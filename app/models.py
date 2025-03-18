@@ -63,7 +63,10 @@ class Vehicle(Base):
     model: Mapped[str] = mapped_column(db.String(100), nullable=False)
     mileage: Mapped[int] = mapped_column(db.Integer, nullable=False)
 
+    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id'))
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='vehicles')
+
+    service_tickets: Mapped[Optional[List['ServiceTicket']]] = db.relationship('ServiceTicket', back_populates='vehicle')
 
 
 # Mechanic Model
@@ -124,10 +127,14 @@ class Inventory(Base):
     stock: Mapped[int] = mapped_column(db.Integer, nullable=False)
     price: Mapped[float] = mapped_column(db.Float, nullable=False)
 
+    service_item: Mapped['ServiceItem'] = db.relationship('ServiceItem', back_populates='inventory')
+
 # ServiceItem Model
 class ServiceItem(Base):
     __tablename__ = 'service_items'
     item_id: Mapped[int] = mapped_column(db.ForeignKey('inventory.id'), primary_key=True)
+    inventory: Mapped['Inventory'] = db.relationship('Inventory', back_populates='service_item')
+    
     quantity: Mapped[int] = mapped_column(db.Integer, nullable=False)
 
     service: Mapped['Service'] = db.relationship('Service', back_populates='service_items')
@@ -153,9 +160,11 @@ class ServiceTicket(Base):
     __tablename__ = 'service_tickets'
     
     id: Mapped[int] = mapped_column(primary_key=True)
-    VIN: Mapped[str] = mapped_column(db.String, db.ForeignKey('vehicles.VIN'), nullable=False)
     service_date: Mapped[date] = mapped_column(db.Date, nullable=False)
     service_desc: Mapped[str] = mapped_column(db.String(255), nullable=False)
+
+    VIN: Mapped[str] = mapped_column(db.String, db.ForeignKey('vehicles.VIN'), nullable=False)
+    vehicle: Mapped['Vehicle'] = db.relationship('Vehicle', back_populates='service_tickets')
 
     customer_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('customers.id', ondelete='SET NULL'), nullable=True)
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='service_tickets')
