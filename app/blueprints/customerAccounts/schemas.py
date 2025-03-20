@@ -15,14 +15,14 @@ class CustomerAccountSchema(SQLAlchemyAutoSchema):
 
     id = fields.Int(dump_only=True)
     email = fields.Str(required=True, validate=Email())
-    password = fields.Str(required=True, validate=Length(min=1, max=100))
+    password = fields.Str(required=True, validate=Length(min=8, max=100), load_only=True)
+
+    customer = fields.Nested('CustomerSchema', exclude=('account',))
 
     @validates('email')
     def validate_email(self, value):
         if not value:
             raise ValidationError("Email is required.")
-        if '@' not in value:
-            raise ValidationError("Invalid email address.")
         
 
 customer_account_schema = CustomerAccountSchema()

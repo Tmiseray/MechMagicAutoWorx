@@ -26,8 +26,6 @@ class CustomerSchema(SQLAlchemyAutoSchema):
     def validate_email(self, value):
         if not value:
             raise ValidationError("Email is required.")
-        if '@' not in value:
-            raise ValidationError("Invalid email address.")
 
 
 customer_schema = CustomerSchema()

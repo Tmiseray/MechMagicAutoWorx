@@ -16,9 +16,9 @@ class ServiceSchema(SQLAlchemyAutoSchema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=Length(min=1, max=100))
     price = fields.Float(required=True)
-    service_item_id = fields.Int(required=True)
 
     service_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('service',)))
+    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', exclude=('services',)))
 
     @validates('name')
     def validate_name(self, value):

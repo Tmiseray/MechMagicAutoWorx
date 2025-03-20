@@ -13,21 +13,19 @@ class VehicleSchema(SQLAlchemyAutoSchema):
         include_relationships = True
         load_instance = True
 
-    VIN = fields.Str(required=True, validate=Length(min=1, max=100))
+    VIN = fields.Str(required=True, validate=Length(min=17, max=100))
     year = fields.Int(required=True)
     make = fields.Str(required=True, validate=Length(min=1, max=100))
     model = fields.Str(required=True, validate=Length(min=1, max=100))
-    # customer_id = fields.Int(required=True)
+    customer_id = fields.Int(required=True)
     
-    customer = fields.Nested('CustomerSchema', exclude=('vehicles',))
+    customer = fields.Nested('CustomerSchema', exclude=('vehicles', 'id',))
     service_tickets = fields.Nested('ServiceTicketSchema', many=True, exclude=('vehicle',))
 
     @validates('VIN')
     def validate_vin(self, value):
         if not value:
             raise ValidationError("VIN is required.")
-        if len(value) != 17:
-            raise ValidationError("VIN must be 17 characters long.")
         
 
 vehicle_schema = VehicleSchema()

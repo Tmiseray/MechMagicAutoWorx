@@ -26,8 +26,6 @@ class MechanicSchema(SQLAlchemyAutoSchema):
     def validate_email(self, value):
         if not value:
             raise ValidationError("Email is required.")
-        if '@' not in value:
-            raise ValidationError("Invalid email address.")
         
 
 mechanic_schema = MechanicSchema()

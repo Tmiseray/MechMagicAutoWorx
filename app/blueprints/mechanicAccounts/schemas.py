@@ -14,15 +14,16 @@ class MechanicAccountSchema(SQLAlchemyAutoSchema):
         load_instance = True
 
     id = fields.Int(dump_only=True)
+    role = fields.Str(dump_only=True)
     email = fields.Str(required=True, validate=Email())
-    password = fields.Str(required=True, validate=Length(min=1, max=100))
+    password = fields.Str(required=True, validate=Length(min=8, max=100), load_only=True)
+
+    mechanic = fields.Nested('MechanicSchema', exclude=('account',))
 
     @validates('email')
     def validate_email(self, value):
         if not value:
             raise ValidationError("Email is required.")
-        if '@' not in value:
-            raise ValidationError("Invalid email address.")
 
 
 mechanic_account_schema = MechanicAccountSchema()
