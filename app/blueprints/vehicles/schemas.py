@@ -27,6 +27,26 @@ class VehicleSchema(SQLAlchemyAutoSchema):
         if not value:
             raise ValidationError("VIN is required.")
         
+    @validates('year')
+    def validate_year(self, value):
+        if not value:
+            raise ValidationError("Year is required.")
+        
+    @validates('make')
+    def validate_make(self, value):
+        if not value:
+            raise ValidationError("Make is required.")
+        
+    @validates('model')
+    def validate_model(self, value):
+        if not value:
+            raise ValidationError("Model is required.")
+        
+    @validates('customer_id')
+    def validate_customer_id(self, value):
+        if not value:
+            raise ValidationError("Customer ID is required.")
+        
 
 vehicle_schema = VehicleSchema()
 vehicles_schema = VehicleSchema(many=True)

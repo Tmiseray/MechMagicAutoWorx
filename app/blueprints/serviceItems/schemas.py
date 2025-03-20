@@ -2,9 +2,7 @@
 from app.extensions import ma
 from app.models import ServiceItem
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
-from marshmallow.validate import Length, Email
 
 
 class ServiceItemSchema(SQLAlchemyAutoSchema):
@@ -15,7 +13,7 @@ class ServiceItemSchema(SQLAlchemyAutoSchema):
 
     id = fields.Int(dump_only=True)
     item_id = fields.Int(required=True)
-    quantity = fields.Int(required=True, validate=Length(min=1))
+    quantity = fields.Int(required=True)
     service_id = fields.Int(required=False)
 
     inventory = fields.Nested('InventorySchema', exclude=('id',))
@@ -26,6 +24,8 @@ class ServiceItemSchema(SQLAlchemyAutoSchema):
     def validate_quantity(self, value):
         if not value:
             raise ValidationError("Quantity is required.")
+        if value < 1:
+            raise ValidationError("Quantity must be at least 1.")
         
 
 service_item_schema = ServiceItemSchema()

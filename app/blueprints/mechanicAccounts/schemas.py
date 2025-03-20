@@ -24,6 +24,11 @@ class MechanicAccountSchema(SQLAlchemyAutoSchema):
     def validate_email(self, value):
         if not value:
             raise ValidationError("Email is required.")
+        
+    @validates('password')
+    def validate_password(self, value):
+        if not value:
+            raise ValidationError("Password is required.")
 
 
 mechanic_account_schema = MechanicAccountSchema()

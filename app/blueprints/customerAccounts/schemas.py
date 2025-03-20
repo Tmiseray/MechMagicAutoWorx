@@ -24,6 +24,10 @@ class CustomerAccountSchema(SQLAlchemyAutoSchema):
         if not value:
             raise ValidationError("Email is required.")
         
+    @validates('password')
+    def validate_password(self, value):
+        if not value:
+            raise ValidationError("Password is required.")
 
 customer_account_schema = CustomerAccountSchema()
 customer_accounts_schema = CustomerAccountSchema(many=True)

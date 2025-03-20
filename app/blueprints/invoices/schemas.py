@@ -2,9 +2,7 @@
 from app.extensions import ma
 from app.models import Invoice
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
-from marshmallow.validate import Length, Email
 
 
 class InvoiceSchema(SQLAlchemyAutoSchema):
@@ -17,7 +15,7 @@ class InvoiceSchema(SQLAlchemyAutoSchema):
     invoice_date = fields.Date(required=False, dump_only=True)
     total = fields.Method('calculate_total')
     paid = fields.Boolean(required=True)
-    service_ticket_id = fields.Int(required=True, validate=Length(min=1))
+    service_ticket_id = fields.Int(required=True)
 
     service_ticket = fields.Nested('ServiceTicketSchema', exclude=('invoice', 'id',))
 
@@ -32,7 +30,7 @@ class InvoiceSchema(SQLAlchemyAutoSchema):
                     for s in mt.services:
                         s_cost = s.price
                         for i in s.service_items:
-                            s_cost = i.quantity * i.inventory.price
+                            s_cost += i.quantity * i.inventory.price
                         mt_cost += s_cost
                             
                 if mt.additional_items:

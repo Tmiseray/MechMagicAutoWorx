@@ -22,10 +22,25 @@ class MechanicSchema(SQLAlchemyAutoSchema):
     account = fields.Nested('MechanicAccountSchema', exclude=('mechanic',))
     mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', many=True, exclude=('mechanic',)))
 
+    @validates('name')
+    def validate_name(self, value):
+        if not value:
+            raise ValidationError("Name is required.")
+        
     @validates('email')
     def validate_email(self, value):
         if not value:
             raise ValidationError("Email is required.")
+        
+    @validates('phone')
+    def validate_phone(self, value):
+        if not value:
+            raise ValidationError("Phone is required.")
+        
+    @validates('salary')
+    def validate_salary(self, value):
+        if not value:
+            raise ValidationError("Salary is required.")
         
 
 mechanic_schema = MechanicSchema()
