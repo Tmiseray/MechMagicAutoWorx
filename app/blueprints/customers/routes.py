@@ -18,8 +18,8 @@ from app.utils.util import token_required, mechanic_token_required
 def create_customer():
     try:
         customer_data = customer_schema.load(request.json)
-    except ValidationError as e:
-        return jsonify(e.messages), 400
+    except ValidationError as ve:
+        return jsonify(ve.messages), 400
 
     new_customer = Customer(
         name=customer_data['name'],
@@ -58,14 +58,14 @@ def get_customers():
 
 
 # Get single customer
-@customers_bp.route('/<int:customer_id>', methods=['GET'])
+@customers_bp.route('/<int:id>', methods=['GET'])
 @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a single customer more than 10 per hour
 @mechanic_token_required
 # Only mechanics can retrieve a single customer
-def get_customer(customer_id):
-    customer = db.session.get(Customer, customer_id)
+def get_customer(id):
+    customer = db.session.get(Customer, id)
 
     if not customer:
         return jsonify({"message": "Invalid customer ID"}), 404
@@ -74,18 +74,18 @@ def get_customer(customer_id):
 
 
 # Update a customer
-@customers_bp.route('/<int:customer_id>', methods=['PUT'])
+@customers_bp.route('/<int:id>', methods=['PUT'])
 @token_required
-def update_customer(customer_id):
-    customer = db.session.get(Customer, customer_id)
+def update_customer(id):
+    customer = db.session.get(Customer, id)
 
     if not customer:
         return jsonify({"message": "Invalid customer ID"}), 404
 
     try:
         customer_data = customer_schema.load(request.json, partial=True)
-    except ValidationError as e:
-        return jsonify(e.messages), 400
+    except ValidationError as ve:
+        return jsonify(ve.messages), 400
 
     customer.name = customer_data.get('name') or customer.name
     customer.email = customer_data.get('email') or customer.email
@@ -99,8 +99,8 @@ def update_customer(customer_id):
 # Delete a customer
 @customers_bp.route('/', methods=['DELETE'])
 @token_required
-def delete_customer(customer_id):
-    customer = db.session.get(Customer, customer_id)
+def delete_customer(id):
+    customer = db.session.get(Customer, id)
 
     if not customer:
         return jsonify({"message": "Invalid customer ID"}), 404

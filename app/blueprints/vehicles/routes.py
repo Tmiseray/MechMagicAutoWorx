@@ -10,7 +10,24 @@ from app.utils.util import token_required, mechanic_token_required
 
 
 # Create Vehicle
+@vehicles_bp.route('/', methods=['POST'])
+@mechanic_token_required
+def create_vehicle():
+    try:
+        vehicle_data = vehicle_schema.load(request.json)
+    except ValidationError as ve:
+        return jsonify(ve.messages), 400
+    
+    new_vehicle = Vehicle(
+        name=vehicle_data['name'],
+        stock=vehicle_data['stock'],
+        price=float(vehicle_data['price'])
+    )
 
+    db.session.add(new_vehicle)
+    db.session.commit()
+
+    return jsonify(vehicle_schema.dump(new_vehicle)), 201
 
 # Read/Get All Vehicles
 
