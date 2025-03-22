@@ -20,8 +20,8 @@ class MechanicTicketSchema(SQLAlchemyAutoSchema):
 
     service_ticket = fields.Nested('ServiceTicketSchema', exclude=('mechanic_tickets', 'id'))
     mechanic = fields.Nested('MechanicSchema', exclude=('mechanic_tickets', 'id',))
-    services = fields.List(fields.Nested('ServiceSchema', exclude=('mechanic_tickets', 'id',)))
-    additional_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('mechanic_tickets')))
+    services = fields.List(fields.Nested('ServiceSchema', exclude=('mechanic_tickets', 'id',)), default=[])
+    additional_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('mechanic_tickets')), default=[])
 
     @validates('service_ticket_id')
     def validate_service_ticket_id(self, value):

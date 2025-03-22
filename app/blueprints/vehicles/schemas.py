@@ -4,7 +4,7 @@ from app.models import Vehicle
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
-from marshmallow.validate import Length, Email
+from marshmallow.validate import Length
 
 
 class VehicleSchema(SQLAlchemyAutoSchema):
@@ -17,7 +17,8 @@ class VehicleSchema(SQLAlchemyAutoSchema):
     year = fields.Int(required=True)
     make = fields.Str(required=True, validate=Length(min=1, max=100))
     model = fields.Str(required=True, validate=Length(min=1, max=100))
-    customer_id = fields.Int(required=True)
+    mileage = fields.Int(required=True)
+    customer_id = fields.Int(required=False)
     
     customer = fields.Nested('CustomerSchema', exclude=('vehicles', 'id',))
     service_tickets = fields.Nested('ServiceTicketSchema', many=True, exclude=('vehicle',))
@@ -41,6 +42,11 @@ class VehicleSchema(SQLAlchemyAutoSchema):
     def validate_model(self, value):
         if not value:
             raise ValidationError("Model is required.")
+        
+    @validates('mileage')
+    def validate_mileage(self, value):
+        if not value:
+            raise ValidationError("Mileage is required.")
         
     @validates('customer_id')
     def validate_customer_id(self, value):

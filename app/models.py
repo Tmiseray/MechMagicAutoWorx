@@ -64,7 +64,7 @@ class Vehicle(Base):
     model: Mapped[str] = mapped_column(db.String(100), nullable=False)
     mileage: Mapped[int] = mapped_column(db.Integer, nullable=False)
 
-    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id'))
+    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id'), ondelete='SET NULL', nullable=True)
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='vehicles')
 
     service_tickets: Mapped[Optional[List['ServiceTicket']]] = db.relationship('ServiceTicket', back_populates='vehicle')
@@ -109,7 +109,7 @@ class MechanicTicket(Base):
     service_ticket_id: Mapped[int] = mapped_column(db.ForeignKey('service_tickets.id'))
     service_ticket: Mapped['ServiceTicket'] = db.relationship('ServiceTicket', back_populates='mechanic_tickets')
 
-    mechanic_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('mechanics.id', ondelete='SET NULL'), nullable=True)
+    mechanic_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('mechanics.id'), ondelete='SET NULL', nullable=True)
     mechanic: Mapped['Mechanic'] = db.relationship('Mechanic', back_populates='mechanic_tickets')
 
     services: Mapped[List['Service']] = db.relationship('Service', back_populates='mechanic_tickets')
@@ -136,7 +136,7 @@ class ServiceItem(Base):
     item_id: Mapped[int] = mapped_column(db.ForeignKey('inventory.id'), nullable=False)
     inventory: Mapped['Inventory'] = db.relationship('Inventory', back_populates='service_items')
     
-    service_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('services.id'), nullable=True)
+    service_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('services.id'), ondelete='SET NULL', nullable=True)
     service: Mapped[Optional['Service']] = db.relationship('Service', back_populates='service_items')
     
     quantity: Mapped[int] = mapped_column(db.Integer, nullable=False)
@@ -167,7 +167,7 @@ class ServiceTicket(Base):
     VIN: Mapped[str] = mapped_column(db.String, db.ForeignKey('vehicles.VIN'), nullable=False)
     vehicle: Mapped['Vehicle'] = db.relationship('Vehicle', back_populates='service_tickets')
 
-    customer_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('customers.id', ondelete='SET NULL'), nullable=True)
+    customer_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('customers.id'), ondelete='SET NULL', nullable=True)
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='service_tickets')
 
     mechanic_tickets: Mapped[Optional[List['MechanicTicket']]] = db.relationship('MechanicTicket', back_populates='service_ticket')

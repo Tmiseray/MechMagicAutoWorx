@@ -3,10 +3,11 @@ from flask import jsonify, request
 from marshmallow import ValidationError
 from sqlalchemy import select
 from . import service_tickets_bp
-from app.models import ServiceTicket, ServiceMechanic, Mechanic, db
+from app.models import ServiceTicket, Customer, Vehicle, Mechanic, db
 from .schemas import service_ticket_schema, service_tickets_schema
 from app.extensions import limiter, cache
 from app.utils.util import token_required, mechanic_token_required
+from datetime import date
 
 
 # Create service_ticket
@@ -19,12 +20,20 @@ def create_service_ticket():
         service_ticket_data = service_ticket_schema.load(request.json)
     except ValidationError as e:
         return jsonify(e.messages), 400
+    
+    customer = db.session.get(Customer, service_ticket_data['customer_id'])
+    vehicle = db.session.get(Vehicle, service_ticket_data['VIN'])
+
+    if not vehicle:
+        return jsonify({"message": "Vehicle Not Found in Database"}), 404
+    elif not customer:
+        return jsonify({"message": "Invalid Customer ID"}), 404
 
     new_service_ticket = ServiceTicket(
-        VIN=service_ticket_data['VIN'],
-        service_date=service_ticket_data['service_date'],
+        VIN=vehicle.VIN,
+        service_date=service_ticket_data['service_date'] or date.today(),
         service_desc=service_ticket_data['service_desc'],
-        customer_id=service_ticket_data['customer_id']
+        customer_id=customer.id
     )
 
     db.session.add(new_service_ticket)
@@ -68,8 +77,8 @@ def get_service_tickets():
 def get_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
 
-    if service_ticket is None:
-        return jsonify({"message": "Invalid service_ticket ID"}), 404
+    if not service_ticket:
+        return jsonify({"message": "Invalid Service Ticket ID or Service Ticket Not in Database"}), 404
 
     return jsonify(service_ticket_schema.dump(service_ticket)), 200
 
@@ -79,19 +88,27 @@ def get_service_ticket(service_ticket_id):
 def update_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
 
-    if service_ticket is None:
-        return jsonify({"message": "Invalid service_ticket ID"}), 404
+    if not service_ticket:
+        return jsonify({"message": "Invalid Service Ticket ID"}), 404
 
     try:
         service_ticket_data = service_ticket_schema.load(request.json, partial=True)
     except ValidationError as e:
         return jsonify(e.messages), 400
+    
+    customer = db.session.get(Customer, service_ticket_data['customer_id'])
+    vehicle = db.session.get(Vehicle, service_ticket_data['VIN'])
+
+    if not vehicle:
+        return jsonify({"message": "Vehicle Not Found in Database"}), 404
+    elif not customer:
+        return jsonify({"message": "Invalid Customer ID"}), 404
 
     # Update basic fields
-    service_ticket.VIN = service_ticket_data.get('VIN') or service_ticket.VIN
+    service_ticket.VIN = vehicle.VIN or service_ticket.VIN
     service_ticket.service_date = service_ticket_data.get('service_date') or service_ticket.service_date
     service_ticket.service_desc = service_ticket_data.get('service_desc') or service_ticket.service_desc
-    service_ticket.customer_id = service_ticket_data.get('customer_id') or service_ticket.customer_id
+    service_ticket.customer_id = customer.id or service_ticket.customer_id
 
     db.session.commit()
 
@@ -104,10 +121,10 @@ def update_service_ticket(service_ticket_id):
 def delete_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
 
-    if service_ticket is None:
-        return jsonify({"message": "Invalid service_ticket ID"}), 404
+    if not service_ticket:
+        return jsonify({"message": "Service Ticket Not Found"}), 404
 
     db.session.delete(service_ticket)
     db.session.commit()
 
-    return jsonify({"message": "Service ticket deleted"}), 200
+    return jsonify({"message": "Service Ticket Deleted Successfully"}), 200

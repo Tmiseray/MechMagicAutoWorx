@@ -21,7 +21,7 @@ class ServiceTicketSchema(SQLAlchemyAutoSchema):
 
     vehicle = fields.Nested('VehicleSchema', exclude=('VIN', 'service_tickets',))
     customer = fields.Nested('CustomerSchema', exclude=('service_tickets', 'id',))
-    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', exclude=('service_ticket',)))
+    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', exclude=('service_ticket',)), default=[])
     invoice = fields.Nested('InvoiceSchema', exclude=('service_ticket', 'service_ticket_id',))
 
     @validates('service_date')

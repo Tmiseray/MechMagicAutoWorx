@@ -20,7 +20,7 @@ class MechanicSchema(SQLAlchemyAutoSchema):
     salary = fields.Float(required=True)
 
     account = fields.Nested('MechanicAccountSchema', exclude=('mechanic',))
-    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', many=True, exclude=('mechanic',)))
+    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', many=True, exclude=('mechanic',)), default=[])
 
     @validates('name')
     def validate_name(self, value):
