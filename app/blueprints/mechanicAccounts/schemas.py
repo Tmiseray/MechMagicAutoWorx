@@ -15,6 +15,7 @@ class MechanicAccountSchema(SQLAlchemyAutoSchema):
 
     id = fields.Int(dump_only=True)
     role = fields.Str(dump_only=True)
+    mechanic_id = fields.Int(required=True)
     email = fields.Str(required=True, validate=Email())
     password = fields.Str(required=True, validate=Length(min=8, max=100), load_only=True)
 

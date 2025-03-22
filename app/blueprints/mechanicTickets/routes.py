@@ -3,10 +3,10 @@ from flask import jsonify, request
 from marshmallow import ValidationError
 from sqlalchemy import select
 from . import mechanic_tickets_bp
-from app.models import MechanicTicket, db, Mechanic, ServiceTicket, Service, ServiceItem, Inventory
+from app.models import MechanicTicket, db, Mechanic, ServiceTicket, Service
 from app.extensions import limiter, cache
 from .schemas import mechanic_ticket_schema, mechanic_tickets_schema
-from app.blueprints.shared.creation import create_service_item
+from app.blueprints.shared.creation import create_service_item, check_and_update_inventory
 from app.utils.util import mechanic_token_required
 from datetime import date
 
@@ -28,7 +28,7 @@ def create_mechanic_ticket():
     elif not service_ticket:
         return jsonify({"message": "Invalid Service Ticket ID"}), 404
     
-    new_ticket = MechanicTicket(
+    mechanic_ticket = MechanicTicket(
         start_date=mechanic_ticket_data.get('start_date') or date.today(),
         end_date=mechanic_ticket_data.get('end_date') or None,
         hours_worked=mechanic_ticket_data.get('hours_worked') or 0.0,
@@ -36,55 +36,43 @@ def create_mechanic_ticket():
         mechanic_id=mechanic.id
     )
 
+    all_uses = []
+
     service_ids = request.json.get('service_ids', [])
     if service_ids:
-        for id in service_ids:
-            service = db.session.get(Service, id)
-            if not service:
-                return jsonify({"message": f"Invalid Service ID: {id}"}), 404
-            new_ticket.services.extend(service)
-    '''
-    addtl_items: [
-        | ServiceItems |
-        {
-            item_id: int,   -> | Inventory |
-            quantity: int       id: int,
-        }, {                    name: str,
-            item_id: int,       stock: int,
-            quantity: int       price: float
-        }, 
-    ]
+        services = Service.query.filter(Service.id.in_(service_ids)).all()
+        if len(services) != len(service_ids):
+            return jsonify({"message": "One or more invalid service IDs."}), 404
+        mechanic_ticket.services.extend(services)
 
-    '''
+        for service in services:
+            for si in service.service_items:
+                all_uses.append({"item_id": si.item_id, "quantity": si.quantity})
+
     addtl_items = request.json.get('additional_items', [])
-    if addtl_items:
-        for addtl_item in addtl_items:
-            item_id = addtl_item['item_id']
-            quantity = addtl_item['quantity']
-            item = db.session.get(Inventory, item_id)
+    for addtl_item in addtl_items:
+        all_uses.append({
+            "item_id": addtl_item['item_id'],
+            "quantity": addtl_item['quantity']
+        })
 
-            if not item:
-                return jsonify({"message": f"Invalid Item ID: {item_id}"}), 404
-            if item.stock <= quantity:
-                return jsonify({
-                    "message": "Insufficient Stock for Item",
-                    "stock_level": f"{item.stock}"
-                    }), 409
+    # Validate inventory
+    success, result = check_and_update_inventory(all_uses)
+    if not success:
+        return jsonify(result), 409
 
-            item.stock -= quantity
-                    
-            payload = {
-                "item_id": item.id,
-                "quantity": quantity
-            }
-            service_item = create_service_item(payload, commit=False)
+    # Create service_items for additional_items
+    for addtl_item in addtl_items:
+        payload = {
+            "item_id": addtl_item["item_id"],
+            "quantity": addtl_item["quantity"]
+        }
+        service_item = create_service_item(payload, commit=False)
+        mechanic_ticket.additional_items.append(service_item)
 
-            new_ticket.additional_items.extend(service_item)
-
-    db.session.add(new_ticket)
+    db.session.add(mechanic_ticket)
     db.session.commit()
-
-    return jsonify(mechanic_ticket_schema.dump(new_ticket)), 201
+    return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 201
 
 
 # Read/Get All MechanicTickets
@@ -128,7 +116,7 @@ def get_mechanic_ticket(id):
 
 
 # Update MechanicTicket
-@mechanic_tickets_bp.route('/<int:id', methods=['PUT'])
+@mechanic_tickets_bp.route('/<int:id>', methods=['PUT'])
 @mechanic_token_required
 def update_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
@@ -144,56 +132,47 @@ def update_mechanic_ticket(id):
     mechanic_ticket.end_date = ticket_data.get('end_date') or mechanic_ticket.end_date
     mechanic_ticket.hours_worked = ticket_data.get('hours_worked') or mechanic_ticket.hours_worked
 
-    service_ids = request.json.get('service_ids', [])
-    if service_ids:
-        for id in service_ids:
-            service = db.session.get(Service, id)
-            if not service:
-                return jsonify({"message": f"Invalid Service ID: {id}"}), 404
-            if service in mechanic_ticket.services:
-                return jsonify({"message": f"Service already exists in Mechanic Ticket"}), 409
-            mechanic_ticket.services.extend(service)         
-    '''
-    addtl_items: [
-        | ServiceItems |
-        {
-            item_id: int,   -> | Inventory |
-            quantity: int       id: int,
-        }, {                    name: str,
-            item_id: int,       stock: int,
-            quantity: int       price: float
-        }, 
-    ]
+    all_uses = []
 
-    '''
-    addtl_items = request.json.get('additional_items', [])
-    if addtl_items:
-        for addtl_item in addtl_items:
-            item = db.session.get(ServiceItem, addtl_item['id'])
-            if item in mechanic_ticket.additional_items:
-                return jsonify({"message": f"Additional Item already exists in Mechanic Ticket"}), 409
-            if not item:
-                id = addtl_item['id']
-                quant = addtl_item['quantity']
-                inventory_item = db.session.get(Inventory, id)
-                if not inventory_item:
-                    return jsonify({"message": f"Invalid Item ID: {id}"}), 404
-                if inventory_item.stock <= quant:
-                    return jsonify({
-                        "message": "Insufficient Stock for Item",
-                        "stock_level": f"{inventory_item.stock}"
-                        }), 409
+    # Replace services if provided
+    if 'service_ids' in request.json:
+        service_ids = request.json.get('service_ids', [])
+        services = Service.query.filter(Service.id.in_(service_ids)).all()
+        if len(services) != len(service_ids):
+            return jsonify({"message": "One or more invalid service IDs."}), 404
 
-                inventory_item.stock -= quant
-                        
-                new_item = ServiceItem(
-                    item_id=id,
-                    quantity=quant
-                )
-                mechanic_ticket.additional_items.extend(new_item)
+        mechanic_ticket.services = services
+        for service in services:
+            for si in service.service_items:
+                all_uses.append({"item_id": si.item_id, "quantity": si.quantity})
+
+    # Replace additional_items if provided
+    if 'additional_items' in request.json:
+        mechanic_ticket.additional_items = []
+        addtl_items = request.json.get('additional_items', [])
+        for item in addtl_items:
+            all_uses.append({
+                "item_id": item['item_id'],
+                "quantity": item['quantity']
+            })
+
+    # Check inventory before proceeding
+    if all_uses:
+        success, result = check_and_update_inventory(all_uses)
+        if not success:
+            return jsonify(result), 409
+
+    # Rebuild additional_items
+    if 'additional_items' in request.json:
+        for item in request.json['additional_items']:
+            payload = {
+                "item_id": item["item_id"],
+                "quantity": item["quantity"]
+            }
+            service_item = create_service_item(payload, commit=False)
+            mechanic_ticket.additional_items.append(service_item)
 
     db.session.commit()
-
     return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 200
 
 

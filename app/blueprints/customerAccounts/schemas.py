@@ -14,8 +14,9 @@ class CustomerAccountSchema(SQLAlchemyAutoSchema):
         load_instance = True
 
     id = fields.Int(dump_only=True)
+    customer_id = fields.Int(required=True)
     email = fields.Str(required=True, validate=Email())
-    password = fields.Str(required=True, validate=Length(min=8, max=100), load_only=True)
+    password = fields.Str(required=True, validate=Length(min=8), load_only=True)
 
     customer = fields.Nested('CustomerSchema', exclude=('account',))
 

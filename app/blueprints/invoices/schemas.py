@@ -13,33 +13,14 @@ class InvoiceSchema(SQLAlchemyAutoSchema):
 
     id = fields.Int(dump_only=True)
     invoice_date = fields.Date(required=False, dump_only=True)
-    total = fields.Method('calculate_total')
+    total = fields.Method('get_total')
     paid = fields.Boolean(required=True)
     service_ticket_id = fields.Int(required=True)
 
     service_ticket = fields.Nested('ServiceTicketSchema', exclude=('invoice', 'id',))
 
-    def calculate_total(self, obj):
-        total = 0.0
-
-        if obj.service_ticket:
-            for mt in obj.service_ticket.mechanic_tickets:
-                mt_cost = 0.0
-
-                if mt.services:
-                    for s in mt.services:
-                        s_cost = s.price
-                        for i in s.service_items:
-                            s_cost += i.quantity * i.inventory.price
-                        mt_cost += s_cost
-                            
-                if mt.additional_items:
-                    for ai in mt.additional_items:
-                        mt_cost += ai.quantity * ai.inventory.price
-
-                total += mt_cost
-
-        return round(total, 2)
+    def get_total(self, obj):
+        return obj.calculate_total()
 
 
     @validates('paid')

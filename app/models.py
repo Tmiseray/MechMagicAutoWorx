@@ -3,6 +3,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
 from datetime import date
+from .utils.util import hash_password, check_password
 
 
 # Create a base class for our models
@@ -24,7 +25,7 @@ class Customer(Base):
 
     vehicles: Mapped[Optional[List['Vehicle']]] = db.relationship('Vehicle', back_populates='customer')
 
-    account: Mapped['CustomerAccount'] = db.relationship('CustomerAccount', back_populates='customer', uselist=False)
+    account: Mapped[Optional['CustomerAccount']] = db.relationship('CustomerAccount', back_populates='customer', uselist=False)
 
     service_tickets: Mapped[Optional[List['ServiceTicket']]] = db.relationship('ServiceTicket', back_populates='customer')
 
@@ -34,12 +35,18 @@ class CustomerAccount(Base):
     __tablename__ = 'customer_accounts'
     
     id: Mapped[int] = mapped_column(primary_key=True)
-
-    email: Mapped[str] = mapped_column(db.String, db.ForeignKey('customers.email'), nullable=False)
-    password: Mapped[str] = mapped_column(db.String(100), nullable=False)
+    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id'), ondelete='SET NULL', nullable=True)
+    email: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    password: Mapped[str] = mapped_column(db.String, nullable=False)
 
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='account', uselist=False)
 
+    def set_password(self, raw_password):
+        self.password = hash_password(raw_password)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+    
 
 # Invoice Model
 class Invoice(Base):
@@ -52,6 +59,28 @@ class Invoice(Base):
 
     service_ticket_id: Mapped[int] = mapped_column(db.ForeignKey('service_tickets.id'))
     service_ticket: Mapped['ServiceTicket'] = db.relationship('ServiceTicket', back_populates='invoice')
+
+    def calculate_total(self):
+        total = 0.0
+
+        if self.service_ticket:
+            for mt in self.service_ticket.mechanic_tickets:
+                mt_cost = 0.0
+
+                if mt.services:
+                    for s in mt.services:
+                        s_cost = s.price
+                        for i in s.service_items:
+                            s_cost += i.quantity * i.inventory.price
+                        mt_cost += s_cost
+                            
+                if mt.additional_items:
+                    for ai in mt.additional_items:
+                        mt_cost += ai.quantity * ai.inventory.price
+
+                total += mt_cost
+
+        return round(total, 2)
 
 
 # Vehicle Model
@@ -80,7 +109,7 @@ class Mechanic(Base):
     phone: Mapped[str] = mapped_column(db.String(100), nullable=False)
     salary: Mapped[float] = mapped_column(db.Float, nullable=False)
 
-    account: Mapped['MechanicAccount'] = db.relationship('MechanicAccount', back_populates='mechanic', uselist=False)
+    account: Mapped[Optional['MechanicAccount']] = db.relationship('MechanicAccount', back_populates='mechanic', uselist=False)
 
     mechanic_tickets: Mapped[List['MechanicTicket']] = db.relationship('MechanicTicket', back_populates='mechanic')
 
@@ -91,10 +120,16 @@ class MechanicAccount(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     role: Mapped[str] = mapped_column(db.String(100), nullable=False, default="Mechanic")
-    password: Mapped[str] = mapped_column(db.String(100), nullable=False)
-
-    email: Mapped[str] = mapped_column(db.String, db.ForeignKey('mechanics.email'), nullable=False)
+    password: Mapped[str] = mapped_column(db.String, nullable=False)
+    mechanic_id: Mapped[int] = mapped_column(db.ForeignKey('mechanics.id'), ondelete='SET NULL', nullable=True)
+    email: Mapped[str] = mapped_column(db.String(255), nullable=False)
     mechanic: Mapped['Mechanic'] = db.relationship('Mechanic', back_populates='account', uselist=False)
+
+    def set_password(self, raw_password):
+        self.password = hash_password(raw_password)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
 
 
 # MechanicTicket Model
