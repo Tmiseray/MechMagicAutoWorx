@@ -17,8 +17,8 @@ class ServiceSchema(SQLAlchemyAutoSchema):
     name = fields.Str(required=True, validate=Length(min=1, max=100))
     price = fields.Float(required=True)
 
-    service_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('service',)), default=[])
-    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', exclude=('services',)), default=[])
+    service_items = fields.List(fields.Nested('ServiceItemSchema', only=('id', 'item_id', 'quantity', 'inventory',)), default=[])
+    mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', only=('id', 'start_date', 'mechanic_id',)), default=[])
 
     @validates('name')
     def validate_name(self, value):

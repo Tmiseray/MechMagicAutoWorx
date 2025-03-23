@@ -15,13 +15,13 @@ class ServiceTicketSchema(SQLAlchemyAutoSchema):
         sqla_session = db.session
 
     id = fields.Int(dump_only=True)
-    service_date = fields.Date(required=True, dump_only=True)
+    service_date = fields.Date(required=True)
     service_desc = fields.Str(required=True, validate=Length(min=1, max=255))
     VIN = fields.Str(required=True)
     customer_id = fields.Int(required=False)
 
-    vehicle = fields.Nested('VehicleSchema', exclude=('VIN', 'service_tickets',))
-    customer = fields.Nested('CustomerSchema', exclude=('service_tickets', 'id',))
+    vehicle = fields.Nested('VehicleSchema', exclude=('VIN', 'service_tickets', 'customer', 'customer_id',))
+    customer = fields.Nested('CustomerSchema', exclude=('service_tickets', 'id', 'account', 'vehicles',))
     mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', exclude=('service_ticket',)), default=[])
     invoice = fields.Nested('InvoiceSchema', exclude=('service_ticket', 'service_ticket_id',))
 

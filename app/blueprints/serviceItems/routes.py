@@ -21,7 +21,7 @@ def create_service_item_route():
 
 # Read/Get All ServiceItems
 @service_items_bp.route('/all', methods=['GET'])
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
 # @mechanic_token_required

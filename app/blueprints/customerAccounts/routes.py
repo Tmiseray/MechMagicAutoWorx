@@ -5,24 +5,28 @@ from sqlalchemy import select
 from . import customer_accounts_bp
 from app.models import CustomerAccount, db, Customer
 from app.extensions import limiter, cache
-from .schemas import customer_account_schema, customer_accounts_schema
-from app.utils.util import token_required, mechanic_token_required, encode_token
+from .schemas import customer_account_schema, customer_accounts_schema, customer_login_schema
+from app.utils.util import token_required, mechanic_token_required, encode_token, check_password, hash_password
 
 
 # Customer Login
 @customer_accounts_bp.route('/login', methods=['POST'])
 def login():
     try:
-        credentials = customer_account_schema.load(request.json, partial=True)
-        email = credentials.email
-        password = credentials.password
+        credentials = customer_login_schema.load(request.json)
+        email = credentials['email']
+        password = credentials['password']
     except KeyError:
         return jsonify({"message": "Expecting Email and Password"}), 400
     
     query = select(CustomerAccount).where(CustomerAccount.email==email)
     account = db.session.execute(query).scalar_one_or_none()
+    print("Password match:", check_password(password, account.password))
+    print("DB password:", account.password)
+    print("Customer password:", password)
+    print("Type:", type(account.password))
 
-    if account and account.check_password(password):
+    if account and check_password(password, account.password):
         auth_token = encode_token(account.customer_id)
 
         response = {
@@ -42,21 +46,19 @@ def create_customer_account():
         account_data = customer_account_schema.load(request.json)
     except ValidationError as ve:
         return jsonify(ve.messages), 404
-    
+
     customer = db.session.get(Customer, account_data.customer_id)
 
     if not customer:
         return jsonify({"message": f"Invalid Customer ID: {account_data.customer_id}"}), 404
-    
-    account = CustomerAccount(
-        customer_id=customer.id,
-        email=account_data.email,
-        password=account_data.password
-    )
-    account.password = account.set_password(account_data.password)
+
+    account = account_data  # Already a CustomerAccount instance
+    account.customer_id = customer.id
+
     db.session.add(account)
     db.session.commit()
-    return jsonify(customer_account_schema.dump(account))
+
+    return jsonify(customer_account_schema.dump(account)), 200
 
 # Read/Get All CustomerAccounts
 @customer_accounts_bp.route('/all', methods=['GET'])
@@ -119,9 +121,10 @@ def update_customer_account(id):
         return jsonify(ve.messages), 400
     
     account = db.session.get(CustomerAccount, customer.account.id)
+    if account_data.password:
+        account.set_password(account_data.password)
     
     account.email = account_data.email or account.email
-    account.password = account.set_password(account_data.password) or account.password
 
     db.session.commit()
 

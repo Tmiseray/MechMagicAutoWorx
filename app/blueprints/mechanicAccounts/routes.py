@@ -5,24 +5,28 @@ from sqlalchemy import select
 from . import mechanic_accounts_bp
 from app.models import MechanicAccount, db, Mechanic
 from app.extensions import limiter, cache
-from .schemas import mechanic_account_schema, mechanic_accounts_schema
-from app.utils.util import mechanic_token_required, encode_mechanic_token
+from .schemas import mechanic_account_schema, mechanic_accounts_schema, mechanic_login_schema
+from app.utils.util import mechanic_token_required, encode_mechanic_token, check_password
 
 
 # Mechanic Login
 @mechanic_accounts_bp.route('/login', methods=['POST'])
 def login():
     try:
-        credentials = mechanic_account_schema.load(request.json, partial=True)
-        email = credentials.email
-        password = credentials.password
+        credentials = mechanic_login_schema.load(request.json)
+        email = credentials['email']
+        password = credentials['password']
     except KeyError:
         return jsonify({"message": "Expecting Email and Password"}), 400
     
     query = select(MechanicAccount).where(MechanicAccount.email==email)
     account = db.session.execute(query).scalar_one_or_none()
+    print("Password match:", check_password(password, account.password))
+    print("DB password:", account.password)
+    print("Customer password:", password)
+    print("Type:", type(account.password))
 
-    if account and account.check_password(password):
+    if account and check_password(password, account.password):
         auth_token = encode_mechanic_token(account.mechanic_id, account.role)
 
         response = {
@@ -48,12 +52,9 @@ def create_mechanic_account():
     if not mechanic:
         return jsonify({"message": f"Invalid Mechanic ID: {account_data.mechanic_id}"}), 404
     
-    account = MechanicAccount(
-        mechanic_id=mechanic.id,
-        email=account_data.email,
-        role=account_data.role or 'Mechanic'
-    )
-    account.password = account.set_password(account_data['password'])
+    account = account_data  # Already a MechanicAccount instance
+    account.mechanic_id = mechanic.id
+
     db.session.add(account)
     db.session.commit()
     return jsonify(mechanic_account_schema.dump(account))
@@ -119,8 +120,10 @@ def update_mechanic_account(id):
     
     account = db.session.get(MechanicAccount, mechanic.account.id)
     
+    if account_data.password:
+        account.set_password(account_data.password)
+    
     account.email = account_data.email or account.email
-    account.password = account.set_password(account_data.password) or account.password
     account.role = account_data.role or account.role
 
     db.session.commit()

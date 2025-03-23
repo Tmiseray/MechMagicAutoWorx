@@ -16,19 +16,19 @@ def create_service_item(payload=None, commit=True, return_json=False):
     try:
         service_item_data = service_item_schema.load(payload)
     except ValidationError as ve:
-        return (
-            jsonify(ve.messages), 400
-            if return_json or request else ve.messages
-        )
+        if return_json:
+            return jsonify(ve.messages), 400
+        else:
+            raise
     
     service_id = service_item_data.service_id
     if service_id:
         service = db.session.get(Service, service_id)
         if not service:
-            return (
-                jsonify({"message": "Invalid Service ID"}), 404
-                if return_json or request else {"error": "Invalid Service ID"}
-            )
+            if return_json:
+                return jsonify({"message": "Invalid Service ID"}), 404
+            else:
+                raise ValueError("Invalid Service ID")
         
     new_service_item = ServiceItem(
         item_id=service_item_data.item_id,
@@ -40,10 +40,9 @@ def create_service_item(payload=None, commit=True, return_json=False):
     if commit:
         db.session.commit()
 
-    return (
-        jsonify(service_item_schema.dump(new_service_item)), 201
-        if return_json or request else new_service_item
-    )
+    if return_json:
+        return jsonify(service_item_schema.dump(new_service_item)), 201
+    return new_service_item
 
 
 def check_and_update_inventory(uses=list[dict], commit=False):

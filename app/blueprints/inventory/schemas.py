@@ -18,7 +18,7 @@ class InventorySchema(SQLAlchemyAutoSchema):
     stock = fields.Int(required=True)
     price = fields.Float(required=True)
 
-    service_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('item_id', 'inventory',)))
+    service_items = fields.List(fields.Nested('ServiceItemSchema', only=('service_id', 'service', 'mechanic_tickets',)))
     
     @validates('name')
     def validate_name(self, value):

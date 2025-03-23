@@ -15,11 +15,11 @@ class ServiceItemSchema(SQLAlchemyAutoSchema):
     id = fields.Int(dump_only=True)
     item_id = fields.Int(required=True)
     quantity = fields.Int(required=True)
-    service_id = fields.Int(required=False)
+    service_id = fields.Int(required=False, allow_none=True)
 
-    inventory = fields.Nested('InventorySchema', exclude=('id',))
-    service = fields.Nested('ServiceSchema', exclude=('id', 'service_items',))
-    mechanic_tickets = fields.Nested('MechanicTicketSchema', exclude=('additional_items',))
+    inventory = fields.Nested('InventorySchema', only=('name', 'stock', 'price',))
+    service = fields.Nested('ServiceSchema', only=('name', 'price',))
+    mechanic_tickets = fields.Nested('MechanicTicketSchema', only=('id', 'start_date', 'mechanic_id',))
 
     @validates('quantity')
     def validate_quantity(self, value):

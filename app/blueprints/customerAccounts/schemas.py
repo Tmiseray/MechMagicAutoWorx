@@ -17,9 +17,10 @@ class CustomerAccountSchema(SQLAlchemyAutoSchema):
     id = fields.Int(dump_only=True)
     customer_id = fields.Int(required=True)
     email = fields.Str(required=True, validate=Email())
-    password = fields.Str(required=True, validate=Length(min=8), load_only=True)
+    password = fields.Str(required=True, validate=Length(min=8))
+    # , load_only=True add above
 
-    customer = fields.Nested('CustomerSchema', exclude=('account',))
+    customer = fields.Nested('CustomerSchema', exclude=('account', 'id',))
 
     @validates('email')
     def validate_email(self, value):
@@ -31,5 +32,10 @@ class CustomerAccountSchema(SQLAlchemyAutoSchema):
         if not value:
             raise ValidationError("Password is required.")
 
+class LoginSchema(ma.Schema):
+    email = fields.Email(required=True)
+    password = fields.String(required=True, validate=Length(min=8))
+
 customer_account_schema = CustomerAccountSchema()
 customer_accounts_schema = CustomerAccountSchema(many=True)
+customer_login_schema = LoginSchema()

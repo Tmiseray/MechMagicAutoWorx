@@ -18,9 +18,11 @@ class MechanicAccountSchema(SQLAlchemyAutoSchema):
     role = fields.Str(dump_only=True)
     mechanic_id = fields.Int(required=True)
     email = fields.Str(required=True, validate=Email())
-    password = fields.Str(required=True, validate=Length(min=8, max=100), load_only=True)
+    password = fields.Str(required=True, validate=Length(min=8, max=100))
 
-    mechanic = fields.Nested('MechanicSchema', exclude=('account',))
+    # , load_only=True Add to above
+
+    mechanic = fields.Nested('MechanicSchema', exclude=('account', 'id', 'email',))
 
     @validates('email')
     def validate_email(self, value):
@@ -31,7 +33,13 @@ class MechanicAccountSchema(SQLAlchemyAutoSchema):
     def validate_password(self, value):
         if not value:
             raise ValidationError("Password is required.")
+        
+
+class LoginSchema(ma.Schema):
+    email = fields.Email(required=True)
+    password = fields.String(required=True, validate=Length(min=8))
 
 
 mechanic_account_schema = MechanicAccountSchema()
 mechanic_accounts_schema = MechanicAccountSchema(many=True)
+mechanic_login_schema = LoginSchema()

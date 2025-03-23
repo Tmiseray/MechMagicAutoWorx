@@ -70,7 +70,7 @@ class CustomerAccount(Base):
     def set_password(self, raw_password):
         self.password = hash_password(raw_password)
 
-    def check_password(self, raw_password):
+    def validate_password(self, raw_password):
         return check_password(raw_password, self.password)
     
 

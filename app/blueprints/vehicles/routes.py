@@ -41,7 +41,7 @@ def create_vehicle():
 
 # Read/Get All Vehicles
 @vehicles_bp.route('/all', methods=['GET'])
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
 # @mechanic_token_required
@@ -70,7 +70,7 @@ def get_vehicles(VIN):
     if not vehicle:
         return jsonify({"message": "Invalid vehicle ID"}), 404
 
-    return jsonify(vehicles_schema.dump(vehicle)), 200
+    return jsonify(vehicle_schema.dump(vehicle)), 200
 
 
 # Update Vehicle
