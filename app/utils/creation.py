@@ -2,13 +2,14 @@
 from flask import jsonify, request
 from marshmallow import ValidationError
 from app.models import ServiceItem, db, Service, Inventory
-from app.blueprints.serviceItems.schemas import service_item_schema
+
 
 
 
 
 # Create ServiceItem
 def create_service_item(payload=None, commit=True, return_json=False):
+    from app.blueprints.serviceItems.schemas import service_item_schema
     if payload is None:
         payload = request.json
 
@@ -20,7 +21,7 @@ def create_service_item(payload=None, commit=True, return_json=False):
             if return_json or request else ve.messages
         )
     
-    service_id = service_item_data.get('service_id')
+    service_id = service_item_data.service_id
     if service_id:
         service = db.session.get(Service, service_id)
         if not service:
@@ -30,8 +31,8 @@ def create_service_item(payload=None, commit=True, return_json=False):
             )
         
     new_service_item = ServiceItem(
-        item_id=service_item_data['item_id'],
-        quantity=service_item_data['quantity'],
+        item_id=service_item_data.item_id,
+        quantity=service_item_data.quantity,
         service_id=service_id
     )
 
@@ -45,7 +46,7 @@ def create_service_item(payload=None, commit=True, return_json=False):
     )
 
 
-def check_and_update_inventory(uses=[{},], commit=False):
+def check_and_update_inventory(uses=list[dict], commit=False):
     if not uses:
         return True, []
     

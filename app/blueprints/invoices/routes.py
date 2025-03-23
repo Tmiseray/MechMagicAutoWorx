@@ -24,8 +24,8 @@ def create_invoice():
         return jsonify({"message": "Invalid Service Ticket ID"}), 404
     
     invoice = Invoice(
-        invoice_date=invoice_data.get('invoice_date') or date.today(),
-        paid=invoice_data.get('paid') or False,
+        invoice_date=invoice_data.invoice_date or date.today(),
+        paid=invoice_data.paid or False,
         service_ticket_id=service_ticket.id
     )
 
@@ -101,8 +101,8 @@ def update_invoice(id):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
     
-    invoice.paid = invoice_data.get('paid') or False
-    invoice.service_ticket_id = invoice_data.get('service_ticket_id') or invoice.service_ticket_id
+    invoice.paid = invoice_data.paid or False
+    invoice.service_ticket_id = invoice_data.service_ticket_id or invoice.service_ticket_id
 
     db.session.commit()
     return jsonify(invoice_schema.dump(invoice)), 200

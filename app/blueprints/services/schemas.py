@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import Service
+from app.models import Service, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields, validates, ValidationError
 from marshmallow.validate import Length
@@ -11,6 +11,7 @@ class ServiceSchema(SQLAlchemyAutoSchema):
         model = Service
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=Length(min=1, max=100))

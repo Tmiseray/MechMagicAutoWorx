@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import ServiceTicket
+from app.models import ServiceTicket, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
@@ -12,6 +12,7 @@ class ServiceTicketSchema(SQLAlchemyAutoSchema):
         model = ServiceTicket
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     id = fields.Int(dump_only=True)
     service_date = fields.Date(required=True, dump_only=True)

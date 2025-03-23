@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import MechanicTicket
+from app.models import MechanicTicket, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields, validates, ValidationError
 
@@ -10,6 +10,7 @@ class MechanicTicketSchema(SQLAlchemyAutoSchema):
         model = MechanicTicket
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     id = fields.Int(dump_only=True)
     start_date = fields.Date(required=True, dump_only=True)
@@ -18,10 +19,10 @@ class MechanicTicketSchema(SQLAlchemyAutoSchema):
     service_ticket_id = fields.Int(required=True)
     mechanic_id = fields.Int(required=False)
 
-    service_ticket = fields.Nested('ServiceTicketSchema', exclude=('mechanic_tickets', 'id'))
+    service_ticket = fields.Nested('ServiceTicketSchema', exclude=('mechanic_tickets', 'id',))
     mechanic = fields.Nested('MechanicSchema', exclude=('mechanic_tickets', 'id',))
     services = fields.List(fields.Nested('ServiceSchema', exclude=('mechanic_tickets', 'id',)), default=[])
-    additional_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('mechanic_tickets')), default=[])
+    additional_items = fields.List(fields.Nested('ServiceItemSchema', exclude=('mechanic_tickets',)), default=[])
 
     @validates('service_ticket_id')
     def validate_service_ticket_id(self, value):

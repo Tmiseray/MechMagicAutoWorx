@@ -14,8 +14,8 @@ from app.utils.util import token_required, mechanic_token_required, encode_token
 def login():
     try:
         credentials = customer_account_schema.load(request.json, partial=True)
-        email = credentials['email']
-        password = credentials['password']
+        email = credentials.email
+        password = credentials.password
     except KeyError:
         return jsonify({"message": "Expecting Email and Password"}), 400
     
@@ -43,16 +43,17 @@ def create_customer_account():
     except ValidationError as ve:
         return jsonify(ve.messages), 404
     
-    customer = db.session.get(Customer, account_data['customer_id'])
+    customer = db.session.get(Customer, account_data.customer_id)
 
     if not customer:
-        return jsonify({"message": f"Invalid Customer ID: {account_data['customer_id']}"}), 404
+        return jsonify({"message": f"Invalid Customer ID: {account_data.customer_id}"}), 404
     
     account = CustomerAccount(
         customer_id=customer.id,
-        email=account_data['email']
+        email=account_data.email,
+        password=account_data.set_password(account_data.password)
     )
-    account.password = account.set_password(account_data['password'])
+    account.password = account.set_password(account_data.password)
     db.session.add(account)
     db.session.commit()
     return jsonify(customer_account_schema.dump(account))
@@ -119,8 +120,8 @@ def update_customer_account(id):
     
     account = db.session.get(CustomerAccount, customer.account.id)
     
-    account.email = account_data.get('email') or account.email
-    account.password = account.set_password(account_data['password']) or account.password
+    account.email = account_data.email or account.email
+    account.password = account.set_password(account_data.password) or account.password
 
     db.session.commit()
 

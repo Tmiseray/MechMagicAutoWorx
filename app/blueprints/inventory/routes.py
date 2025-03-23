@@ -19,9 +19,9 @@ def create_inventory():
         return jsonify(ve.messages), 400
     
     new_inventory = Inventory(
-        name=inventory_data['name'],
-        stock=inventory_data['stock'],
-        price=float(inventory_data['price'])
+        name=inventory_data.name,
+        stock=inventory_data.stock,
+        price=float(inventory_data.price)
     )
 
     db.session.add(new_inventory)
@@ -79,9 +79,9 @@ def update_inventory(id):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
 
-    inventory.name = inventory_data.get('name') or inventory.name
-    inventory.stock = inventory_data.get('stock') or inventory.stock
-    inventory.price = inventory_data.get('price') or inventory.price
+    inventory.name = inventory_data.name or inventory.name
+    inventory.stock = inventory_data.stock or inventory.stock
+    inventory.price = inventory_data.price or inventory.price
 
     db.session.commit()
 

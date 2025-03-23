@@ -21,10 +21,10 @@ def create_mechanic():
         return jsonify(e.messages), 400
 
     new_mechanic = Mechanic(
-        name=mechanic_data['name'],
-        email=mechanic_data['email'],
-        phone=mechanic_data['phone'],
-        salary=mechanic_data['salary']
+        name=mechanic_data.name,
+        email=mechanic_data.email,
+        phone=mechanic_data.phone,
+        salary=mechanic_data.salary
     )
 
     db.session.add(new_mechanic)
@@ -86,10 +86,10 @@ def update_mechanic(mechanic_id):
     except ValidationError as e:
         return jsonify(e.messages), 400
 
-    mechanic.name = mechanic_data.get('name') or mechanic.name
-    mechanic.email = mechanic_data.get('email') or mechanic.email
-    mechanic.phone = mechanic_data.get('phone') or mechanic.phone
-    mechanic.salary = mechanic_data.get('salary') or mechanic.salary
+    mechanic.name = mechanic_data.name or mechanic.name
+    mechanic.email = mechanic_data.email or mechanic.email
+    mechanic.phone = mechanic_data.phone or mechanic.phone
+    mechanic.salary = mechanic_data.salary or mechanic.salary
 
     db.session.commit()
 

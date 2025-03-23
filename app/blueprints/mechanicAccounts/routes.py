@@ -14,8 +14,8 @@ from app.utils.util import mechanic_token_required, encode_mechanic_token
 def login():
     try:
         credentials = mechanic_account_schema.load(request.json, partial=True)
-        email = credentials['email']
-        password = credentials['password']
+        email = credentials.email
+        password = credentials.password
     except KeyError:
         return jsonify({"message": "Expecting Email and Password"}), 400
     
@@ -43,15 +43,15 @@ def create_mechanic_account():
     except ValidationError as ve:
         return jsonify(ve.messages), 404
     
-    mechanic = db.session.get(Mechanic, account_data['mechanic_id'])
+    mechanic = db.session.get(Mechanic, account_data.mechanic_id)
 
     if not mechanic:
-        return jsonify({"message": f"Invalid Mechanic ID: {account_data['mechanic_id']}"}), 404
+        return jsonify({"message": f"Invalid Mechanic ID: {account_data.mechanic_id}"}), 404
     
     account = MechanicAccount(
         mechanic_id=mechanic.id,
-        email=account_data['email'],
-        role=account_data.get('role') or 'Mechanic'
+        email=account_data.email,
+        role=account_data.role or 'Mechanic'
     )
     account.password = account.set_password(account_data['password'])
     db.session.add(account)
@@ -90,7 +90,7 @@ def get_mechanic_accounts():
 # @mechanic_token_required
 # Only that mechanic can retrieve their account details
 def get_mechanic_account(id):
-    mechanic = db.session.get(mechanic, id)
+    mechanic = db.session.get(Mechanic, id)
 
     if not mechanic:
         return jsonify({"message": "Mechanic or Account not found"}), 404
@@ -119,9 +119,9 @@ def update_mechanic_account(id):
     
     account = db.session.get(MechanicAccount, mechanic.account.id)
     
-    account.email = account_data.get('email') or account.email
-    account.password = account.set_password(account_data['password']) or account.password
-    account.role = account_data.get('role') or account.role
+    account.email = account_data.email or account.email
+    account.password = account.set_password(account_data.password) or account.password
+    account.role = account_data.role or account.role
 
     db.session.commit()
 

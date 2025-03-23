@@ -21,8 +21,8 @@ def create_service_ticket():
     except ValidationError as e:
         return jsonify(e.messages), 400
     
-    customer = db.session.get(Customer, service_ticket_data['customer_id'])
-    vehicle = db.session.get(Vehicle, service_ticket_data['VIN'])
+    customer = db.session.get(Customer, service_ticket_data.customer_id)
+    vehicle = db.session.get(Vehicle, service_ticket_data.VIN)
 
     if not vehicle:
         return jsonify({"message": "Vehicle Not Found in Database"}), 404
@@ -31,8 +31,8 @@ def create_service_ticket():
 
     new_service_ticket = ServiceTicket(
         VIN=vehicle.VIN,
-        service_date=service_ticket_data['service_date'] or date.today(),
-        service_desc=service_ticket_data['service_desc'],
+        service_date=service_ticket_data.service_date or date.today(),
+        service_desc=service_ticket_data.service_desc,
         customer_id=customer.id
     )
 
@@ -111,8 +111,8 @@ def update_service_ticket(service_ticket_id):
     except ValidationError as e:
         return jsonify(e.messages), 400
     
-    customer = db.session.get(Customer, service_ticket_data['customer_id'])
-    vehicle = db.session.get(Vehicle, service_ticket_data['VIN'])
+    customer = db.session.get(Customer, service_ticket_data.customer_id)
+    vehicle = db.session.get(Vehicle, service_ticket_data.VIN)
 
     if not vehicle:
         return jsonify({"message": "Vehicle Not Found in Database"}), 404
@@ -121,8 +121,8 @@ def update_service_ticket(service_ticket_id):
 
     # Update basic fields
     service_ticket.VIN = vehicle.VIN or service_ticket.VIN
-    service_ticket.service_date = service_ticket_data.get('service_date') or service_ticket.service_date
-    service_ticket.service_desc = service_ticket_data.get('service_desc') or service_ticket.service_desc
+    service_ticket.service_date = service_ticket_data.service_date or service_ticket.service_date
+    service_ticket.service_desc = service_ticket_data.service_desc or service_ticket.service_desc
     service_ticket.customer_id = customer.id or service_ticket.customer_id
 
     db.session.commit()

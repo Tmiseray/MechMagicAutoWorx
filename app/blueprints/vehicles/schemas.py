@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import Vehicle
+from app.models import Vehicle, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
@@ -12,6 +12,7 @@ class VehicleSchema(SQLAlchemyAutoSchema):
         model = Vehicle
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     VIN = fields.Str(required=True, validate=Length(min=17, max=100))
     year = fields.Int(required=True)

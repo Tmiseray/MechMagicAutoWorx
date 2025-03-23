@@ -26,7 +26,6 @@ def create_app(config_name):
     # Extensions initialization
     ma.init_app(app)
     limiter.init_app(app)
-    cache.init_app(app)
 
     # Registering our blueprints
     app.register_blueprint(customers_bp, url_prefix='/customers')

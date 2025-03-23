@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import Mechanic
+from app.models import Mechanic, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
@@ -12,6 +12,7 @@ class MechanicSchema(SQLAlchemyAutoSchema):
         model = Mechanic
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=Length(min=1, max=100))

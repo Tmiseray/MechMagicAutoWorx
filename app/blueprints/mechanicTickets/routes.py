@@ -6,7 +6,7 @@ from . import mechanic_tickets_bp
 from app.models import MechanicTicket, db, Mechanic, ServiceTicket, Service
 from app.extensions import limiter, cache
 from .schemas import mechanic_ticket_schema, mechanic_tickets_schema
-from app.blueprints.shared.creation import create_service_item, check_and_update_inventory
+from app.utils.creation import create_service_item, check_and_update_inventory
 from app.utils.util import mechanic_token_required
 from datetime import date
 
@@ -20,8 +20,8 @@ def create_mechanic_ticket():
     except ValidationError as ve:
         return jsonify(ve.messages), 400
     
-    mechanic = db.session.get(Mechanic, mechanic_ticket_data['mechanic_id'])
-    service_ticket = db.session.get(ServiceTicket, mechanic_ticket_data['service_ticket_id'])
+    mechanic = db.session.get(Mechanic, mechanic_ticket_data.mechanic_id)
+    service_ticket = db.session.get(ServiceTicket, mechanic_ticket_data.service_ticket_id)
 
     if not mechanic:
         return jsonify({"message": "Invalid Mechanic ID"}), 404
@@ -29,9 +29,9 @@ def create_mechanic_ticket():
         return jsonify({"message": "Invalid Service Ticket ID"}), 404
     
     mechanic_ticket = MechanicTicket(
-        start_date=mechanic_ticket_data.get('start_date') or date.today(),
-        end_date=mechanic_ticket_data.get('end_date') or None,
-        hours_worked=mechanic_ticket_data.get('hours_worked') or 0.0,
+        start_date=mechanic_ticket_data.start_date or date.today(),
+        end_date=mechanic_ticket_data.end_date or None,
+        hours_worked=mechanic_ticket_data.hours_worked or 0.0,
         service_ticket_id=service_ticket.id,
         mechanic_id=mechanic.id
     )
@@ -141,8 +141,8 @@ def update_mechanic_ticket(id):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
     
-    mechanic_ticket.end_date = ticket_data.get('end_date') or mechanic_ticket.end_date
-    mechanic_ticket.hours_worked = ticket_data.get('hours_worked') or mechanic_ticket.hours_worked
+    mechanic_ticket.end_date = ticket_data.end_date or mechanic_ticket.end_date
+    mechanic_ticket.hours_worked = ticket_data.hours_worked or mechanic_ticket.hours_worked
 
     all_uses = []
 

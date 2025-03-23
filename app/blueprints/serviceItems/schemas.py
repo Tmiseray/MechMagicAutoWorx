@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import ServiceItem
+from app.models import ServiceItem, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields, validates, ValidationError
 
@@ -10,6 +10,7 @@ class ServiceItemSchema(SQLAlchemyAutoSchema):
         model = ServiceItem
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     id = fields.Int(dump_only=True)
     item_id = fields.Int(required=True)
@@ -18,7 +19,7 @@ class ServiceItemSchema(SQLAlchemyAutoSchema):
 
     inventory = fields.Nested('InventorySchema', exclude=('id',))
     service = fields.Nested('ServiceSchema', exclude=('id', 'service_items',))
-    mechanic_tickets = fields.Nested('MechanicTicketSchema', exclude=('additional_items'))
+    mechanic_tickets = fields.Nested('MechanicTicketSchema', exclude=('additional_items',))
 
     @validates('quantity')
     def validate_quantity(self, value):

@@ -1,6 +1,6 @@
 
 from app.extensions import ma
-from app.models import Invoice
+from app.models import Invoice, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields, validates, ValidationError
 
@@ -10,6 +10,7 @@ class InvoiceSchema(SQLAlchemyAutoSchema):
         model = Invoice
         include_relationships = True
         load_instance = True
+        sqla_session = db.session
 
     id = fields.Int(dump_only=True)
     invoice_date = fields.Date(required=False, dump_only=True)

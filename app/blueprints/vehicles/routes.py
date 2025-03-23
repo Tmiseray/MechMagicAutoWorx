@@ -18,18 +18,18 @@ def create_vehicle():
     except ValidationError as ve:
         return jsonify(ve.messages), 400
     
-    customer_id = vehicle_data.get('customer_id')
+    customer_id = vehicle_data.customer_id
     if customer_id:
-        customer = db.session.get(Customer, vehicle_data['customer_id'])
+        customer = db.session.get(Customer, vehicle_data.customer_id)
         if not customer:
-            return jsonify({"message": f"Invalid Customer ID: {vehicle_data['customer_id']}"}), 404
+            return jsonify({"message": f"Invalid Customer ID: {customer_id}"}), 404
     
     new_vehicle = Vehicle(
-        VIN=vehicle_data['VIN'],
-        year=vehicle_data['year'],
-        make=vehicle_data['make'],
-        model=vehicle_data['model'],
-        mileage=vehicle_data['mileage'],
+        VIN=vehicle_data.VIN,
+        year=vehicle_data.year,
+        make=vehicle_data.make,
+        model=vehicle_data.model,
+        mileage=vehicle_data.mileage,
         customer_id=customer_id
     )
 
@@ -61,7 +61,7 @@ def get_all_vehicles():
 
 
 # Read/Get Specific Vehicle
-@vehicles_bp.route('/<str:VIN>')
+@vehicles_bp.route('/<VIN>')
 # @mechanic_token_required
 # Only mechanics can retrieve a single vehicle
 def get_vehicles(VIN):
@@ -74,7 +74,7 @@ def get_vehicles(VIN):
 
 
 # Update Vehicle
-@vehicles_bp.route('/<str:VIN>', methods=['PUT'])
+@vehicles_bp.route('/<VIN>', methods=['PUT'])
 # @mechanic_token_required
 # Only mechanics can update vehicle
 def update_vehicle(VIN):
@@ -88,12 +88,12 @@ def update_vehicle(VIN):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
 
-    vehicle.VIN = vehicle_data.get('VIN') or vehicle.VIN
-    vehicle.year = vehicle_data.get('year') or vehicle.year
-    vehicle.make = vehicle_data.get('make') or vehicle.make
-    vehicle.model = vehicle_data.get('model') or vehicle.model
-    vehicle.mileage = vehicle_data.get('mileage') or vehicle.mileage
-    vehicle.customer_id = vehicle_data.get('customer_id') or vehicle.customer_id
+    vehicle.VIN = vehicle_data.VIN or vehicle.VIN
+    vehicle.year = vehicle_data.year or vehicle.year
+    vehicle.make = vehicle_data.make or vehicle.make
+    vehicle.model = vehicle_data.model or vehicle.model
+    vehicle.mileage = vehicle_data.mileage or vehicle.mileage
+    vehicle.customer_id = vehicle_data.customer_id or vehicle.customer_id
 
     db.session.commit()
 

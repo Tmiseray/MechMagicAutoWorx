@@ -7,7 +7,7 @@ from app.models import ServiceItem, db
 from app.extensions import limiter, cache
 from .schemas import service_item_schema, service_items_schema
 from app.utils.util import token_required, mechanic_token_required
-from app.blueprints.shared.creation import create_service_item
+from app.utils.creation import create_service_item
 
 
 
@@ -68,9 +68,9 @@ def update_service_item(id):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
 
-    service_item.item_id = service_item_data.get('item_id') or service_item.item_id
-    service_item.quantity = service_item_data.get('quantity') or service_item.quantity
-    service_item.service_id = service_item_data.get('service_id') or service_item.service_id
+    service_item.item_id = service_item_data.item_id or service_item.item_id
+    service_item.quantity = service_item_data.quantity or service_item.quantity
+    service_item.service_id = service_item_data.service_id or service_item.service_id
 
     db.session.commit()
 

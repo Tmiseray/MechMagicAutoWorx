@@ -14,6 +14,28 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class = Base)
 
 
+# ------------------------------------------------
+# Association Tables
+# ------------------------------------------------
+
+# Association Table for Services & MechanicTickets
+mechanic_ticket_services = db.Table(
+    'mechanic_ticket_services',
+    db.Column('mechanic_ticket_id', db.ForeignKey('mechanic_tickets.id'), primary_key=True),
+    db.Column('service_id', db.ForeignKey('services.id'), primary_key=True)
+)
+
+# Association Table for ServiceItems & MechanicTickets
+mechanic_ticket_items = db.Table(
+    'mechanic_ticket_items',
+    db.Column('mechanic_ticket_id', db.ForeignKey('mechanic_tickets.id'), primary_key=True),
+    db.Column('service_item_id', db.ForeignKey('service_items.id'), primary_key=True)
+)
+
+# ------------------------------------------------
+# Model Tables
+# ------------------------------------------------
+
 # Customer Model
 class Customer(Base):
     __tablename__ = 'customers'
@@ -35,9 +57,9 @@ class CustomerAccount(Base):
     __tablename__ = 'customer_accounts'
     
     id: Mapped[int] = mapped_column(primary_key=True)
-    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id'), ondelete='SET NULL', nullable=True)
+    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id', ondelete='SET NULL'), nullable=True)
     email: Mapped[str] = mapped_column(db.String(255), nullable=False)
-    password: Mapped[str] = mapped_column(db.String, nullable=False)
+    password: Mapped[str] = mapped_column(db.String(255), nullable=False)
 
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='account', uselist=False)
 
@@ -87,13 +109,13 @@ class Invoice(Base):
 class Vehicle(Base):
     __tablename__ = 'vehicles'
     
-    VIN: Mapped[str] = mapped_column(primary_key=True)
+    VIN: Mapped[str] = mapped_column(db.String(100), primary_key=True)
     year: Mapped[int] = mapped_column(db.Integer, nullable=False)
     make: Mapped[str] = mapped_column(db.String(100), nullable=False)
     model: Mapped[str] = mapped_column(db.String(100), nullable=False)
     mileage: Mapped[int] = mapped_column(db.Integer, nullable=False)
 
-    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id'), ondelete='SET NULL', nullable=True)
+    customer_id: Mapped[int] = mapped_column(db.ForeignKey('customers.id', ondelete='SET NULL'), nullable=True)
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='vehicles')
 
     service_tickets: Mapped[Optional[List['ServiceTicket']]] = db.relationship('ServiceTicket', back_populates='vehicle')
@@ -105,8 +127,8 @@ class Mechanic(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
-    email: Mapped[str] = mapped_column(db.String(100), unique=True, nullable=False)
-    phone: Mapped[str] = mapped_column(db.String(100), nullable=False)
+    email: Mapped[str] = mapped_column(db.String(255), unique=True, nullable=False)
+    phone: Mapped[str] = mapped_column(db.String(20), nullable=False)
     salary: Mapped[float] = mapped_column(db.Float, nullable=False)
 
     account: Mapped[Optional['MechanicAccount']] = db.relationship('MechanicAccount', back_populates='mechanic', uselist=False)
@@ -119,9 +141,9 @@ class MechanicAccount(Base):
     __tablename__ = 'mechanic_accounts'
     
     id: Mapped[int] = mapped_column(primary_key=True)
-    role: Mapped[str] = mapped_column(db.String(100), nullable=False, default="Mechanic")
-    password: Mapped[str] = mapped_column(db.String, nullable=False)
-    mechanic_id: Mapped[int] = mapped_column(db.ForeignKey('mechanics.id'), ondelete='SET NULL', nullable=True)
+    role: Mapped[str] = mapped_column(db.String(10), nullable=False, default="Mechanic")
+    password: Mapped[str] = mapped_column(db.String(255), nullable=False)
+    mechanic_id: Mapped[int] = mapped_column(db.ForeignKey('mechanics.id', ondelete='SET NULL'), nullable=True)
     email: Mapped[str] = mapped_column(db.String(255), nullable=False)
     mechanic: Mapped['Mechanic'] = db.relationship('Mechanic', back_populates='account', uselist=False)
 
@@ -144,12 +166,12 @@ class MechanicTicket(Base):
     service_ticket_id: Mapped[int] = mapped_column(db.ForeignKey('service_tickets.id'))
     service_ticket: Mapped['ServiceTicket'] = db.relationship('ServiceTicket', back_populates='mechanic_tickets')
 
-    mechanic_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('mechanics.id'), ondelete='SET NULL', nullable=True)
+    mechanic_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('mechanics.id', ondelete='SET NULL'), nullable=True)
     mechanic: Mapped['Mechanic'] = db.relationship('Mechanic', back_populates='mechanic_tickets')
 
-    services: Mapped[List['Service']] = db.relationship('Service', back_populates='mechanic_tickets')
+    services = db.relationship('Service', secondary=mechanic_ticket_services, back_populates='mechanic_tickets')
 
-    additional_items: Mapped[Optional[List['ServiceItem']]] = db.relationship('ServiceItem', back_populates='mechanic_tickets')
+    additional_items = db.relationship('ServiceItem', secondary=mechanic_ticket_items, back_populates='mechanic_tickets')
 
 
 # Inventory Model
@@ -171,12 +193,12 @@ class ServiceItem(Base):
     item_id: Mapped[int] = mapped_column(db.ForeignKey('inventory.id'), nullable=False)
     inventory: Mapped['Inventory'] = db.relationship('Inventory', back_populates='service_items')
     
-    service_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('services.id'), ondelete='SET NULL', nullable=True)
+    service_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('services.id', ondelete='SET NULL'), nullable=True)
     service: Mapped[Optional['Service']] = db.relationship('Service', back_populates='service_items')
     
     quantity: Mapped[int] = mapped_column(db.Integer, nullable=False)
 
-    mechanic_tickets: Mapped[Optional['MechanicTicket']] = db.relationship('MechanicTicket', back_populates='additional_items')
+    mechanic_tickets = db.relationship('MechanicTicket', secondary=mechanic_ticket_items, back_populates='additional_items')
 
 # Service Model
 class Service(Base):
@@ -188,7 +210,7 @@ class Service(Base):
 
     service_items: Mapped[List['ServiceItem']] = db.relationship('ServiceItem', back_populates='service')
 
-    mechanic_tickets: Mapped[Optional[List['MechanicTicket']]] = db.relationship('MechanicTicket', back_populates='services')
+    mechanic_tickets = db.relationship('MechanicTicket', secondary=mechanic_ticket_services, back_populates='services')
 
 
 # ServiceTicket Model
@@ -199,10 +221,10 @@ class ServiceTicket(Base):
     service_date: Mapped[date] = mapped_column(db.Date, nullable=False, default=date.today())
     service_desc: Mapped[str] = mapped_column(db.String(255), nullable=False)
 
-    VIN: Mapped[str] = mapped_column(db.String, db.ForeignKey('vehicles.VIN'), nullable=False)
+    VIN: Mapped[str] = mapped_column(db.String(100), db.ForeignKey('vehicles.VIN'), nullable=False)
     vehicle: Mapped['Vehicle'] = db.relationship('Vehicle', back_populates='service_tickets')
 
-    customer_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('customers.id'), ondelete='SET NULL', nullable=True)
+    customer_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('customers.id', ondelete='SET NULL'), nullable=True)
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='service_tickets')
 
     mechanic_tickets: Mapped[Optional[List['MechanicTicket']]] = db.relationship('MechanicTicket', back_populates='service_ticket')

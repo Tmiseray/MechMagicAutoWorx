@@ -7,7 +7,7 @@ from app.models import Service, db
 from app.extensions import limiter, cache
 from .schemas import service_schema, services_schema
 from app.utils.util import token_required, mechanic_token_required
-from app.blueprints.shared.creation import create_service_item
+from app.utils.creation import create_service_item
 
 
 # Create Service
@@ -20,8 +20,8 @@ def create_service():
         return jsonify(ve.messages), 400
     
     new_service = Service(
-        name=service_data['name'],
-        price=service_data['price']
+        name=service_data.name,
+        price=service_data.price
     )
 
     service_items = request.json.get('service_items', [])
@@ -85,8 +85,8 @@ def update_service(id):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
 
-    service.name = service_data.get('name') or service.name
-    service.price = service_data.get('price') or service.price
+    service.name = service_data.name or service.name
+    service.price = service_data.price or service.price
 
     s_items = request.json.get('service_items', [])
     service.service_items = []

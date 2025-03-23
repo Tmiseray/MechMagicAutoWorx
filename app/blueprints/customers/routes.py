@@ -22,9 +22,9 @@ def create_customer():
         return jsonify(ve.messages), 400
 
     new_customer = Customer(
-        name=customer_data['name'],
-        email=customer_data['email'],
-        phone=customer_data['phone']
+        name=customer_data.name,
+        email=customer_data.email,
+        phone=customer_data.phone
     )
 
     db.session.add(new_customer)
@@ -88,9 +88,9 @@ def update_customer(id):
     except ValidationError as ve:
         return jsonify(ve.messages), 400
 
-    customer.name = customer_data.get('name') or customer.name
-    customer.email = customer_data.get('email') or customer.email
-    customer.phone = customer_data.get('phone') or customer.phone
+    customer.name = customer_data.name or customer.name
+    customer.email = customer_data.email or customer.email
+    customer.phone = customer_data.phone or customer.phone
 
     db.session.commit()
 
