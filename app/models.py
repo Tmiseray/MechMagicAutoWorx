@@ -63,6 +63,10 @@ class CustomerAccount(Base):
 
     customer: Mapped['Customer'] = db.relationship('Customer', back_populates='account', uselist=False)
 
+    def __init__(self, email, password, **kwargs):
+        super().__init__(email=email, **kwargs)
+        self.set_password(password)
+
     def set_password(self, raw_password):
         self.password = hash_password(raw_password)
 
@@ -146,6 +150,10 @@ class MechanicAccount(Base):
     mechanic_id: Mapped[int] = mapped_column(db.ForeignKey('mechanics.id', ondelete='SET NULL'), nullable=True)
     email: Mapped[str] = mapped_column(db.String(255), nullable=False)
     mechanic: Mapped['Mechanic'] = db.relationship('Mechanic', back_populates='account', uselist=False)
+
+    def __init__(self, email, password, **kwargs):
+        super().__init__(email=email, **kwargs)
+        self.set_password(password)
 
     def set_password(self, raw_password):
         self.password = hash_password(raw_password)

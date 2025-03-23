@@ -51,7 +51,7 @@ def create_customer_account():
     account = CustomerAccount(
         customer_id=customer.id,
         email=account_data.email,
-        password=account_data.set_password(account_data.password)
+        password=account_data.password
     )
     account.password = account.set_password(account_data.password)
     db.session.add(account)
