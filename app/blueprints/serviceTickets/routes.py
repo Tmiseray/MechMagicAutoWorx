@@ -12,7 +12,7 @@ from datetime import date
 
 # Create service_ticket
 @service_tickets_bp.route('/', methods=['POST'])
-@limiter.limit("20 per hour")
+# @limiter.limit("20 per hour")
 # Limit the number of service_ticket creations to 20 per hour
 # There shouldn't be a need to create more than 20 service_tickets per hour
 def create_service_ticket():
@@ -43,14 +43,14 @@ def create_service_ticket():
 
 
 # Get all service_tickets
-@service_tickets_bp.route('/', methods=['GET'])
-@limiter.limit("20 per hour")
+@service_tickets_bp.route('/all', methods=['GET'])
+# @limiter.limit("20 per hour")
 # Limit the number of retrievals to 20 per hour
 # There shouldn't be a need to retrieve all service_tickets more than 20 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-@mechanic_token_required
+# @mechanic_token_required
 def get_service_tickets():
     try:
         page = int(request.args.get('page'))
@@ -67,13 +67,13 @@ def get_service_tickets():
 
 # Get single service_ticket
 @service_tickets_bp.route('/<int:service_ticket_id>', methods=['GET'])
-@limiter.limit("20 per hour")
+# @limiter.limit("20 per hour")
 # Limit the number of retrievals to 20 per hour
 # There shouldn't be a need to retrieve a single service_ticket more than 20 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-@mechanic_token_required
+# @mechanic_token_required
 def get_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
 
@@ -83,8 +83,23 @@ def get_service_ticket(service_ticket_id):
     return jsonify(service_ticket_schema.dump(service_ticket)), 200
 
 
+# Get customer's service tickets
+@service_tickets_bp.route('/my-tickets/<int:customer_id>', methods=['GET'])
+# @service_tickets_bp.route('/my-tickets', methods=['GET'])
+# @limiter.limit("10 per hour")
+# Limit the number of retrievals to 10 per hour
+# There shouldn't be a need to retrieve a customer's service tickets more than 10 per hour
+# @token_required
+def get_my_service_tickets(customer_id):
+    query = select(ServiceTicket).where(ServiceTicket.customer_id == customer_id)
+    service_tickets = db.session.execute(query).scalars().all()
+
+    return jsonify(service_tickets_schema.dump(service_tickets)), 200
+
+
 # Update a service_ticket
 @service_tickets_bp.route('/<int:service_ticket_id>', methods=['PUT'])
+# @mechanic_token_required
 def update_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
 
@@ -115,16 +130,16 @@ def update_service_ticket(service_ticket_id):
     return jsonify(service_ticket_schema.dump(service_ticket)), 200
 
 
-# Delete a service_ticket
-@service_tickets_bp.route('/<int:service_ticket_id>', methods=['DELETE'])
-@mechanic_token_required
-def delete_service_ticket(service_ticket_id):
-    service_ticket = db.session.get(ServiceTicket, service_ticket_id)
+# # Delete a service_ticket
+# @service_tickets_bp.route('/<int:service_ticket_id>', methods=['DELETE'])
+# @mechanic_token_required
+# def delete_service_ticket(service_ticket_id):
+#     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
 
-    if not service_ticket:
-        return jsonify({"message": "Service Ticket Not Found"}), 404
+#     if not service_ticket:
+#         return jsonify({"message": "Service Ticket Not Found"}), 404
 
-    db.session.delete(service_ticket)
-    db.session.commit()
+#     db.session.delete(service_ticket)
+#     db.session.commit()
 
-    return jsonify({"message": "Service Ticket Deleted Successfully"}), 200
+#     return jsonify({"message": "Service Ticket Deleted Successfully"}), 200

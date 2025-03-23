@@ -20,8 +20,8 @@ class Customer(Base):
     
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str] = mapped_column(db.String(100), nullable=False)
-    email: Mapped[str] = mapped_column(db.String(100), unique=True, nullable=False)
-    phone: Mapped[str] = mapped_column(db.String(100), nullable=False)
+    email: Mapped[str] = mapped_column(db.String(255), unique=True, nullable=False)
+    phone: Mapped[str] = mapped_column(db.String(20), nullable=False)
 
     vehicles: Mapped[Optional[List['Vehicle']]] = db.relationship('Vehicle', back_populates='customer')
 

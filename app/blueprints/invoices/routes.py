@@ -12,7 +12,7 @@ from app.utils.util import token_required, mechanic_token_required
 
 # Create Invoice
 @invoices_bp.route('/', methods=['POST'])
-@mechanic_token_required
+# @mechanic_token_required
 def create_invoice():
     try:
         invoice_data = invoice_schema.load(request.json)
@@ -35,14 +35,14 @@ def create_invoice():
 
 
 # Read/Get All Invoices
-@invoices_bp.route('/', methods=['GET'])
-@limiter.limit("10 per hour")
+@invoices_bp.route('/all', methods=['GET'])
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve all Invoices more than 10 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve all Invoices
 def get_invoices():
     try:
@@ -60,10 +60,10 @@ def get_invoices():
 
 # Read/Get Specific Invoice
 @invoices_bp.route('/<int:id>', methods=['GET'])
-@limiter.limit("10 per hour")
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a single Invoice more than 10 per hour
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve a single Invoice
 def get_invoice(id):
     invoice = db.session.get(Invoice, id)
@@ -74,9 +74,22 @@ def get_invoice(id):
     return jsonify(invoice_schema.dump(invoice)), 200
 
 
+# Get customer's invoices
+@invoices_bp.route('/my-invoices/<int:customer_id>', methods=['GET'])
+# @limiter.limit("10 per hour")
+# Limit the number of retrievals to 10 per hour
+# There shouldn't be a need to retrieve a customer's invoices more than 10 per hour
+# @token_required
+def get_my_invoices(customer_id):
+    query = select(Invoice).where(Invoice.service_ticket.customer_id == customer_id)
+    invoices = db.session.execute(query).scalars().all()
+
+    return jsonify(invoices_schema.dump(invoices)), 200
+
+
 # Update Invoice
 @invoices_bp.route('/<int:id>', methods=['PUT'])
-@mechanic_token_required
+# @mechanic_token_required
 def update_invoice(id):
     invoice = db.session.get(Invoice, id)
 

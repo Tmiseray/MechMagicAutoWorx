@@ -12,7 +12,7 @@ from app.utils.util import token_required, mechanic_token_required
 
 # Create Customer
 @customers_bp.route('/', methods=['POST'])
-@limiter.limit("3 per hour")
+# @limiter.limit("3 per hour")
 # Limit the number of customer creations to 3 per hour
 # There shouldn't be a need to create more than 3 customers per hour
 def create_customer():
@@ -34,14 +34,14 @@ def create_customer():
 
 
 # Get all customers
-@customers_bp.route('/', methods=['GET'])
-@limiter.limit("10 per hour")
+@customers_bp.route('/all', methods=['GET'])
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve all customers more than 10 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve all customers
 def get_customers():
     try:
@@ -59,10 +59,10 @@ def get_customers():
 
 # Get single customer
 @customers_bp.route('/<int:id>', methods=['GET'])
-@limiter.limit("10 per hour")
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a single customer more than 10 per hour
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve a single customer
 def get_customer(id):
     customer = db.session.get(Customer, id)
@@ -74,8 +74,9 @@ def get_customer(id):
 
 
 # Update a customer
-@customers_bp.route('/', methods=['PUT'])
-@token_required
+@customers_bp.route('/<int:id>', methods=['PUT'])
+# @customers_bp.route('/', methods=['PUT'])
+# @token_required
 def update_customer(id):
     customer = db.session.get(Customer, id)
 
@@ -97,8 +98,9 @@ def update_customer(id):
 
 
 # Delete a customer
-@customers_bp.route('/', methods=['DELETE'])
-@token_required
+@customers_bp.route('/<int:id>', methods=['DELETE'])
+# @customers_bp.route('/', methods=['DELETE'])
+# @token_required
 def delete_customer(id):
     customer = db.session.get(Customer, id)
 

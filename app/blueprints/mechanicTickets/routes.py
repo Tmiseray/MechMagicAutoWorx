@@ -13,7 +13,7 @@ from datetime import date
 
 # Create MechanicTicket
 @mechanic_tickets_bp.route('/', methods=['POST'])
-@mechanic_token_required
+# @mechanic_token_required
 def create_mechanic_ticket():
     try:
         mechanic_ticket_data = mechanic_ticket_schema.load(request.json)
@@ -76,14 +76,14 @@ def create_mechanic_ticket():
 
 
 # Read/Get All MechanicTickets
-@mechanic_tickets_bp.route('/', methods=['GET'])
-@limiter.limit("10 per hour")
+@mechanic_tickets_bp.route('/all', methods=['GET'])
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve all MechanicTickets more than 10 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve all MechanicTickets
 def get_mechanic_tickets():
     try:
@@ -101,10 +101,10 @@ def get_mechanic_tickets():
 
 # Read/Get Specific MechanicTicket
 @mechanic_tickets_bp.route('/<int:id>', methods=['GET'])
-@limiter.limit("10 per hour")
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a single MechanicTicket more than 10 per hour
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve a single MechanicTicket
 def get_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
@@ -114,10 +114,22 @@ def get_mechanic_ticket(id):
 
     return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 200
 
+# Get Mechanic's tickets
+@mechanic_tickets_bp.route('/my-tickets/<int:id>', methods=['GET'])
+# @limiter.limit("10 per hour")
+# Limit the number of retrievals to 10 per hour
+# There shouldn't be a need to retrieve a mechanic's tickets more than 10 per hour
+# @mechanic_token_required
+def get_my_tickets(id):
+    query = select(MechanicTicket).where(MechanicTicket.mechanic_id == id)
+    mechanic_tickets = db.session.execute(query).scalars().all()
+
+    return jsonify(mechanic_tickets_schema.dump(mechanic_tickets)), 200
+
 
 # Update MechanicTicket
 @mechanic_tickets_bp.route('/<int:id>', methods=['PUT'])
-@mechanic_token_required
+# @mechanic_token_required
 def update_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
 

@@ -60,13 +60,13 @@ def create_mechanic_account():
 
 # Read/Get All MechanicAccounts
 @mechanic_accounts_bp.route('/all', methods=['GET'])
-@limiter.limit("3 per hour")
+# @limiter.limit("3 per hour")
 # Limit the number of retrievals to 3 per hour
 # There shouldn't be a need to retrieve all Mechanics' Accounts more than 3 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve all mechanics' Accounts
 def get_mechanic_accounts():
     try:
@@ -82,11 +82,12 @@ def get_mechanic_accounts():
         return jsonify(mechanic_accounts_schema.dump(result)), 200
 
 # Read/Get Specific MechanicAccount
-@mechanic_accounts_bp.route('/', methods=['GET'])
-@limiter.limit("3 per hour")
+@mechanic_accounts_bp.route('/<int:id>', methods=['GET'])
+# @mechanic_accounts_bp.route('/', methods=['GET'])
+# @limiter.limit("3 per hour")
 # Limit the number of retrievals to 3 per hour
 # There shouldn't be a need to retrieve a single mechanic account more than 3 per hour
-@mechanic_token_required
+# @mechanic_token_required
 # Only that mechanic can retrieve their account details
 def get_mechanic_account(id):
     mechanic = db.session.get(mechanic, id)
@@ -98,11 +99,12 @@ def get_mechanic_account(id):
     return jsonify(mechanic_account_schema.dump(account)), 200
 
 # Update MechanicAccount
-@mechanic_accounts_bp.route('/', methods=['PUT'])
-@limiter.limit("2 per day")
+@mechanic_accounts_bp.route('/<int:id>', methods=['PUT'])
+# @mechanic_accounts_bp.route('/', methods=['PUT'])
+# @limiter.limit("2 per day")
 # Limit the number of updates to 2 per day
 # There shouldn't be a need to update the mechanic account more than 2 per day
-@mechanic_token_required
+# @mechanic_token_required
 # Only that mechanic can update their account
 def update_mechanic_account(id):
     mechanic = db.session.get(Mechanic, id)
@@ -119,14 +121,16 @@ def update_mechanic_account(id):
     
     account.email = account_data.get('email') or account.email
     account.password = account.set_password(account_data['password']) or account.password
+    account.role = account_data.get('role') or account.role
 
     db.session.commit()
 
     return jsonify(mechanic_account_schema.dump(account)), 200
 
 # Delete MechanicAccount
-@mechanic_accounts_bp.route('/', methods=['DELETE'])
-@mechanic_token_required
+@mechanic_accounts_bp.route('/<int:id>', methods=['DELETE'])
+# @mechanic_accounts_bp.route('/', methods=['DELETE'])
+# @mechanic_token_required
 def delete_mechanic_account(id):
     mechanic = db.session.get(Mechanic, id)
     account = db.session.get(MechanicAccount, mechanic.account.id)

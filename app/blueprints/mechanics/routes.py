@@ -11,7 +11,7 @@ from app.utils.util import encode_mechanic_token, mechanic_token_required
 
 # Create Mechanic
 @mechanics_bp.route('/', methods=['POST'])
-@limiter.limit("3 per hour")
+# @limiter.limit("3 per hour")
 # Limit the number of mechanic creations to 3 per hour
 # There shouldn't be a need to create more than 3 mechanics per hour
 def create_mechanic():
@@ -34,11 +34,11 @@ def create_mechanic():
 
 
 # Get all mechanics
-@mechanics_bp.route('/', methods=['GET'])
-@limiter.limit("10 per hour")
+@mechanics_bp.route('/all', methods=['GET'])
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve all mechanics more than 10 per hour
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
 def get_mechanics():
@@ -57,9 +57,11 @@ def get_mechanics():
 
 # Get single mechanic
 @mechanics_bp.route('/<int:mechanic_id>', methods=['GET'])
-@limiter.limit("10 per hour")
+# @mechanics_bp.route('/', methods=['GET'])
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a single mechanic more than 10 per hour
+# @mechanic_token_required
 def get_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
@@ -71,7 +73,8 @@ def get_mechanic(mechanic_id):
 
 # Update a mechanic
 @mechanics_bp.route('/<int:mechanic_id>', methods=['PUT'])
-@mechanic_token_required
+# @mechanics_bp.route('/', methods=['PUT'])
+# @mechanic_token_required
 def update_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
@@ -95,7 +98,8 @@ def update_mechanic(mechanic_id):
 
 # Delete a mechanic
 @mechanics_bp.route('/<int:mechanic_id>', methods=['DELETE'])
-@mechanic_token_required
+# @mechanics_bp.route('/', methods=['DELETE'])
+# @mechanic_token_required
 def delete_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
@@ -112,13 +116,13 @@ def delete_mechanic(mechanic_id):
     return jsonify({"message": "Mechanic deleted"}), 200
 
 
-# Top Earners
-@mechanics_bp.route('/top_earners', methods=['GET'])
-@limiter.limit("10 per hour")
+# Top Mechanics
+@mechanics_bp.route('/top-mechanics', methods=['GET'])
+# @limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
-# There shouldn't be a need to retrieve the top earners more
+# There shouldn't be a need to retrieve the top mechanics more
 # than 10 times per hour
-def get_top_earners():
+def get_top_mechanics():
     query = select(Mechanic)
     mechanics = db.session.execute(query).scalars().all()
     mechanics.sort(key=lambda m: len(m.mechanic_tickets), reverse=True)
