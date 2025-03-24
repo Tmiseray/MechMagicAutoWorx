@@ -7,6 +7,7 @@ from app.models import CustomerAccount, db, Customer
 from app.extensions import limiter, cache
 from .schemas import customer_account_schema, customer_accounts_schema, customer_login_schema
 from app.utils.util import token_required, mechanic_token_required, encode_token, check_password, hash_password
+from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
 
 
 # Customer Login
@@ -42,23 +43,22 @@ def login():
 # Create CustomerAccount
 @customer_accounts_bp.route('/', methods=['POST'])
 def create_customer_account():
+    payload = request.json
+
     try:
-        account_data = customer_account_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 404
+        validate_foreign_key(Customer, payload.get('customer_id'), "Customer ID")
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 404
 
-    customer = db.session.get(Customer, account_data.customer_id)
-
-    if not customer:
-        return jsonify({"message": f"Invalid Customer ID: {account_data.customer_id}"}), 404
-
-    account = account_data  # Already a CustomerAccount instance
-    account.customer_id = customer.id
-
-    db.session.add(account)
-    db.session.commit()
-
-    return jsonify(customer_account_schema.dump(account)), 200
+    return validate_and_create(
+        model=CustomerAccount,
+        payload=payload,
+        schema=customer_account_schema,
+        unique_fields=['email'],
+        case_insensitive_fields=['email'],
+        commit=True,
+        return_json=True
+    )
 
 # Read/Get All CustomerAccounts
 @customer_accounts_bp.route('/all', methods=['GET'])
@@ -111,28 +111,29 @@ def get_customer_account(id):
 # Only that customer can update their account
 def update_customer_account(id):
     customer = db.session.get(Customer, id)
-
-    if not customer:
+    if not customer or not customer.account:
         return jsonify({"message": "Customer or Account not found"}), 404
-    
-    try:
-        account_data = customer_account_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    account = db.session.get(CustomerAccount, customer.account.id)
-    if account_data.password:
-        account.set_password(account_data.password)
-    
-    account.email = account_data.email or account.email
 
-    db.session.commit()
+    payload = request.json
+    account = customer.account
 
-    return jsonify(customer_account_schema.dump(account)), 200
+    # If password is being updated, use the model's method
+    if 'password' in payload:
+        account.set_password(payload['password'])
+        del payload['password']  # Prevent overwriting hashed password
+
+    # Validate and update remaining fields
+    success, response, status_code = validate_and_update(
+        instance=account,
+        schema=customer_account_schema,
+        payload=payload
+    )
+    return response, status_code
 
 
 # Delete CustomerAccount
-@customer_accounts_bp.route('/', methods=['DELETE'])
+@customer_accounts_bp.route('/<int:id>', methods=['DELETE'])
+# @customer_accounts_bp.route('/', methods=['DELETE'])
 # @token_required
 def delete_customer_account(id):
     customer = db.session.get(Customer, id)

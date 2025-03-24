@@ -7,6 +7,7 @@ from app.models import MechanicAccount, db, Mechanic
 from app.extensions import limiter, cache
 from .schemas import mechanic_account_schema, mechanic_accounts_schema, mechanic_login_schema
 from app.utils.util import mechanic_token_required, encode_mechanic_token, check_password
+from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
 
 
 # Mechanic Login
@@ -42,22 +43,22 @@ def login():
 # Create MechanicAccount
 @mechanic_accounts_bp.route('/', methods=['POST'])
 def create_mechanic_account():
+    payload = request.json
+
     try:
-        account_data = mechanic_account_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 404
-    
-    mechanic = db.session.get(Mechanic, account_data.mechanic_id)
+        validate_foreign_key(Mechanic, payload.get('mechanic_id'), "Mechanic ID")
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 404
 
-    if not mechanic:
-        return jsonify({"message": f"Invalid Mechanic ID: {account_data.mechanic_id}"}), 404
-    
-    account = account_data  # Already a MechanicAccount instance
-    account.mechanic_id = mechanic.id
-
-    db.session.add(account)
-    db.session.commit()
-    return jsonify(mechanic_account_schema.dump(account))
+    return validate_and_create(
+        model=MechanicAccount,
+        payload=payload,
+        schema=mechanic_account_schema,
+        unique_fields=['email'],
+        case_insensitive_fields=['email'],
+        commit=True,
+        return_json=True
+    )
 
 # Read/Get All MechanicAccounts
 @mechanic_accounts_bp.route('/all', methods=['GET'])
@@ -109,26 +110,24 @@ def get_mechanic_account(id):
 # Only that mechanic can update their account
 def update_mechanic_account(id):
     mechanic = db.session.get(Mechanic, id)
-
-    if not mechanic:
+    if not mechanic or not mechanic.account:
         return jsonify({"message": "Mechanic or Account not found"}), 404
-    
-    try:
-        account_data = mechanic_account_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    account = db.session.get(MechanicAccount, mechanic.account.id)
-    
-    if account_data.password:
-        account.set_password(account_data.password)
-    
-    account.email = account_data.email or account.email
-    account.role = account_data.role or account.role
 
-    db.session.commit()
+    payload = request.json
+    account = mechanic.account
 
-    return jsonify(mechanic_account_schema.dump(account)), 200
+    # If password is being updated, use the model's method
+    if 'password' in payload:
+        account.set_password(payload['password'])
+        del payload['password']  # Prevent overwriting hashed password
+
+    # Validate and update remaining fields
+    success, response, status_code = validate_and_update(
+        instance=account,
+        schema=mechanic_account_schema,
+        payload=payload
+    )
+    return response, status_code
 
 # Delete MechanicAccount
 @mechanic_accounts_bp.route('/<int:id>', methods=['DELETE'])

@@ -7,36 +7,29 @@ from app.models import Vehicle, db, Customer
 from app.extensions import limiter, cache
 from .schemas import vehicle_schema, vehicles_schema
 from app.utils.util import token_required, mechanic_token_required
+from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
 
 
 # Create Vehicle
 @vehicles_bp.route('/', methods=['POST'])
 # @mechanic_token_required
 def create_vehicle():
+    payload = request.json
+
     try:
-        vehicle_data = vehicle_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
+        validate_foreign_key(Customer, payload.get('customer_id'), "Customer ID")
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 404
     
-    customer_id = vehicle_data.customer_id
-    if customer_id:
-        customer = db.session.get(Customer, vehicle_data.customer_id)
-        if not customer:
-            return jsonify({"message": f"Invalid Customer ID: {customer_id}"}), 404
-    
-    new_vehicle = Vehicle(
-        VIN=vehicle_data.VIN,
-        year=vehicle_data.year,
-        make=vehicle_data.make,
-        model=vehicle_data.model,
-        mileage=vehicle_data.mileage,
-        customer_id=customer_id
+    return validate_and_create(
+        model=Vehicle,
+        payload=payload,
+        schema=vehicle_schema,
+        unique_fields=['VIN'],
+        case_insensitive_fields=['VIN'],
+        commit=True,
+        return_json=True
     )
-
-    db.session.add(new_vehicle)
-    db.session.commit()
-
-    return jsonify(vehicle_schema.dump(new_vehicle)), 201
 
 
 # Read/Get All Vehicles
@@ -79,24 +72,26 @@ def get_vehicles(VIN):
 # Only mechanics can update vehicle
 def update_vehicle(VIN):
     vehicle = db.session.get(Vehicle, VIN)
-
     if not vehicle:
-        return jsonify({"message": "Invalid VIN"}), 404
+        return jsonify({"message": "Vehicle not found"}), 404
 
-    try:
-        vehicle_data = vehicle_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
+    payload = request.json
 
-    vehicle.VIN = vehicle_data.VIN or vehicle.VIN
-    vehicle.year = vehicle_data.year or vehicle.year
-    vehicle.make = vehicle_data.make or vehicle.make
-    vehicle.model = vehicle_data.model or vehicle.model
-    vehicle.mileage = vehicle_data.mileage or vehicle.mileage
-    vehicle.customer_id = vehicle_data.customer_id or vehicle.customer_id
+    # Validate foreign key (customer_id)
+    fk_checks = [(Customer, payload.get("customer_id"))] if "customer_id" in payload else []
+    fk_error = validate_foreign_key(fk_checks)
+    if fk_error:
+        return fk_error
 
-    db.session.commit()
-
-    return jsonify(vehicle_schema.dump(vehicle)), 200 
+    # Proceed with update
+    success, response, status_code = validate_and_update(
+        instance=vehicle,
+        schema=vehicle_schema,
+        payload=payload
+    )
+    return response, status_code
 
 # Delete Vehicle
+'''
+Preserving Vehicle history due to it being crucial for recording-keeping, taxes, audits, and warranty disputes
+'''

@@ -8,30 +8,25 @@ from app.models import Invoice, db, ServiceTicket
 from app.extensions import limiter, cache
 from .schemas import invoice_schema, invoices_schema
 from app.utils.util import token_required, mechanic_token_required
+from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
 
 
 # Create Invoice
 @invoices_bp.route('/', methods=['POST'])
 # @mechanic_token_required
 def create_invoice():
-    try:
-        invoice_data = invoice_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    service_ticket = db.session.get(ServiceTicket, invoice_data['service_ticket_id'])
-    if not service_ticket:
-        return jsonify({"message": "Invalid Service Ticket ID"}), 404
-    
-    invoice = Invoice(
-        invoice_date=invoice_data.invoice_date or date.today(),
-        paid=invoice_data.paid or False,
-        service_ticket_id=service_ticket.id
-    )
+    payload = request.json
 
-    db.session.add(invoice)
-    db.session.commit()
-    return jsonify(invoice_schema.dump(invoice)), 201
+    try:
+        validate_foreign_key(ServiceTicket, payload.get('service_ticket_id'), "Service Ticket ID")
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 404
+
+    new_invoice, err = validate_and_create(Invoice, invoice_schema, payload)
+    if err:
+        return err
+
+    return jsonify(invoice_schema.dump(new_invoice)), 201
 
 
 # Read/Get All Invoices
@@ -92,20 +87,29 @@ def get_my_invoices(customer_id):
 # @mechanic_token_required
 def update_invoice(id):
     invoice = db.session.get(Invoice, id)
-
     if not invoice:
         return jsonify({"message": "Invalid Invoice ID"}), 404
-    
-    try:
-        invoice_data = invoice_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    invoice.paid = invoice_data.paid or False
-    invoice.service_ticket_id = invoice_data.service_ticket_id or invoice.service_ticket_id
 
-    db.session.commit()
-    return jsonify(invoice_schema.dump(invoice)), 200
+    payload = request.json
+
+    # Validate foreign keys (if changing service_ticket_id)
+    fk_result = validate_foreign_key(payload, {
+        "service_ticket_id": ServiceTicket
+    })
+    if fk_result:
+        return fk_result
+
+    # Update invoice fields safely
+    success, response, status_code = validate_and_update(
+        instance=invoice,
+        schema=invoice_schema,
+        payload=payload,
+        foreign_keys={}  # already validated
+    )
+    return response, status_code
 
 
 # Delete Invoice
+'''
+Preserving Invoice history due to it being crucial for recording-keeping, taxes, audits, and warranty disputes
+'''

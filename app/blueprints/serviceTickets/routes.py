@@ -7,6 +7,7 @@ from app.models import ServiceTicket, Customer, Vehicle, Mechanic, db
 from .schemas import service_ticket_schema, service_tickets_schema
 from app.extensions import limiter, cache
 from app.utils.util import token_required, mechanic_token_required
+from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
 from datetime import date
 
 
@@ -16,30 +17,21 @@ from datetime import date
 # Limit the number of service_ticket creations to 20 per hour
 # There shouldn't be a need to create more than 20 service_tickets per hour
 def create_service_ticket():
+    payload = request.json
+
     try:
-        service_ticket_data = service_ticket_schema.load(request.json)
-    except ValidationError as e:
-        return jsonify(e.messages), 400
-    
-    customer = db.session.get(Customer, service_ticket_data.customer_id)
-    vehicle = db.session.get(Vehicle, service_ticket_data.VIN)
+        validate_foreign_key(Customer, payload.get('customer_id'), "Customer ID")
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 404
 
-    if not vehicle:
-        return jsonify({"message": "Vehicle Not Found in Database"}), 404
-    elif not customer:
-        return jsonify({"message": "Invalid Customer ID"}), 404
+    payload["service_desc"] = payload["service_desc"].lower()
+    payload["service_date"] = date.today()
 
-    new_service_ticket = ServiceTicket(
-        VIN=vehicle.VIN,
-        service_date=service_ticket_data.service_date or date.today(),
-        service_desc=service_ticket_data.service_desc,
-        customer_id=customer.id
-    )
+    new_ticket, err = validate_and_create(ServiceTicket, service_ticket_schema, payload)
+    if err:
+        return err
 
-    db.session.add(new_service_ticket)
-    db.session.commit()
-
-    return jsonify(service_ticket_schema.dump(new_service_ticket)), 201
+    return jsonify(service_ticket_schema.dump(new_ticket)), 201
 
 
 # Get all service_tickets
@@ -102,44 +94,33 @@ def get_my_service_tickets(customer_id):
 # @mechanic_token_required
 def update_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
-
     if not service_ticket:
         return jsonify({"message": "Invalid Service Ticket ID"}), 404
 
-    try:
-        service_ticket_data = service_ticket_schema.load(request.json, partial=True)
-    except ValidationError as e:
-        return jsonify(e.messages), 400
-    
-    customer = db.session.get(Customer, service_ticket_data.customer_id)
-    vehicle = db.session.get(Vehicle, service_ticket_data.VIN)
+    payload = request.json
 
-    if not vehicle:
-        return jsonify({"message": "Vehicle Not Found in Database"}), 404
-    elif not customer:
-        return jsonify({"message": "Invalid Customer ID"}), 404
+    # Ensure foreign keys exist
+    foreign_keys = {
+        "customer_id": Customer,
+        "VIN": Vehicle  # Note: VIN is not a numeric ID, so we must treat this carefully
+    }
 
-    # Update basic fields
-    service_ticket.VIN = vehicle.VIN or service_ticket.VIN
-    service_ticket.service_date = service_ticket_data.service_date or service_ticket.service_date
-    service_ticket.service_desc = service_ticket_data.service_desc or service_ticket.service_desc
-    service_ticket.customer_id = customer.id or service_ticket.customer_id
+    # Manually check for vehicle existence (since it's string key, not numeric FK)
+    VIN = payload.get("VIN")
+    if VIN and not db.session.get(Vehicle, VIN):
+        return jsonify({"message": f"Vehicle with VIN '{VIN}' not found"}), 404
 
-    db.session.commit()
-
-    return jsonify(service_ticket_schema.dump(service_ticket)), 200
+    # Proceed with generic validation and update
+    success, response, status_code = validate_and_update(
+        instance=service_ticket,
+        schema=service_ticket_schema,
+        payload=payload,
+        foreign_keys={"customer_id": Customer}  # VIN was handled above
+    )
+    return response, status_code
 
 
 # # Delete a service_ticket
-# @service_tickets_bp.route('/<int:service_ticket_id>', methods=['DELETE'])
-# @mechanic_token_required
-# def delete_service_ticket(service_ticket_id):
-#     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
-
-#     if not service_ticket:
-#         return jsonify({"message": "Service Ticket Not Found"}), 404
-
-#     db.session.delete(service_ticket)
-#     db.session.commit()
-
-#     return jsonify({"message": "Service Ticket Deleted Successfully"}), 200
+'''
+Preserving Service Ticket history due to it being crucial for recording-keeping, taxes, audits, and warranty disputes
+'''

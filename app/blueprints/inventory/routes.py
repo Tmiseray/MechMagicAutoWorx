@@ -7,27 +7,22 @@ from app.models import Inventory, db
 from app.extensions import limiter, cache
 from .schemas import inventory_schema, inventories_schema
 from app.utils.util import token_required, mechanic_token_required
+from app.utils.validation_creation import validate_and_create, validate_and_update
 
 
 # Create Inventory
 @inventory_bp.route('/', methods=['POST'])
 # @mechanic_token_required
 def create_inventory():
-    try:
-        inventory_data = inventory_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    new_inventory = Inventory(
-        name=inventory_data.name,
-        stock=inventory_data.stock,
-        price=float(inventory_data.price)
+    return validate_and_create(
+        model=Inventory,
+        payload=request.json,
+        schema=inventory_schema,
+        unique_fields=['name'],
+        case_insensitive_fields=['name'],
+        commit=True,
+        return_json=True
     )
-
-    db.session.add(new_inventory)
-    db.session.commit()
-
-    return jsonify(inventory_schema.dump(new_inventory)), 201
 
 
 # Read/Get All Inventory
@@ -70,22 +65,15 @@ def get_inventory(id):
 # Only mechanics can update inventory
 def update_inventory(id):
     inventory = db.session.get(Inventory, id)
-
     if not inventory:
         return jsonify({"message": "Invalid Inventory ID"}), 404
 
-    try:
-        inventory_data = inventory_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-
-    inventory.name = inventory_data.name or inventory.name
-    inventory.stock = inventory_data.stock or inventory.stock
-    inventory.price = inventory_data.price or inventory.price
-
-    db.session.commit()
-
-    return jsonify(inventory_schema.dump(inventory)), 200 
+    success, response, status_code = validate_and_update(
+        instance=inventory,
+        schema=inventory_schema,
+        payload=request.json
+    )
+    return response, status_code
 
 
 # Delete Inventory

@@ -3,10 +3,11 @@ from flask import jsonify, request
 from marshmallow import ValidationError
 from sqlalchemy import select
 from . import mechanic_tickets_bp
-from app.models import MechanicTicket, db, Mechanic, ServiceTicket, Service
+from app.models import MechanicTicket, db, Mechanic, ServiceTicket, Service, ServiceItem
 from app.extensions import limiter, cache
 from .schemas import mechanic_ticket_schema, mechanic_tickets_schema
-from app.utils.creation import create_service_item, check_and_update_inventory
+from app.blueprints.serviceItems.schemas import service_item_schema
+from app.utils.validation_creation import validate_and_create, check_and_update_inventory, validate_foreign_key, validate_and_update
 from app.utils.util import mechanic_token_required
 from datetime import date
 
@@ -15,64 +16,52 @@ from datetime import date
 @mechanic_tickets_bp.route('/', methods=['POST'])
 # @mechanic_token_required
 def create_mechanic_ticket():
+    payload = request.json
+    payload['start_date'] = date.today()
+
+    # Validate foreign keys
     try:
-        mechanic_ticket_data = mechanic_ticket_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    mechanic = db.session.get(Mechanic, mechanic_ticket_data.mechanic_id)
-    service_ticket = db.session.get(ServiceTicket, mechanic_ticket_data.service_ticket_id)
+        validate_foreign_key(Mechanic, payload.get('mechanic_id'), "Mechanic ID")
+        validate_foreign_key(ServiceTicket, payload.get('service_ticket_id'), "Service Ticket ID")
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 404
 
-    if not mechanic:
-        return jsonify({"message": "Invalid Mechanic ID"}), 404
-    elif not service_ticket:
-        return jsonify({"message": "Invalid Service Ticket ID"}), 404
-    
-    mechanic_ticket = MechanicTicket(
-        start_date=mechanic_ticket_data.start_date or date.today(),
-        end_date=mechanic_ticket_data.end_date or None,
-        hours_worked=mechanic_ticket_data.hours_worked or 0.0,
-        service_ticket_id=service_ticket.id,
-        mechanic_id=mechanic.id
-    )
+    new_ticket, err = validate_and_create(MechanicTicket, mechanic_ticket_schema, payload, commit=False)
+    if err:
+        return err
 
-    all_uses = []
-
-    service_ids = request.json.get('service_ids', [])
+    # Attach services
+    service_ids = payload.get('service_ids', [])
     if service_ids:
         services = Service.query.filter(Service.id.in_(service_ids)).all()
-        if len(services) != len(service_ids):
-            return jsonify({"message": "One or more invalid service IDs."}), 404
-        mechanic_ticket.services.extend(services)
+        new_ticket.services.extend(services)
 
-        for service in services:
-            for si in service.service_items:
-                all_uses.append({"item_id": si.item_id, "quantity": si.quantity})
+    # Collect inventory uses from service_items + additional_items
+    all_uses = []
+    for s in new_ticket.services:
+        for si in s.service_items:
+            all_uses.append({"item_id": si.item_id, "quantity": si.quantity})
 
-    addtl_items = request.json.get('additional_items', [])
-    for addtl_item in addtl_items:
-        all_uses.append({
-            "item_id": addtl_item['item_id'],
-            "quantity": addtl_item['quantity']
-        })
+    for item in payload.get('additional_items', []):
+        all_uses.append({"item_id": item['item_id'], "quantity": item['quantity']})
 
-    # Validate inventory
     success, result = check_and_update_inventory(all_uses)
     if not success:
         return jsonify(result), 409
 
-    # Create service_items for additional_items
-    for addtl_item in addtl_items:
-        payload = {
-            "item_id": addtl_item["item_id"],
-            "quantity": addtl_item["quantity"]
+    # Add additional_items as service items
+    for item in payload.get('additional_items', []):
+        si_payload = {
+            "item_id": item["item_id"],
+            "quantity": item["quantity"]
         }
-        service_item = create_service_item(payload, commit=False)
-        mechanic_ticket.additional_items.append(service_item)
+        service_item, _ = validate_and_create(ServiceItem, service_item_schema, si_payload, commit=False)
+        new_ticket.additional_items.append(service_item)
 
-    db.session.add(mechanic_ticket)
+    db.session.add(new_ticket)
     db.session.commit()
-    return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 201
+
+    return jsonify(mechanic_ticket_schema.dump(new_ticket)), 201
 
 
 # Read/Get All MechanicTickets
@@ -132,60 +121,69 @@ def get_my_tickets(id):
 # @mechanic_token_required
 def update_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
-
     if not mechanic_ticket:
         return jsonify({"message": "Invalid Mechanic Ticket ID"}), 404
-    
-    try:
-        ticket_data = mechanic_ticket_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-    
-    mechanic_ticket.end_date = ticket_data.end_date or mechanic_ticket.end_date
-    mechanic_ticket.hours_worked = ticket_data.hours_worked or mechanic_ticket.hours_worked
+
+    payload = request.json
+
+    # Validate foreign keys
+    fk_result = validate_foreign_key(payload, {
+        "mechanic_id": Mechanic,
+        "service_ticket_id": ServiceTicket
+    })
+    if fk_result:
+        return fk_result
 
     all_uses = []
 
     # Replace services if provided
-    if 'service_ids' in request.json:
-        service_ids = request.json.get('service_ids', [])
+    if "service_ids" in payload:
+        service_ids = payload["service_ids"]
         services = Service.query.filter(Service.id.in_(service_ids)).all()
         if len(services) != len(service_ids):
             return jsonify({"message": "One or more invalid service IDs."}), 404
-
         mechanic_ticket.services = services
-        for service in services:
-            for si in service.service_items:
+
+        for s in services:
+            for si in s.service_items:
                 all_uses.append({"item_id": si.item_id, "quantity": si.quantity})
 
     # Replace additional_items if provided
-    if 'additional_items' in request.json:
-        mechanic_ticket.additional_items = []
-        addtl_items = request.json.get('additional_items', [])
-        for item in addtl_items:
-            all_uses.append({
-                "item_id": item['item_id'],
-                "quantity": item['quantity']
-            })
+    if "additional_items" in payload:
+        mechanic_ticket.additional_items.clear()
+        for item in payload["additional_items"]:
+            all_uses.append({"item_id": item["item_id"], "quantity": item["quantity"]})
 
-    # Check inventory before proceeding
+    # Check inventory
     if all_uses:
         success, result = check_and_update_inventory(all_uses)
         if not success:
             return jsonify(result), 409
 
-    # Rebuild additional_items
-    if 'additional_items' in request.json:
-        for item in request.json['additional_items']:
-            payload = {
-                "item_id": item["item_id"],
-                "quantity": item["quantity"]
-            }
-            service_item = create_service_item(payload, commit=False)
-            mechanic_ticket.additional_items.append(service_item)
+    # Recreate additional_items using validate_and_create
+    if "additional_items" in payload:
+        for item in payload["additional_items"]:
+            item["service_id"] = None  # Optional, since these are stand-alone
+            new_item = validate_and_create(
+                model=ServiceItem,
+                payload=item,
+                schema=service_item_schema,
+                commit=False,
+                return_json=False
+            )
+            mechanic_ticket.additional_items.append(new_item)
 
-    db.session.commit()
-    return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 200
+    # Final generic updates
+    success, response, status_code = validate_and_update(
+        instance=mechanic_ticket,
+        schema=mechanic_ticket_schema,
+        payload=payload,
+        foreign_keys={},  # Already validated
+    )
+    return response, status_code
 
 
 # Delete MechanicTicket
+'''
+Preserving Mechanic Ticket history due to it being crucial for recording-keeping, taxes, audits, and warranty disputes
+'''

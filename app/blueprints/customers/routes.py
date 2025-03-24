@@ -7,6 +7,7 @@ from app.models import Customer, db
 from .schemas import customer_schema, customers_schema
 from app.extensions import limiter, cache
 from app.utils.util import token_required, mechanic_token_required
+from app.utils.validation_creation import validate_and_create, validate_and_update
 
 
 
@@ -16,21 +17,15 @@ from app.utils.util import token_required, mechanic_token_required
 # Limit the number of customer creations to 3 per hour
 # There shouldn't be a need to create more than 3 customers per hour
 def create_customer():
-    try:
-        customer_data = customer_schema.load(request.json)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
-
-    new_customer = Customer(
-        name=customer_data.name,
-        email=customer_data.email,
-        phone=customer_data.phone
+    return validate_and_create(
+        model=Customer,
+        payload=request.json,
+        schema=customer_schema,
+        unique_fields=['email'],
+        case_insensitive_fields=['email'],
+        commit=True,
+        return_json=True
     )
-
-    db.session.add(new_customer)
-    db.session.commit()
-
-    return jsonify(customer_schema.dump(new_customer)), 201
 
 
 # Get all customers
@@ -79,22 +74,17 @@ def get_customer(id):
 # @token_required
 def update_customer(id):
     customer = db.session.get(Customer, id)
-
     if not customer:
-        return jsonify({"message": "Invalid customer ID"}), 404
+        return jsonify({"message": "Customer not found"}), 404
 
-    try:
-        customer_data = customer_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
+    payload = request.json
 
-    customer.name = customer_data.name or customer.name
-    customer.email = customer_data.email or customer.email
-    customer.phone = customer_data.phone or customer.phone
-
-    db.session.commit()
-
-    return jsonify(customer_schema.dump(customer)), 200
+    success, response, status_code = validate_and_update(
+        instance=customer,
+        schema=customer_schema,
+        payload=payload
+    )
+    return response, status_code
 
 
 # Delete a customer
@@ -110,6 +100,14 @@ def delete_customer(id):
     # Set customer_id to NULL for related service tickets
     for service_ticket in customer.service_tickets:
         service_ticket.customer_id = None
+
+    # Set customer_id to NULL for related account
+    if customer.account:
+        db.session.delete(customer.account)
+
+    # Set customer_id to NULL for related vehicles
+    for vehicle in customer.vehicles or []:
+        vehicle.customer_id = None
 
     db.session.delete(customer)
     db.session.commit()

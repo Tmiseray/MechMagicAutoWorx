@@ -3,20 +3,26 @@ from flask import jsonify, request
 from marshmallow import ValidationError
 from sqlalchemy import select
 from . import service_items_bp
-from app.models import ServiceItem, db
+from app.models import ServiceItem, db, Service
 from app.extensions import limiter, cache
 from .schemas import service_item_schema, service_items_schema
 from app.utils.util import token_required, mechanic_token_required
-from app.utils.creation import create_service_item
+from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
 
 
 
-# Creating Reusable Route for shared/creation.py
+# Create Service Item
 @service_items_bp.route('/', methods=['POST'])
 # @mechanic_token_required
 # def create_service_item_route(user_id, role):
-def create_service_item_route():
-    return create_service_item()
+def create_service_item():
+    return validate_and_create(
+        model=ServiceItem,
+        payload=request.json,
+        schema=service_item_schema,
+        commit=True,
+        return_json=True
+    )
 
 
 # Read/Get All ServiceItems
@@ -59,22 +65,24 @@ def get_service_item(id):
 # Only mechanics can update ServiceItem
 def update_service_item(id):
     service_item = db.session.get(ServiceItem, id)
-
     if not service_item:
         return jsonify({"message": "Invalid Service Item ID"}), 404
 
-    try:
-        service_item_data = service_item_schema.load(request.json, partial=True)
-    except ValidationError as ve:
-        return jsonify(ve.messages), 400
+    # Validate foreign key if service_id is present in payload
+    if 'service_id' in request.json:
+        fk_success, fk_error = validate_foreign_key(Service, request.json['service_id'], "Service")
+        if not fk_success:
+            return fk_error
 
-    service_item.item_id = service_item_data.item_id or service_item.item_id
-    service_item.quantity = service_item_data.quantity or service_item.quantity
-    service_item.service_id = service_item_data.service_id or service_item.service_id
-
-    db.session.commit()
-
-    return jsonify(service_item_schema.dump(service_item)), 200 
+    success, response, status_code = validate_and_update(
+        instance=service_item,
+        schema=service_item_schema,
+        payload=request.json
+    )
+    return response, status_code
 
 
 # Delete ServiceItem
+'''
+Preserving Service Items due to it being crucial for recording-keeping, taxes, audits, and warranty disputes
+'''
