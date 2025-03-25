@@ -80,7 +80,9 @@ def update_mechanic(mechanic_id):
     success, response, status_code = validate_and_update(
         instance=mechanic,
         schema=mechanic_schema,
-        payload=payload
+        payload=payload,
+        foreign_keys={},
+        return_json=True
     )
     return response, status_code
 

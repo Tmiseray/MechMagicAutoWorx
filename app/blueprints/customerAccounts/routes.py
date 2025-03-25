@@ -126,7 +126,9 @@ def update_customer_account(id):
     success, response, status_code = validate_and_update(
         instance=account,
         schema=customer_account_schema,
-        payload=payload
+        payload=payload,
+        foreign_keys={},
+        return_json=True
     )
     return response, status_code
 

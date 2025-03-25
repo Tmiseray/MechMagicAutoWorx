@@ -15,15 +15,32 @@ from app.utils.validation_creation import validate_and_create, validate_and_upda
 @services_bp.route('/', methods=['POST'])
 # @mechanic_token_required
 def create_service():
-    payload = request.json
+    payload = request.json.copy()
+    service_items_payload = payload.pop("service_items", [])
 
-    new_service, err = validate_and_create(Service, service_schema, payload, commit=False)
+    new_service, err = validate_and_create(
+        model=Service,
+        payload=payload,
+        schema=service_schema,
+        commit=False
+    )
     if err:
         return err
 
-    for item in payload.get("service_items", []):
-        item["service_id"] = None  # Prevent invalid FK during creation
-        service_item, _ = validate_and_create(ServiceItem, service_item_schema, item, commit=False)
+    for item in service_items_payload:
+        if "item_id" not in item or "quantity" not in item:
+            return jsonify({"message": "Each additional item must include 'item_id' and 'quantity'."}), 400
+        si_payload = {
+            "item_id": item["item_id"],
+            "quantity": item["quantity"],
+            "service_id": None
+        }
+        service_item, _ = validate_and_create(
+            model=ServiceItem,
+            payload=si_payload,
+            schema=service_item_schema,
+            commit=False
+        )
         new_service.service_items.append(service_item)
 
     db.session.add(new_service)
@@ -68,44 +85,40 @@ def update_service(id):
     if not service:
         return jsonify({"message": "Invalid Service ID"}), 404
 
-    payload = request.json
+    payload = request.json.copy()
+    service_items_payload = payload.pop("service_items", None)
 
-    # Begin item usage tracking
-    all_uses = []
+    success, response, status_code = validate_and_update(
+        instance=service,
+        schema=service_schema,
+        payload=payload,
+        foreign_keys={},
+        return_json=False
+    )
+    if not success:
+        return response, status_code
 
-    # Replace service_items if provided
-    if 'service_items' in payload:
-        service.service_items = []  # Clear existing
-        for item in payload['service_items']:
-            all_uses.append({
+    # Handle service_items update
+    if service_items_payload is not None:
+        service.service_items.clear()
+        for item in service_items_payload:
+            if "item_id" not in item or "quantity" not in item:
+                return jsonify({"message": "Each additional item must include 'item_id' and 'quantity'."}), 400
+            si_payload = {
                 "item_id": item["item_id"],
-                "quantity": item["quantity"]
-            })
-
-    # Validate inventory if needed
-    if all_uses:
-        success, result = check_and_update_inventory(all_uses)
-        if not success:
-            return jsonify(result), 409
-
-    # Rebuild service_items if replaced
-    if 'service_items' in payload:
-        for item in payload['service_items']:
-            item["service_id"] = id
-            service_item = validate_and_create(
+                "quantity": item["quantity"],
+                "service_id": service.id
+            }
+            service_item, _ = validate_and_create(
                 model=ServiceItem,
-                payload=item,
+                payload=si_payload,
+                schema=service_item_schema,
                 commit=False
             )
             service.service_items.append(service_item)
 
-    # Apply other field updates
-    success, response, status_code = validate_and_update(
-        instance=service,
-        schema=service_schema,
-        payload=payload
-    )
-    return response, status_code
+    db.session.commit()
+    return jsonify(service_schema.dump(service)), 200
 
 # Delete Service
 '''

@@ -77,7 +77,9 @@ def update_service_item(id):
     success, response, status_code = validate_and_update(
         instance=service_item,
         schema=service_item_schema,
-        payload=request.json
+        payload=request.json,
+        foreign_keys={},
+        return_json=True
     )
     return response, status_code
 

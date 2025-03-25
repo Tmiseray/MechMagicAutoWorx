@@ -82,7 +82,9 @@ def update_customer(id):
     success, response, status_code = validate_and_update(
         instance=customer,
         schema=customer_schema,
-        payload=payload
+        payload=payload,
+        foreign_keys={},
+        return_json=True
     )
     return response, status_code
 

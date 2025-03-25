@@ -137,7 +137,7 @@ def check_and_update_inventory(uses=list[dict], commit=False):
 
 
 
-def validate_and_update(instance, schema, payload, foreign_keys: dict = None):
+def validate_and_update(instance, schema, payload, foreign_keys=None, return_json=False):
     '''
     Validate and partially update a model instance using schema.
 
@@ -151,19 +151,17 @@ def validate_and_update(instance, schema, payload, foreign_keys: dict = None):
     - (True, updated_instance, 200) on success.
     - (False, response, error_code) on failure.
     '''
-
-    try:
-        data = schema.load(payload, instance=instance, partial=True)
-    except ValidationError as ve:
-        return False, jsonify(ve.messages), 400
-
+    # Validate foreign keys
     if foreign_keys:
-        for field, model in foreign_keys.items():
-            fk_id = payload.get(field)
-            if fk_id is not None:
-                valid, response = validate_foreign_key(model, fk_id)
-                if not valid:
-                    return False, response
+        fk_result = validate_foreign_key(payload, foreign_keys)
+        if fk_result:
+            return False, fk_result, 404
+
+    # Load into existing instance to avoid __init__ call
+    updated_instance = schema.load(payload, instance=instance, partial=True)
 
     db.session.commit()
-    return True, data, 200
+
+    if return_json:
+        return True, jsonify(schema.dump(updated_instance)), 200
+    return True, updated_instance, 200

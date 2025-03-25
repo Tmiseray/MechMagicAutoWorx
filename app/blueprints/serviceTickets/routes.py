@@ -27,7 +27,7 @@ def create_service_ticket():
     payload["service_desc"] = payload["service_desc"].lower()
     payload["service_date"] = date.today()
 
-    new_ticket, err = validate_and_create(ServiceTicket, service_ticket_schema, payload)
+    new_ticket, err = validate_and_create(ServiceTicket, payload, service_ticket_schema)
     if err:
         return err
 
@@ -115,7 +115,8 @@ def update_service_ticket(service_ticket_id):
         instance=service_ticket,
         schema=service_ticket_schema,
         payload=payload,
-        foreign_keys={"customer_id": Customer}  # VIN was handled above
+        foreign_keys={"customer_id": Customer},  # VIN was handled above
+        return_json=True
     )
     return response, status_code
 
