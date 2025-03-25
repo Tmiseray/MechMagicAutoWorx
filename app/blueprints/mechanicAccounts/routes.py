@@ -7,7 +7,7 @@ from app.models import MechanicAccount, db, Mechanic
 from app.extensions import limiter, cache
 from .schemas import mechanic_account_schema, mechanic_accounts_schema, mechanic_login_schema
 from app.utils.util import mechanic_token_required, encode_mechanic_token, check_password
-from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
+from app.utils.validation_creation import validate_and_create, validate_and_update
 
 
 # Mechanic Login
@@ -45,30 +45,28 @@ def login():
 def create_mechanic_account():
     payload = request.json
 
-    try:
-        validate_foreign_key(Mechanic, payload.get('mechanic_id'), "Mechanic ID")
-    except ValueError as e:
-        return jsonify({"message": str(e)}), 404
-
     return validate_and_create(
         model=MechanicAccount,
         payload=payload,
         schema=mechanic_account_schema,
         unique_fields=['email'],
         case_insensitive_fields=['email'],
+        foreign_keys={
+            "mechanic_id": Mechanic
+        },
         commit=True,
         return_json=True
     )
 
 # Read/Get All MechanicAccounts
 @mechanic_accounts_bp.route('/all', methods=['GET'])
-# @limiter.limit("3 per hour")
+@limiter.limit("3 per hour")
 # Limit the number of retrievals to 3 per hour
 # There shouldn't be a need to retrieve all Mechanics' Accounts more than 3 per hour
-# @cache.cached(timeout=60)
+@cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve all mechanics' Accounts
 def get_mechanic_accounts():
     try:
@@ -84,12 +82,12 @@ def get_mechanic_accounts():
         return jsonify(mechanic_accounts_schema.dump(result)), 200
 
 # Read/Get Specific MechanicAccount
-@mechanic_accounts_bp.route('/<int:id>', methods=['GET'])
-# @mechanic_accounts_bp.route('/', methods=['GET'])
-# @limiter.limit("3 per hour")
+# @mechanic_accounts_bp.route('/<int:id>', methods=['GET'])
+@mechanic_accounts_bp.route('/', methods=['GET'])
+@limiter.limit("3 per hour")
 # Limit the number of retrievals to 3 per hour
 # There shouldn't be a need to retrieve a single mechanic account more than 3 per hour
-# @mechanic_token_required
+@mechanic_token_required
 # Only that mechanic can retrieve their account details
 def get_mechanic_account(id):
     mechanic = db.session.get(Mechanic, id)
@@ -101,12 +99,12 @@ def get_mechanic_account(id):
     return jsonify(mechanic_account_schema.dump(account)), 200
 
 # Update MechanicAccount
-@mechanic_accounts_bp.route('/<int:id>', methods=['PUT'])
-# @mechanic_accounts_bp.route('/', methods=['PUT'])
-# @limiter.limit("2 per day")
+# @mechanic_accounts_bp.route('/<int:id>', methods=['PUT'])
+@mechanic_accounts_bp.route('/', methods=['PUT'])
+@limiter.limit("2 per day")
 # Limit the number of updates to 2 per day
 # There shouldn't be a need to update the mechanic account more than 2 per day
-# @mechanic_token_required
+@mechanic_token_required
 # Only that mechanic can update their account
 def update_mechanic_account(id):
     mechanic = db.session.get(Mechanic, id)
@@ -132,9 +130,9 @@ def update_mechanic_account(id):
     return response, status_code
 
 # Delete MechanicAccount
-@mechanic_accounts_bp.route('/<int:id>', methods=['DELETE'])
-# @mechanic_accounts_bp.route('/', methods=['DELETE'])
-# @mechanic_token_required
+# @mechanic_accounts_bp.route('/<int:id>', methods=['DELETE'])
+@mechanic_accounts_bp.route('/', methods=['DELETE'])
+@mechanic_token_required
 def delete_mechanic_account(id):
     mechanic = db.session.get(Mechanic, id)
     account = db.session.get(MechanicAccount, mechanic.account.id)

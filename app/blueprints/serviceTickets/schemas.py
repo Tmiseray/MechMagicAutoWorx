@@ -1,10 +1,8 @@
 
-from app.extensions import ma
 from app.models import ServiceTicket, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-from marshmallow_sqlalchemy.fields import Nested
 from marshmallow import fields, validates, ValidationError
-from marshmallow.validate import Length, Email
+from marshmallow.validate import Length
 
 
 class ServiceTicketSchema(SQLAlchemyAutoSchema):
@@ -15,7 +13,7 @@ class ServiceTicketSchema(SQLAlchemyAutoSchema):
         sqla_session = db.session
 
     id = fields.Int(dump_only=True)
-    service_date = fields.Date(required=True)
+    service_date = fields.Date(required=False, dump_only=True)
     service_desc = fields.Str(required=True, validate=Length(min=1, max=255))
     VIN = fields.Str(required=True)
     customer_id = fields.Int(required=False)

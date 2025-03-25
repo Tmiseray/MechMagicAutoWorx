@@ -79,7 +79,7 @@ class Invoice(Base):
     __tablename__ = 'invoices'
     
     id: Mapped[int] = mapped_column(primary_key=True)
-    invoice_date: Mapped[date] = mapped_column(db.Date, nullable=False, default=date.today())
+    invoice_date: Mapped[date] = mapped_column(db.Date, nullable=False)
     total: Mapped[float] = mapped_column(db.Float, nullable=False)
     paid: Mapped[bool] = mapped_column(db.Boolean, nullable=False)
 
@@ -167,7 +167,7 @@ class MechanicTicket(Base):
     __tablename__ = 'mechanic_tickets'  
 
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
-    start_date: Mapped[date] = mapped_column(db.Date, nullable=False, default=date.today())
+    start_date: Mapped[date] = mapped_column(db.Date, nullable=False)
     end_date: Mapped[Optional[date]] = mapped_column(db.Date, nullable=True)
     hours_worked: Mapped[Optional[float]] = mapped_column(db.Float, nullable=False)
 

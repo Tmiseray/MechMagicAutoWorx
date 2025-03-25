@@ -12,7 +12,7 @@ from app.utils.validation_creation import validate_and_create, validate_and_upda
 
 # Create Inventory
 @inventory_bp.route('/', methods=['POST'])
-# @mechanic_token_required
+@mechanic_token_required
 def create_inventory():
     return validate_and_create(
         model=Inventory,
@@ -27,10 +27,10 @@ def create_inventory():
 
 # Read/Get All Inventory
 @inventory_bp.route('/all', methods=['GET'])
-# @cache.cached(timeout=60)
+@cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve all inventory
 def get_all_inventory():
     try:
@@ -48,7 +48,7 @@ def get_all_inventory():
 
 # Read/Get Specific Inventory
 @inventory_bp.route('/<int:id>')
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve a single inventory
 def get_inventory(id):
     inventory = db.session.get(Inventory, id)
@@ -61,7 +61,7 @@ def get_inventory(id):
 
 # Update Inventory
 @inventory_bp.route('/<int:id>', methods=['PUT'])
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can update inventory
 def update_inventory(id):
     inventory = db.session.get(Inventory, id)
@@ -79,3 +79,6 @@ def update_inventory(id):
 
 
 # Delete Inventory
+'''
+Preserving Inventory history due to it being crucial for recording-keeping, taxes, audits, and warranty disputes
+'''

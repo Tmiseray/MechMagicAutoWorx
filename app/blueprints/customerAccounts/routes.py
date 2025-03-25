@@ -7,7 +7,7 @@ from app.models import CustomerAccount, db, Customer
 from app.extensions import limiter, cache
 from .schemas import customer_account_schema, customer_accounts_schema, customer_login_schema
 from app.utils.util import token_required, mechanic_token_required, encode_token, check_password, hash_password
-from app.utils.validation_creation import validate_and_create, validate_foreign_key, validate_and_update
+from app.utils.validation_creation import validate_and_create, validate_and_update
 
 
 # Customer Login
@@ -45,30 +45,28 @@ def login():
 def create_customer_account():
     payload = request.json
 
-    try:
-        validate_foreign_key(Customer, payload.get('customer_id'), "Customer ID")
-    except ValueError as e:
-        return jsonify({"message": str(e)}), 404
-
     return validate_and_create(
         model=CustomerAccount,
         payload=payload,
         schema=customer_account_schema,
         unique_fields=['email'],
         case_insensitive_fields=['email'],
+        foreign_keys={
+            "customer_id": Customer
+        },
         commit=True,
         return_json=True
     )
 
 # Read/Get All CustomerAccounts
 @customer_accounts_bp.route('/all', methods=['GET'])
-# @limiter.limit("3 per hour")
+@limiter.limit("3 per hour")
 # Limit the number of retrievals to 3 per hour
 # There shouldn't be a need to retrieve all Customers' Accounts more than 3 per hour
-# @cache.cached(timeout=60)
+@cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve all Customers' Accounts
 def get_customer_accounts():
     try:
@@ -84,12 +82,12 @@ def get_customer_accounts():
         return jsonify(customer_accounts_schema.dump(result)), 200
 
 # Read/Get Specific CustomerAccount
-@customer_accounts_bp.route('/<int:id>', methods=['GET'])
-# @customer_accounts_bp.route('/', methods=['GET'])
-# @limiter.limit("3 per hour")
+# @customer_accounts_bp.route('/<int:id>', methods=['GET'])
+@customer_accounts_bp.route('/', methods=['GET'])
+@limiter.limit("3 per hour")
 # Limit the number of retrievals to 3 per hour
 # There shouldn't be a need to retrieve a single customer account more than 3 per hour
-# @token_required
+@token_required
 # Only that customer can retrieve their account details
 def get_customer_account(id):
     customer = db.session.get(Customer, id)
@@ -102,12 +100,12 @@ def get_customer_account(id):
 
 
 # Update CustomerAccount
-@customer_accounts_bp.route('/<int:id>', methods=['PUT'])
-# @customer_accounts_bp.route('/', methods=['PUT'])
-# @limiter.limit("2 per day")
+# @customer_accounts_bp.route('/<int:id>', methods=['PUT'])
+@customer_accounts_bp.route('/', methods=['PUT'])
+@limiter.limit("2 per day")
 # Limit the number of updates to 2 per day
 # There shouldn't be a need to update the customer account more than 2 per day
-# @token_required
+@token_required
 # Only that customer can update their account
 def update_customer_account(id):
     customer = db.session.get(Customer, id)
@@ -134,9 +132,9 @@ def update_customer_account(id):
 
 
 # Delete CustomerAccount
-@customer_accounts_bp.route('/<int:id>', methods=['DELETE'])
-# @customer_accounts_bp.route('/', methods=['DELETE'])
-# @token_required
+# @customer_accounts_bp.route('/<int:id>', methods=['DELETE'])
+@customer_accounts_bp.route('/', methods=['DELETE'])
+@token_required
 def delete_customer_account(id):
     customer = db.session.get(Customer, id)
     account = db.session.get(CustomerAccount, customer.account.id)

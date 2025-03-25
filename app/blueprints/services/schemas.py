@@ -1,5 +1,4 @@
 
-from app.extensions import ma
 from app.models import Service, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields, validates, ValidationError

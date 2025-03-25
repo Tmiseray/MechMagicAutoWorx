@@ -1,0 +1,5131 @@
+{
+	"info": {
+		"_postman_id": "15b527e7-fa58-4e10-92f1-e2a4a1ad378c",
+		"name": "Mechanic Shop Endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38007177"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"7894561230\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Customer1",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"jane.doe@example.com\",\n    \"phone\": \"3216549870\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:03:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "158"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"jane.doe@example.com\",\n    \"id\": 1,\n    \"name\": \"Jane Doe\",\n    \"phone\": \"3216549870\",\n    \"service_tickets\": [],\n    \"vehicles\": []\n}"
+						},
+						{
+							"name": "Customer2",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"John Doe\",\n    \"email\": \"john.doe@example.com\",\n    \"phone\": \"7894561230\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:04:29 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "158"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"john.doe@example.com\",\n    \"id\": 2,\n    \"name\": \"John Doe\",\n    \"phone\": \"7894561230\",\n    \"service_tickets\": [],\n    \"vehicles\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "All Customers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "After 2 Creations",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:04:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "357"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"account\": null,\n        \"email\": \"jane.doe@example.com\",\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"service_tickets\": [],\n        \"vehicles\": []\n    },\n    {\n        \"account\": null,\n        \"email\": \"john.doe@example.com\",\n        \"id\": 2,\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\",\n        \"service_tickets\": [],\n        \"vehicles\": []\n    }\n]"
+						},
+						{
+							"name": "After Accounts & Vehicles",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:15:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1115"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"account\": {\n            \"customer_id\": 1,\n            \"email\": \"mary.jane@example.com\",\n            \"id\": 1,\n            \"password\": \"$2b$12$dZtOJOJ5Yi0ZEbJ1upRlFONV.DYaHPYzYReIDQxRSHUYRqUDVCWVm\"\n        },\n        \"email\": \"mary.jane@example.com\",\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"service_tickets\": [],\n        \"vehicles\": [\n            {\n                \"VIN\": \"Jane's2020HondaCivic\",\n                \"customer_id\": 1,\n                \"make\": \"Honda\",\n                \"mileage\": 123456,\n                \"model\": \"Civic\",\n                \"service_tickets\": [],\n                \"year\": 2020\n            }\n        ]\n    },\n    {\n        \"account\": {\n            \"customer_id\": 2,\n            \"email\": \"john.boy@example.com\",\n            \"id\": 2,\n            \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n        },\n        \"email\": \"john.boy@example.com\",\n        \"id\": 2,\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\",\n        \"service_tickets\": [],\n        \"vehicles\": [\n            {\n                \"VIN\": \"John's2022CadillacXTS\",\n                \"customer_id\": 2,\n                \"make\": \"Cadillac\",\n                \"mileage\": 7890,\n                \"model\": \"XTS\",\n                \"service_tickets\": [],\n                \"year\": 2022\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Customer1",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:05:25 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "158"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"jane.doe@example.com\",\n    \"id\": 1,\n    \"name\": \"Jane Doe\",\n    \"phone\": \"3216549870\",\n    \"service_tickets\": [],\n    \"vehicles\": []\n}"
+						},
+						{
+							"name": "Customer2",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:05:45 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "158"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"john.doe@example.com\",\n    \"id\": 2,\n    \"name\": \"John Doe\",\n    \"phone\": \"7894561230\",\n    \"service_tickets\": [],\n    \"vehicles\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"mary.jane@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Email Customer1",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"mary.jane@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:06:40 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "159"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"mary.jane@example.com\",\n    \"id\": 1,\n    \"name\": \"Jane Doe\",\n    \"phone\": \"3216549870\",\n    \"service_tickets\": [],\n    \"vehicles\": []\n}"
+						},
+						{
+							"name": "Email Customer2",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john.boy@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:07:25 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "158"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"john.boy@example.com\",\n    \"id\": 2,\n    \"name\": \"John Doe\",\n    \"phone\": \"7894561230\",\n    \"service_tickets\": [],\n    \"vehicles\": []\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Any and All Endpoint Requests for Customers.\n\nCustomers are associated with CustomerAccounts, Vehicles, ServiceTickets, and Invoices.\n\nA Mechanic would need to be logged in to view any Customer data.\n\nA Customer would need to be logged in to update or delete their data\n\n**These endpoints have a URL prefixed with:**\n\n`/customers`"
+		},
+		{
+			"name": "CustomerAccounts",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": 2,\n    \"email\": \"john.boy@example.com\",\n    \"password\": \"JaneyDoesNtKn0w!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Creation w/load_only=True",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 1,\n    \"email\": \"mary.jane@example.com\",\n    \"password\": \"JohnBoyHasMy<3\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:33:54 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "239"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"customer\": {\n        \"email\": \"mary.jane@example.com\",\n        \"id\": 1,\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"service_tickets\": [],\n        \"vehicles\": []\n    },\n    \"customer_id\": 1,\n    \"email\": \"mary.jane@example.com\",\n    \"id\": 1\n}"
+						},
+						{
+							"name": "Customer2 Success!",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 2,\n    \"email\": \"john.boy@example.com\",\n    \"password\": \"JaneyDoesNtKn0w!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 05:54:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "315"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"customer\": {\n        \"email\": \"john.boy@example.com\",\n        \"id\": 2,\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\",\n        \"service_tickets\": [],\n        \"vehicles\": []\n    },\n    \"customer_id\": 2,\n    \"email\": \"john.boy@example.com\",\n    \"id\": 2,\n    \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n}"
+						}
+					]
+				},
+				{
+					"name": "All CustomerAccounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Password Hash Test",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 04:34:52 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "349"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"id\": 1,\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\",\n            \"service_tickets\": [],\n            \"vehicles\": []\n        },\n        \"customer_id\": 1,\n        \"email\": \"mary.jane@example.com\",\n        \"id\": 1,\n        \"password\": \"$2b$12$5Tqpqjlo6j9qOmUwKOjtz.ociILaFNCfWs/J5aRgA0ow.j5RQxwkG\"\n    }\n]"
+						},
+						{
+							"name": "After Update Vehicle Customer ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:13:49 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1165"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"id\": 1,\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\",\n            \"service_tickets\": [],\n            \"vehicles\": [\n                {\n                    \"VIN\": \"Jane's2020HondaCivic\",\n                    \"customer_id\": 1,\n                    \"make\": \"Honda\",\n                    \"mileage\": 123456,\n                    \"model\": \"Civic\",\n                    \"service_tickets\": [],\n                    \"year\": 2020\n                }\n            ]\n        },\n        \"customer_id\": 1,\n        \"email\": \"mary.jane@example.com\",\n        \"id\": 1,\n        \"password\": \"$2b$12$dZtOJOJ5Yi0ZEbJ1upRlFONV.DYaHPYzYReIDQxRSHUYRqUDVCWVm\"\n    },\n    {\n        \"customer\": {\n            \"email\": \"john.boy@example.com\",\n            \"id\": 2,\n            \"name\": \"John Doe\",\n            \"phone\": \"7894561230\",\n            \"service_tickets\": [],\n            \"vehicles\": [\n                {\n                    \"VIN\": \"John's2022CadillacXTS\",\n                    \"customer_id\": 2,\n                    \"make\": \"Cadillac\",\n                    \"mileage\": 7890,\n                    \"model\": \"XTS\",\n                    \"service_tickets\": [],\n                    \"year\": 2022\n                }\n            ]\n        },\n        \"customer_id\": 2,\n        \"email\": \"john.boy@example.com\",\n        \"id\": 2,\n        \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get By Customer ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Customer2 Account",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:13:10 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "531"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"customer\": {\n        \"email\": \"john.boy@example.com\",\n        \"id\": 2,\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\",\n        \"service_tickets\": [],\n        \"vehicles\": [\n            {\n                \"VIN\": \"John's2022CadillacXTS\",\n                \"customer_id\": 2,\n                \"make\": \"Cadillac\",\n                \"mileage\": 7890,\n                \"model\": \"XTS\",\n                \"service_tickets\": [],\n                \"year\": 2022\n            }\n        ]\n    },\n    \"customer_id\": 2,\n    \"email\": \"john.boy@example.com\",\n    \"id\": 2,\n    \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get By Login Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"J0hnnyD0esN+Kn0W!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Jane Password",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"J0hnnyD0esN+Kn0W!\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts/1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 23:26:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "826"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"customer\": {\n        \"email\": \"mary.jane@example.com\",\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"service_tickets\": [\n            {\n                \"VIN\": \"Jane's2020HondaCivic\",\n                \"id\": 1,\n                \"invoice\": null,\n                \"mechanic_tickets\": [],\n                \"service_date\": \"2025-01-15\",\n                \"service_desc\": \"oil change, tire rotation\",\n                \"vehicle\": {\n                    \"make\": \"Honda\",\n                    \"mileage\": 123456,\n                    \"model\": \"Civic\",\n                    \"year\": 2020\n                }\n            }\n        ],\n        \"vehicles\": [\n            {\n                \"VIN\": \"Jane's2020HondaCivic\",\n                \"make\": \"Honda\",\n                \"mileage\": 123456,\n                \"model\": \"Civic\",\n                \"year\": 2020\n            }\n        ]\n    },\n    \"customer_id\": 1,\n    \"email\": \"mary.jane@example.com\",\n    \"id\": 1,\n    \"password\": \"$2b$12$RoiiXjZyzCAWM7SOgYdW5O4dYSni83DKheO1bkxHiJ9wRLblfyUOm\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"john.boy@example.com\",\n    \"password\": \"JaneyDoesNtKn0w!\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/accounts/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Success!",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"mary.jane@example.com\",\n    \"password\": \"JohnBoyHasMy<3\"\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 05:45:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "226"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDI3OTUxNTUsImlhdCI6MTc0MjcwODc1NSwic3ViIjoiMSJ9.qnyxEU4KumYoOd2PQKy3__1SenfccIDN3rg6B2xLGY0\",\n    \"message\": \"Successfully Logged In\",\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "Customer2 Success!",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"john.boy@example.com\",\n    \"password\": \"JaneyDoesNtKn0w!\"\n}\n\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/accounts/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"accounts",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 05:55:14 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "226"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDI3OTU3MTQsImlhdCI6MTc0MjcwOTMxNCwic3ViIjoiMiJ9.FauykevTvLRgzbJuzxAPiRShgRUh-BffKb2MM_gv-U0\",\n    \"message\": \"Successfully Logged In\",\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			],
+			"description": "### Any and All Endpoint Requests for CustomerAccounts.\n\nCustomerAccounts are associated with Customers.\n\nA Customer would need to be logged in to view their account, update, or delete them.\n\nA Mechanic would need to be logged in to view All CustomerAccounts.\n\nAll passwords are hashed as well. Ensuring proper security protocols are in place to keep account data safe.\n\n**These endpoints have a URL prefixed with:**\n\n`/customers/accounts`"
+		},
+		{
+			"name": "Vehicles",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_id\": 2,\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"year\": 2022,\n    \"make\": \"Cadillac\",\n    \"model\": \"XTS\",\n    \"mileage\": 7890\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/vehicles/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"vehicles",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Customer1 Vehicle",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 1,\n    \"VIN\": \"Jane's2020HondaCivic\",\n    \"year\": 2020,\n    \"make\": \"Honda\",\n    \"model\": \"Civic\",\n    \"mileage\": 123456\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/vehicles/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"vehicles",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 05:56:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "477"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"Jane's2020HondaCivic\",\n    \"customer\": {\n        \"account\": {\n            \"customer_id\": 1,\n            \"email\": \"mary.jane@example.com\",\n            \"id\": 1,\n            \"password\": \"$2b$12$dZtOJOJ5Yi0ZEbJ1upRlFONV.DYaHPYzYReIDQxRSHUYRqUDVCWVm\"\n        },\n        \"email\": \"mary.jane@example.com\",\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"service_tickets\": []\n    },\n    \"customer_id\": 1,\n    \"make\": \"Honda\",\n    \"mileage\": 123456,\n    \"model\": \"Civic\",\n    \"service_tickets\": [],\n    \"year\": 2020\n}"
+						},
+						{
+							"name": "Mistake",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customer_id\": 1,\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"year\": 2022,\n    \"make\": \"Cadillac\",\n    \"model\": \"XTS\",\n    \"mileage\": 7890\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/vehicles/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"vehicles",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 05:58:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "477"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"customer\": {\n        \"account\": {\n            \"customer_id\": 1,\n            \"email\": \"mary.jane@example.com\",\n            \"id\": 1,\n            \"password\": \"$2b$12$dZtOJOJ5Yi0ZEbJ1upRlFONV.DYaHPYzYReIDQxRSHUYRqUDVCWVm\"\n        },\n        \"email\": \"mary.jane@example.com\",\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"service_tickets\": []\n    },\n    \"customer_id\": 1,\n    \"make\": \"Cadillac\",\n    \"mileage\": 7890,\n    \"model\": \"XTS\",\n    \"service_tickets\": [],\n    \"year\": 2022\n}"
+						}
+					]
+				},
+				{
+					"name": "All Vehicles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/vehicles/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"vehicles",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "All Vehicles",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/vehicles/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"vehicles",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:03:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1041"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"account\": {\n                \"customer_id\": 1,\n                \"email\": \"mary.jane@example.com\",\n                \"id\": 1,\n                \"password\": \"$2b$12$dZtOJOJ5Yi0ZEbJ1upRlFONV.DYaHPYzYReIDQxRSHUYRqUDVCWVm\"\n            },\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\",\n            \"service_tickets\": []\n        },\n        \"customer_id\": 1,\n        \"make\": \"Honda\",\n        \"mileage\": 123456,\n        \"model\": \"Civic\",\n        \"service_tickets\": [],\n        \"year\": 2020\n    },\n    {\n        \"VIN\": \"John's2022CadillacXTS\",\n        \"customer\": {\n            \"account\": {\n                \"customer_id\": 2,\n                \"email\": \"john.boy@example.com\",\n                \"id\": 2,\n                \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n            },\n            \"email\": \"john.boy@example.com\",\n            \"name\": \"John Doe\",\n            \"phone\": \"7894561230\",\n            \"service_tickets\": []\n        },\n        \"customer_id\": 2,\n        \"make\": \"Cadillac\",\n        \"mileage\": 7890,\n        \"model\": \"XTS\",\n        \"service_tickets\": [],\n        \"year\": 2022\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get By VIN",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/vehicles/John's2022CadillacXTS",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"vehicles",
+								"John's2022CadillacXTS"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "John's Cadillac",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/vehicles/John's2022CadillacXTS",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"vehicles",
+										"John's2022CadillacXTS"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:06:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "475"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"customer\": {\n        \"account\": {\n            \"customer_id\": 2,\n            \"email\": \"john.boy@example.com\",\n            \"id\": 2,\n            \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n        },\n        \"email\": \"john.boy@example.com\",\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\",\n        \"service_tickets\": []\n    },\n    \"customer_id\": 2,\n    \"make\": \"Cadillac\",\n    \"mileage\": 7890,\n    \"model\": \"XTS\",\n    \"service_tickets\": [],\n    \"year\": 2022\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n    \"customer_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/vehicles/John's2022CadillacXTS",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"vehicles",
+								"John's2022CadillacXTS"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Mistake to Customer2",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\n    \"customer_id\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/vehicles/John's2022CadillacXTS",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"vehicles",
+										"John's2022CadillacXTS"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:02:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "475"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"customer\": {\n        \"account\": {\n            \"customer_id\": 2,\n            \"email\": \"john.boy@example.com\",\n            \"id\": 2,\n            \"password\": \"$2b$12$DAGfdoskP0fCxyq7tyIQb./cJzLeSgPeIp6eC/Tf9GHQT6LZE1N82\"\n        },\n        \"email\": \"john.boy@example.com\",\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\",\n        \"service_tickets\": []\n    },\n    \"customer_id\": 2,\n    \"make\": \"Cadillac\",\n    \"mileage\": 7890,\n    \"model\": \"XTS\",\n    \"service_tickets\": [],\n    \"year\": 2022\n}"
+						}
+					]
+				}
+			],
+			"description": "### Any and All Endpoint Requests for Vehicles.\n\nVehicles are associated with Customers and need to be added to the database in order to do any service on them.\n\n**These endpoints have a URL prefixed with:**\n\n`/customers/vehicles`"
+		},
+		{
+			"name": "ServiceTickets",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"service_date\": \"2025-01-16\",\n    \"service_desc\": \"change brakes, noisy\",\n    \"customer_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Jane's ServiceTicket",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"VIN\": \"Jane's2020HondaCivic\",\n    \"service_date\": \"2025-01-15\",\n    \"service_desc\": \"oil change, tire rotation\",\n    \"customer_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 08:18:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "907"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"Jane's2020HondaCivic\",\n    \"customer\": {\n        \"account\": {\n            \"customer_id\": 1,\n            \"email\": \"mary.jane@example.com\",\n            \"id\": 1,\n            \"password\": \"$2b$12$dZtOJOJ5Yi0ZEbJ1upRlFONV.DYaHPYzYReIDQxRSHUYRqUDVCWVm\"\n        },\n        \"email\": \"mary.jane@example.com\",\n        \"name\": \"Jane Doe\",\n        \"phone\": \"3216549870\",\n        \"vehicles\": [\n            {\n                \"VIN\": \"Jane's2020HondaCivic\",\n                \"make\": \"Honda\",\n                \"mileage\": 123456,\n                \"model\": \"Civic\",\n                \"year\": 2020\n            }\n        ]\n    },\n    \"customer_id\": 1,\n    \"id\": 1,\n    \"invoice\": null,\n    \"mechanic_tickets\": [],\n    \"service_date\": \"2025-01-15\",\n    \"service_desc\": \"oil change, tire rotation\",\n    \"vehicle\": {\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"make\": \"Honda\",\n        \"mileage\": 123456,\n        \"model\": \"Civic\",\n        \"year\": 2020\n    }\n}"
+						},
+						{
+							"name": "John's ServiceTicket",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"service_date\": \"2025-01-16\",\n    \"service_desc\": \"change brakes, noisy\",\n    \"customer_id\": 2\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 08:26:58 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"customer\": {\n        \"email\": \"john.boy@example.com\",\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\"\n    },\n    \"customer_id\": 2,\n    \"id\": 3,\n    \"invoice\": null,\n    \"mechanic_tickets\": [],\n    \"service_date\": \"2025-01-16\",\n    \"service_desc\": \"change brakes, noisy\",\n    \"vehicle\": {\n        \"make\": \"Cadillac\",\n        \"mileage\": 7890,\n        \"model\": \"XTS\",\n        \"year\": 2022\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "All ServiceTickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Duplicate Ticket",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 08:27:42 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1323"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"id\": 1,\n        \"invoice\": null,\n        \"mechanic_tickets\": [],\n        \"service_date\": \"2025-01-15\",\n        \"service_desc\": \"oil change, tire rotation\",\n        \"vehicle\": {\n            \"make\": \"Honda\",\n            \"mileage\": 123456,\n            \"model\": \"Civic\",\n            \"year\": 2020\n        }\n    },\n    {\n        \"VIN\": \"John's2022CadillacXTS\",\n        \"customer\": {\n            \"email\": \"john.boy@example.com\",\n            \"name\": \"John Doe\",\n            \"phone\": \"7894561230\"\n        },\n        \"customer_id\": 2,\n        \"id\": 2,\n        \"invoice\": null,\n        \"mechanic_tickets\": [],\n        \"service_date\": \"2025-01-16\",\n        \"service_desc\": \"change brakes, noisy\",\n        \"vehicle\": {\n            \"make\": \"Cadillac\",\n            \"mileage\": 7890,\n            \"model\": \"XTS\",\n            \"year\": 2022\n        }\n    },\n    {\n        \"VIN\": \"John's2022CadillacXTS\",\n        \"customer\": {\n            \"email\": \"john.boy@example.com\",\n            \"name\": \"John Doe\",\n            \"phone\": \"7894561230\"\n        },\n        \"customer_id\": 2,\n        \"id\": 3,\n        \"invoice\": null,\n        \"mechanic_tickets\": [],\n        \"service_date\": \"2025-01-16\",\n        \"service_desc\": \"change brakes, noisy\",\n        \"vehicle\": {\n            \"make\": \"Cadillac\",\n            \"mileage\": 7890,\n            \"model\": \"XTS\",\n            \"year\": 2022\n        }\n    }\n]"
+						},
+						{
+							"name": "After Mechanic Ticket",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 18:08:27 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2940"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"id\": 1,\n        \"invoice\": null,\n        \"mechanic_tickets\": [\n            {\n                \"additional_items\": [\n                    {\n                        \"id\": 11,\n                        \"inventory\": {\n                            \"name\": \"Phone Mount\",\n                            \"price\": 19.99,\n                            \"stock\": 22\n                        },\n                        \"item_id\": 26,\n                        \"quantity\": 1,\n                        \"service\": null,\n                        \"service_id\": null\n                    },\n                    {\n                        \"id\": 12,\n                        \"inventory\": {\n                            \"name\": \"Air Freshener\",\n                            \"price\": 7.99,\n                            \"stock\": 47\n                        },\n                        \"item_id\": 20,\n                        \"quantity\": 1,\n                        \"service\": null,\n                        \"service_id\": null\n                    }\n                ],\n                \"end_date\": \"2025-01-21\",\n                \"hours_worked\": 2.5,\n                \"id\": 3,\n                \"mechanic\": {\n                    \"name\": \"Bonnie Elizabeth Parker\"\n                },\n                \"mechanic_id\": 1,\n                \"service_ticket_id\": 1,\n                \"services\": [\n                    {\n                        \"name\": \"Oil Change\",\n                        \"price\": 69.95,\n                        \"service_items\": [\n                            {\n                                \"id\": 1,\n                                \"inventory\": {\n                                    \"name\": \"Motor Oil (5W-30)\",\n                                    \"price\": 9.99,\n                                    \"stock\": 96\n                                },\n                                \"item_id\": 1,\n                                \"quantity\": 4\n                            },\n                            {\n                                \"id\": 2,\n                                \"inventory\": {\n                                    \"name\": \"Oil Filter\",\n                                    \"price\": 29.99,\n                                    \"stock\": 49\n                                },\n                                \"item_id\": 2,\n                                \"quantity\": 1\n                            }\n                        ]\n                    }\n                ],\n                \"start_date\": \"2025-01-15\"\n            }\n        ],\n        \"service_date\": \"2025-01-15\",\n        \"service_desc\": \"oil change, tire rotation\",\n        \"vehicle\": {\n            \"make\": \"Honda\",\n            \"mileage\": 123456,\n            \"model\": \"Civic\",\n            \"year\": 2020\n        }\n    },\n    {\n        \"VIN\": \"John's2022CadillacXTS\",\n        \"customer\": {\n            \"email\": \"john.boy@example.com\",\n            \"name\": \"John Doe\",\n            \"phone\": \"7894561230\"\n        },\n        \"customer_id\": 2,\n        \"id\": 2,\n        \"invoice\": null,\n        \"mechanic_tickets\": [],\n        \"service_date\": \"2025-01-16\",\n        \"service_desc\": \"change brakes, noisy\",\n        \"vehicle\": {\n            \"make\": \"Cadillac\",\n            \"mileage\": 7890,\n            \"model\": \"XTS\",\n            \"year\": 2022\n        }\n    },\n    {\n        \"VIN\": \"John's2022CadillacXTS\",\n        \"customer\": {\n            \"email\": \"john.boy@example.com\",\n            \"name\": \"John Doe\",\n            \"phone\": \"7894561230\"\n        },\n        \"customer_id\": 2,\n        \"id\": 3,\n        \"invoice\": null,\n        \"mechanic_tickets\": [],\n        \"service_date\": \"2025-01-16\",\n        \"service_desc\": \"change brakes, noisy\",\n        \"vehicle\": {\n            \"make\": \"Cadillac\",\n            \"mileage\": 7890,\n            \"model\": \"XTS\",\n            \"year\": 2022\n        }\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Ticket by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "John's Ticket",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 22:40:28 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "397"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"VIN\": \"John's2022CadillacXTS\",\n    \"customer\": {\n        \"email\": \"john.boy@example.com\",\n        \"name\": \"John Doe\",\n        \"phone\": \"7894561230\"\n    },\n    \"customer_id\": 2,\n    \"id\": 2,\n    \"invoice\": null,\n    \"mechanic_tickets\": [],\n    \"service_date\": \"2025-01-16\",\n    \"service_desc\": \"change brakes, noisy\",\n    \"vehicle\": {\n        \"make\": \"Cadillac\",\n        \"mileage\": 7890,\n        \"model\": \"XTS\",\n        \"year\": 2022\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "All Customer's Tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/my-tickets/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"my-tickets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"VIN\": \"\",\n    \"service_date\": \"2025-01-15\",\n    \"service_desc\": \"basic description\",\n    \"customer_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Any and All Endpoint Requests for ServiceTickets.\n\nServiceTickets are associated with Customers, Vehicles, MechanicTickets, and Invoices.\n\nA Mechanic would need to be logged in to view, update, or delete any ServiceTicket.\n\n**These endpoints have a URL prefixed with:**\n\n`/customers/tickets`"
+		},
+		{
+			"name": "Invoices",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"invoice_date\": \"2025-01-22\",\n    \"total\": 0.0,\n    \"paid\": false,\n    \"service_ticket_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/invoices/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"invoices",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Service Ticket 1 w/o Paid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"invoice_date\": \"2025-01-22\",\n    \"total\": 0.0,\n    \"paid\": false,\n    \"service_ticket_id\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/invoices/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										"invoices",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 18:16:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2153"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"invoice_date\": \"2025-01-22\",\n    \"paid\": false,\n    \"service_ticket\": {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"mechanic_tickets\": [\n            {\n                \"additional_items\": [\n                    {\n                        \"id\": 11,\n                        \"inventory\": {\n                            \"name\": \"Phone Mount\",\n                            \"price\": 19.99,\n                            \"stock\": 22\n                        },\n                        \"item_id\": 26,\n                        \"quantity\": 1,\n                        \"service\": null,\n                        \"service_id\": null\n                    },\n                    {\n                        \"id\": 12,\n                        \"inventory\": {\n                            \"name\": \"Air Freshener\",\n                            \"price\": 7.99,\n                            \"stock\": 47\n                        },\n                        \"item_id\": 20,\n                        \"quantity\": 1,\n                        \"service\": null,\n                        \"service_id\": null\n                    }\n                ],\n                \"end_date\": \"2025-01-21\",\n                \"hours_worked\": 2.5,\n                \"id\": 3,\n                \"mechanic\": {\n                    \"name\": \"Bonnie Elizabeth Parker\"\n                },\n                \"mechanic_id\": 1,\n                \"service_ticket_id\": 1,\n                \"services\": [\n                    {\n                        \"name\": \"Oil Change\",\n                        \"price\": 69.95,\n                        \"service_items\": [\n                            {\n                                \"id\": 1,\n                                \"inventory\": {\n                                    \"name\": \"Motor Oil (5W-30)\",\n                                    \"price\": 9.99,\n                                    \"stock\": 96\n                                },\n                                \"item_id\": 1,\n                                \"quantity\": 4\n                            },\n                            {\n                                \"id\": 2,\n                                \"inventory\": {\n                                    \"name\": \"Oil Filter\",\n                                    \"price\": 29.99,\n                                    \"stock\": 49\n                                },\n                                \"item_id\": 2,\n                                \"quantity\": 1\n                            }\n                        ]\n                    }\n                ],\n                \"start_date\": \"2025-01-15\"\n            }\n        ],\n        \"service_date\": \"2025-01-15\",\n        \"service_desc\": \"oil change, tire rotation\",\n        \"vehicle\": {\n            \"make\": \"Honda\",\n            \"mileage\": 123456,\n            \"model\": \"Civic\",\n            \"year\": 2020\n        }\n    },\n    \"service_ticket_id\": 1,\n    \"total\": 167.88\n}"
+						}
+					]
+				},
+				{
+					"name": "All Invoices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/invoices/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"invoices",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "W/O Invoices",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/customers/tickets/invoices/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"customers",
+										"tickets",
+										"invoices",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 18:16:04 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "3"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[]"
+						}
+					]
+				},
+				{
+					"name": "Invoice by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/invoices/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Customer's Invoices",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/invoices/my-invoices/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"invoices",
+								"my-invoices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"paid\": true,\n    \"service_ticket_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/customers/tickets/invoices/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"customers",
+								"tickets",
+								"invoices",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Any and All Endpoint Requests for Invoices.\n\nInvoices are associated with Customers, and ServiceTickets.\n\nA Mechanic would need to be logged in to create one and are added to the database when the Mechanic has finished working on a ServiceTicket.\n\n**These endpoints have a URL prefixed with:**\n\n`/customers/tickets/invoices`"
+		},
+		{
+			"name": "Mechanics",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Clyde Chestnut 'Champion' Barrow\",\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"phone\": \"9876543210\",\n    \"salary\": 75.00\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bonnie",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Bonnie Elizabeth Parker\",\n    \"email\": \"Clydes.Bonnie@example.com\",\n    \"phone\": \"9876543210\",\n    \"salary\": 50.00\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:19:13 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "179"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"Clydes.Bonnie@example.com\",\n    \"id\": 1,\n    \"mechanic_tickets\": [],\n    \"name\": \"Bonnie Elizabeth Parker\",\n    \"phone\": \"9876543210\",\n    \"salary\": 50\n}"
+						},
+						{
+							"name": "Clyde",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Clyde Chestnut 'Champion' Barrow\",\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"phone\": \"9876543210\",\n    \"salary\": 75.00\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:20:09 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "188"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"id\": 2,\n    \"mechanic_tickets\": [],\n    \"name\": \"Clyde Chestnut 'Champion' Barrow\",\n    \"phone\": \"9876543210\",\n    \"salary\": 75\n}"
+						}
+					]
+				},
+				{
+					"name": "All Mechanics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "After 2 Creations",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:22:06 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "408"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"account\": null,\n        \"email\": \"Clydes.Bonnie@example.com\",\n        \"id\": 1,\n        \"mechanic_tickets\": [],\n        \"name\": \"Bonnie Elizabeth Parker\",\n        \"phone\": \"9876543210\",\n        \"salary\": 50\n    },\n    {\n        \"account\": null,\n        \"email\": \"Bonnies.Clyde@example.com\",\n        \"id\": 2,\n        \"mechanic_tickets\": [],\n        \"name\": \"Clyde Chestnut 'Champion' Barrow\",\n        \"phone\": \"9876543210\",\n        \"salary\": 75\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Clyde",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:22:26 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "188"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"id\": 2,\n    \"mechanic_tickets\": [],\n    \"name\": \"Clyde Chestnut 'Champion' Barrow\",\n    \"phone\": \"9876543210\",\n    \"salary\": 75\n}"
+						}
+					]
+				},
+				{
+					"name": "Get by Mechanic Login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Clyde Champion\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Clyde Champion",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Clyde Champion\"\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:23:44 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "170"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"account\": null,\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"id\": 2,\n    \"mechanic_tickets\": [],\n    \"name\": \"Clyde Champion\",\n    \"phone\": \"9876543210\",\n    \"salary\": 75\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Top Mechanics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/top-mechanics",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"top-mechanics"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Before MechanicTickets",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/top-mechanics",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"top-mechanics"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:24:05 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "390"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"account\": null,\n        \"email\": \"Clydes.Bonnie@example.com\",\n        \"id\": 1,\n        \"mechanic_tickets\": [],\n        \"name\": \"Bonnie Elizabeth Parker\",\n        \"phone\": \"9876543210\",\n        \"salary\": 50\n    },\n    {\n        \"account\": null,\n        \"email\": \"Bonnies.Clyde@example.com\",\n        \"id\": 2,\n        \"mechanic_tickets\": [],\n        \"name\": \"Clyde Champion\",\n        \"phone\": \"9876543210\",\n        \"salary\": 75\n    }\n]"
+						}
+					]
+				}
+			],
+			"description": "### Any and All Endpoint Requests for Mechanics.\n\nMechanics are associated with MechanicAccounts, and MechaniTickets.\n\nA Mechanic would need to be logged in to update or delete their own data.\n\n**These endpoints have a URL prefixed with:**\n\n`/mechanics`"
+		},
+		{
+			"name": "MechanicAccounts",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"mechanic_id\": 2,\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"password\": \"$Elizabeth1934\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bonnie's Account",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mechanic_id\": 1,\n    \"email\": \"Clydes.Bonnie@example.com\",\n    \"password\": \"$Chestnut1932\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:26:18 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "285"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"email\": \"Clydes.Bonnie@example.com\",\n    \"id\": 1,\n    \"mechanic\": {\n        \"email\": \"Clydes.Bonnie@example.com\",\n        \"id\": 1,\n        \"mechanic_tickets\": [],\n        \"name\": \"Bonnie Elizabeth Parker\",\n        \"phone\": \"9876543210\",\n        \"salary\": 50\n    },\n    \"mechanic_id\": 1,\n    \"role\": \"Mechanic\"\n}"
+						},
+						{
+							"name": "Clyde's Account w/o load_only=True",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mechanic_id\": 2,\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"password\": \"$Elizabeth1934\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:28:02 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "354"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"id\": 2,\n    \"mechanic\": {\n        \"email\": \"Bonnies.Clyde@example.com\",\n        \"id\": 2,\n        \"mechanic_tickets\": [],\n        \"name\": \"Clyde Champion\",\n        \"phone\": \"9876543210\",\n        \"salary\": 75\n    },\n    \"mechanic_id\": 2,\n    \"password\": \"$2b$12$mwpzpvcBAY57DzzrT0H1butL10HHbkXMeYjAKZcQZzocS4KtekoOG\",\n    \"role\": \"Mechanic\"\n}"
+						}
+					]
+				},
+				{
+					"name": "All MechanicAccounts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "After 2 Creations",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:28:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "782"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"email\": \"Clydes.Bonnie@example.com\",\n        \"id\": 1,\n        \"mechanic\": {\n            \"email\": \"Clydes.Bonnie@example.com\",\n            \"id\": 1,\n            \"mechanic_tickets\": [],\n            \"name\": \"Bonnie Elizabeth Parker\",\n            \"phone\": \"9876543210\",\n            \"salary\": 50\n        },\n        \"mechanic_id\": 1,\n        \"password\": \"$2b$12$CLTosWaLiwj1qRsl.ehiSefBHDjgpp2B2ckf8Cbc7LxncMwE4lhfK\",\n        \"role\": \"Mechanic\"\n    },\n    {\n        \"email\": \"Bonnies.Clyde@example.com\",\n        \"id\": 2,\n        \"mechanic\": {\n            \"email\": \"Bonnies.Clyde@example.com\",\n            \"id\": 2,\n            \"mechanic_tickets\": [],\n            \"name\": \"Clyde Champion\",\n            \"phone\": \"9876543210\",\n            \"salary\": 75\n        },\n        \"mechanic_id\": 2,\n        \"password\": \"$2b$12$mwpzpvcBAY57DzzrT0H1butL10HHbkXMeYjAKZcQZzocS4KtekoOG\",\n        \"role\": \"Mechanic\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "MechanicAccount By ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Bonnie's Account",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:29:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "363"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"email\": \"Clydes.Bonnie@example.com\",\n    \"id\": 1,\n    \"mechanic\": {\n        \"email\": \"Clydes.Bonnie@example.com\",\n        \"id\": 1,\n        \"mechanic_tickets\": [],\n        \"name\": \"Bonnie Elizabeth Parker\",\n        \"phone\": \"9876543210\",\n        \"salary\": 50\n    },\n    \"mechanic_id\": 1,\n    \"password\": \"$2b$12$CLTosWaLiwj1qRsl.ehiSefBHDjgpp2B2ckf8Cbc7LxncMwE4lhfK\",\n    \"role\": \"Mechanic\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get By Login Details",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"1934Elizabeth$\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								"2"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Clyde Password",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"1934Elizabeth$\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/2",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 23:12:00 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "299"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"id\": 2,\n    \"mechanic\": {\n        \"mechanic_tickets\": [],\n        \"name\": \"Clyde Champion\",\n        \"phone\": \"9876543210\",\n        \"salary\": 75\n    },\n    \"mechanic_id\": 2,\n    \"password\": \"$2b$12$6YuDqIineouVgM.sUX571O.wsJ8KiP9Y7I/cKCwBdKVKxpl4d8UDK\",\n    \"role\": \"Mechanic\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"password\": \"1934Elizabeth$\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/accounts/login",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"accounts",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Clyde Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"password\": \"$Elizabeth1934\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 22:44:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "250"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDI5NDI2NjMsImlhdCI6MTc0Mjg1NjI2Mywic3ViIjoiMiIsInJvbGUiOiJNZWNoYW5pYyJ9.QgDOKt-1aiKBYh87rGFgQNBTjUjIGJ67kk5GNOEAM88\",\n    \"message\": \"Successfully Logged In\",\n    \"status\": \"success\"\n}"
+						},
+						{
+							"name": "After Update Success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"Bonnies.Clyde@example.com\",\n    \"password\": \"1934Elizabeth$\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/accounts/login",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"accounts",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 23:12:51 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "250"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"auth_token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NDI5NDQzNzEsImlhdCI6MTc0Mjg1Nzk3MSwic3ViIjoiMiIsInJvbGUiOiJNZWNoYW5pYyJ9.cCCJGxL_8Mcgiw1xgRwu8-3nYaoBQoo18LW60iT8_60\",\n    \"message\": \"Successfully Logged In\",\n    \"status\": \"success\"\n}"
+						}
+					]
+				}
+			],
+			"description": "### Any and All Endpoint Requests for MechanicAccounts.\n\nMechanicAccounts are associated with Mechanics.\n\nA Mechanic would need to be logged in to view their account, update, or delete them.\n\nA Mechanic would need to be logged in to view All MechanicAccounts.\n\nAll passwords are hashed as well. Ensuring proper security protocols are in place to keep account data safe.\n\n**These endpoints have a URL prefixed with:**\n\n`/mechanics/accounts`"
+		},
+		{
+			"name": "MechanicTickets",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start_date\": \"2025-01-20\",\n    \"hours_worked\": 0.0,\n    \"service_ticket_id\": 1,\n    \"mechanic_id\": 1,\n    \"service_ids\": [1],\n    \"additional_items\": [\n        {\n            \"item_id\": 31,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 26,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 20,\n            \"quantity\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/tickets/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"tickets",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Addtl Unnecessary Fields",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"start_date\": \"2025-01-20\",\n    \"hours_worked\": 0.0,\n    \"service_ticket_id\": 1,\n    \"mechanic_id\": 1,\n    \"service_ids\": [1],\n    \"additional_items\": [\n        {\n            \"item_id\": 31,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 26,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 20,\n            \"quantity\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/tickets/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"tickets",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 00:32:39 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2176"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"additional_items\": [\n        {\n            \"id\": 6,\n            \"inventory\": {\n                \"name\": \"All-Weather Windshield Fluid\",\n                \"price\": 11.99,\n                \"stock\": 29\n            },\n            \"item_id\": 31,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        },\n        {\n            \"id\": 7,\n            \"inventory\": {\n                \"name\": \"Phone Mount\",\n                \"price\": 19.99,\n                \"stock\": 24\n            },\n            \"item_id\": 26,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        },\n        {\n            \"id\": 8,\n            \"inventory\": {\n                \"name\": \"Air Freshener\",\n                \"price\": 7.99,\n                \"stock\": 49\n            },\n            \"item_id\": 20,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        }\n    ],\n    \"end_date\": null,\n    \"hours_worked\": 0,\n    \"id\": 3,\n    \"mechanic\": {\n        \"account\": {\n            \"email\": \"Clydes.Bonnie@example.com\",\n            \"id\": 1,\n            \"mechanic_id\": 1,\n            \"password\": \"$2b$12$CLTosWaLiwj1qRsl.ehiSefBHDjgpp2B2ckf8Cbc7LxncMwE4lhfK\",\n            \"role\": \"Mechanic\"\n        },\n        \"email\": \"Clydes.Bonnie@example.com\",\n        \"name\": \"Bonnie Elizabeth Parker\",\n        \"phone\": \"9876543210\",\n        \"salary\": 50\n    },\n    \"mechanic_id\": 1,\n    \"service_ticket\": {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"invoice\": null,\n        \"service_date\": \"2025-01-15\",\n        \"service_desc\": \"oil change, tire rotation\",\n        \"vehicle\": {\n            \"make\": \"Honda\",\n            \"mileage\": 123456,\n            \"model\": \"Civic\",\n            \"year\": 2020\n        }\n    },\n    \"service_ticket_id\": 1,\n    \"services\": [\n        {\n            \"name\": \"Oil Change\",\n            \"price\": 69.95,\n            \"service_items\": [\n                {\n                    \"id\": 1,\n                    \"inventory\": {\n                        \"name\": \"Motor Oil (5W-30)\",\n                        \"price\": 9.99,\n                        \"stock\": 96\n                    },\n                    \"item_id\": 1,\n                    \"quantity\": 4\n                },\n                {\n                    \"id\": 2,\n                    \"inventory\": {\n                        \"name\": \"Oil Filter\",\n                        \"price\": 29.99,\n                        \"stock\": 49\n                    },\n                    \"item_id\": 2,\n                    \"quantity\": 1\n                }\n            ]\n        }\n    ],\n    \"start_date\": \"2025-03-24\"\n}"
+						}
+					]
+				},
+				{
+					"name": "All MechanicTickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/tickets/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"tickets",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "After Fields Update",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/tickets/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"tickets",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 00:35:36 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2067"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"additional_items\": [\n            {\n                \"id\": 6,\n                \"inventory\": {\n                    \"name\": \"All-Weather Windshield Fluid\",\n                    \"price\": 11.99,\n                    \"stock\": 29\n                },\n                \"item_id\": 31,\n                \"quantity\": 1,\n                \"service\": null,\n                \"service_id\": null\n            },\n            {\n                \"id\": 7,\n                \"inventory\": {\n                    \"name\": \"Phone Mount\",\n                    \"price\": 19.99,\n                    \"stock\": 24\n                },\n                \"item_id\": 26,\n                \"quantity\": 1,\n                \"service\": null,\n                \"service_id\": null\n            },\n            {\n                \"id\": 8,\n                \"inventory\": {\n                    \"name\": \"Air Freshener\",\n                    \"price\": 7.99,\n                    \"stock\": 49\n                },\n                \"item_id\": 20,\n                \"quantity\": 1,\n                \"service\": null,\n                \"service_id\": null\n            }\n        ],\n        \"end_date\": null,\n        \"hours_worked\": 0,\n        \"id\": 3,\n        \"mechanic\": {\n            \"name\": \"Bonnie Elizabeth Parker\"\n        },\n        \"mechanic_id\": 1,\n        \"service_ticket\": {\n            \"VIN\": \"Jane's2020HondaCivic\",\n            \"customer\": {\n                \"email\": \"mary.jane@example.com\",\n                \"name\": \"Jane Doe\",\n                \"phone\": \"3216549870\"\n            },\n            \"customer_id\": 1,\n            \"invoice\": null,\n            \"service_date\": \"2025-01-15\",\n            \"service_desc\": \"oil change, tire rotation\",\n            \"vehicle\": {\n                \"make\": \"Honda\",\n                \"mileage\": 123456,\n                \"model\": \"Civic\",\n                \"year\": 2020\n            }\n        },\n        \"service_ticket_id\": 1,\n        \"services\": [\n            {\n                \"name\": \"Oil Change\",\n                \"price\": 69.95,\n                \"service_items\": [\n                    {\n                        \"id\": 1,\n                        \"inventory\": {\n                            \"name\": \"Motor Oil (5W-30)\",\n                            \"price\": 9.99,\n                            \"stock\": 96\n                        },\n                        \"item_id\": 1,\n                        \"quantity\": 4\n                    },\n                    {\n                        \"id\": 2,\n                        \"inventory\": {\n                            \"name\": \"Oil Filter\",\n                            \"price\": 29.99,\n                            \"stock\": 49\n                        },\n                        \"item_id\": 2,\n                        \"quantity\": 1\n                    }\n                ]\n            }\n        ],\n        \"start_date\": \"2025-03-24\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Ticket by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/tickets/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"tickets",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "After Service Completion",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/tickets/3",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"tickets",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 18:06:46 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1643"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"additional_items\": [\n        {\n            \"id\": 11,\n            \"inventory\": {\n                \"name\": \"Phone Mount\",\n                \"price\": 19.99,\n                \"stock\": 22\n            },\n            \"item_id\": 26,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        },\n        {\n            \"id\": 12,\n            \"inventory\": {\n                \"name\": \"Air Freshener\",\n                \"price\": 7.99,\n                \"stock\": 47\n            },\n            \"item_id\": 20,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        }\n    ],\n    \"end_date\": \"2025-01-21\",\n    \"hours_worked\": 2.5,\n    \"id\": 3,\n    \"mechanic\": {\n        \"name\": \"Bonnie Elizabeth Parker\"\n    },\n    \"mechanic_id\": 1,\n    \"service_ticket\": {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"invoice\": null,\n        \"service_date\": \"2025-01-15\",\n        \"service_desc\": \"oil change, tire rotation\",\n        \"vehicle\": {\n            \"make\": \"Honda\",\n            \"mileage\": 123456,\n            \"model\": \"Civic\",\n            \"year\": 2020\n        }\n    },\n    \"service_ticket_id\": 1,\n    \"services\": [\n        {\n            \"name\": \"Oil Change\",\n            \"price\": 69.95,\n            \"service_items\": [\n                {\n                    \"id\": 1,\n                    \"inventory\": {\n                        \"name\": \"Motor Oil (5W-30)\",\n                        \"price\": 9.99,\n                        \"stock\": 96\n                    },\n                    \"item_id\": 1,\n                    \"quantity\": 4\n                },\n                {\n                    \"id\": 2,\n                    \"inventory\": {\n                        \"name\": \"Oil Filter\",\n                        \"price\": 29.99,\n                        \"stock\": 49\n                    },\n                    \"item_id\": 2,\n                    \"quantity\": 1\n                }\n            ]\n        }\n    ],\n    \"start_date\": \"2025-01-15\"\n}"
+						}
+					]
+				},
+				{
+					"name": "All Mechanic's Tickets",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/tickets/my-tickets/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"tickets",
+								"my-tickets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"start_date\": \"2025-01-15\",\n    \"end_date\": \"2025-01-21\",\n    \"hours_worked\": 2.5,\n    \"additional_items\": [\n        {\n            \"item_id\": 26,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 20,\n            \"quantity\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/mechanics/tickets/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"mechanics",
+								"tickets",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Removing Washer Fluid",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"start_date\": \"2025-01-15\",\n    \"end_date\": \"2025-01-21\",\n    \"hours_worked\": 2.5,\n    \"additional_items\": [\n        {\n            \"item_id\": 26,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 20,\n            \"quantity\": 1\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/mechanics/tickets/3",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"mechanics",
+										"tickets",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Mar 2025 18:05:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1642"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"additional_items\": [\n        {\n            \"id\": 9,\n            \"inventory\": {\n                \"name\": \"Phone Mount\",\n                \"price\": 19.99,\n                \"stock\": 23\n            },\n            \"item_id\": 26,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        },\n        {\n            \"id\": 10,\n            \"inventory\": {\n                \"name\": \"Air Freshener\",\n                \"price\": 7.99,\n                \"stock\": 48\n            },\n            \"item_id\": 20,\n            \"quantity\": 1,\n            \"service\": null,\n            \"service_id\": null\n        }\n    ],\n    \"end_date\": \"2025-01-21\",\n    \"hours_worked\": 2.5,\n    \"id\": 3,\n    \"mechanic\": {\n        \"name\": \"Bonnie Elizabeth Parker\"\n    },\n    \"mechanic_id\": 1,\n    \"service_ticket\": {\n        \"VIN\": \"Jane's2020HondaCivic\",\n        \"customer\": {\n            \"email\": \"mary.jane@example.com\",\n            \"name\": \"Jane Doe\",\n            \"phone\": \"3216549870\"\n        },\n        \"customer_id\": 1,\n        \"invoice\": null,\n        \"service_date\": \"2025-01-15\",\n        \"service_desc\": \"oil change, tire rotation\",\n        \"vehicle\": {\n            \"make\": \"Honda\",\n            \"mileage\": 123456,\n            \"model\": \"Civic\",\n            \"year\": 2020\n        }\n    },\n    \"service_ticket_id\": 1,\n    \"services\": [\n        {\n            \"name\": \"Oil Change\",\n            \"price\": 69.95,\n            \"service_items\": [\n                {\n                    \"id\": 1,\n                    \"inventory\": {\n                        \"name\": \"Motor Oil (5W-30)\",\n                        \"price\": 9.99,\n                        \"stock\": 96\n                    },\n                    \"item_id\": 1,\n                    \"quantity\": 4\n                },\n                {\n                    \"id\": 2,\n                    \"inventory\": {\n                        \"name\": \"Oil Filter\",\n                        \"price\": 29.99,\n                        \"stock\": 49\n                    },\n                    \"item_id\": 2,\n                    \"quantity\": 1\n                }\n            ]\n        }\n    ],\n    \"start_date\": \"2025-01-15\"\n}"
+						}
+					]
+				}
+			],
+			"description": "### Any and All Endpoint Requests for MechanicTickets.\n\nMechanicTickets are associated with Mechanics, Services, ServiceItems, and ServiceTickets.\n\nA Mechanic would need to be logged in to create one and are added to the database when the Mechanic starts working on a ServiceTicket.\n\n**These endpoints have a URL prefixed with:**\n\n`/mechanics/tickets`"
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n      \"name\": \"All-Weather Windshield Fluid\",\n      \"price\": 11.99,\n      \"stock\": 30\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Motor Oil",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Motor Oil (5W-30)\", \n    \"price\": 9.99, \n    \"stock\": 100\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:49:16 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "101"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Motor Oil (5W-30)\",\n    \"price\": 9.99,\n    \"service_items\": [],\n    \"stock\": 100\n}"
+						},
+						{
+							"name": "Oil Filter",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"Oil Filter\", \"price\": 29.99, \"stock\": 50}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:49:50 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "94"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"name\": \"Oil Filter\",\n    \"price\": 29.99,\n    \"service_items\": [],\n    \"stock\": 50\n}"
+						},
+						{
+							"name": "Brake Pads",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"Brake Pads (Set)\", \"price\": 129.99, \"stock\": 30}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:50:17 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "101"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"name\": \"Brake Pads (Set)\",\n    \"price\": 129.99,\n    \"service_items\": [],\n    \"stock\": 30\n}"
+						},
+						{
+							"name": "Brake Cleaner",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"name\": \"Brake Cleaner Spray\", \"price\": 9.99, \"stock\": 50}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 06:50:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "102"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 4,\n    \"name\": \"Brake Cleaner Spray\",\n    \"price\": 9.99,\n    \"service_items\": [],\n    \"stock\": 50\n}"
+						},
+						{
+							"name": "Air Freshener",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\n      \"name\": \"Air Freshener\",\n      \"price\": 7.99,\n      \"stock\": 50\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:31:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "97"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 20,\n    \"name\": \"Air Freshener\",\n    \"price\": 7.99,\n    \"service_items\": [],\n    \"stock\": 50\n}"
+						},
+						{
+							"name": "Windshield Washer Fluid",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\n      \"name\": \"Windshield Washer Fluid\",\n      \"price\": 6.99,\n      \"stock\": 30\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:31:41 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "107"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 21,\n    \"name\": \"Windshield Washer Fluid\",\n    \"price\": 6.99,\n    \"service_items\": [],\n    \"stock\": 30\n}"
+						},
+						{
+							"name": "Wiper Blades",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "    {\n      \"name\": \"Wiper Blades\",\n      \"price\": 21.99,\n      \"stock\": 40\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:32:20 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "97"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 22,\n    \"name\": \"Wiper Blades\",\n    \"price\": 21.99,\n    \"service_items\": [],\n    \"stock\": 40\n}"
+						}
+					]
+				},
+				{
+					"name": "All Inventory",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Duplicate MechanicTickets",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:36:37 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4809"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Motor Oil (5W-30)\",\n        \"price\": 9.99,\n        \"service_items\": [\n            {\n                \"id\": 1,\n                \"mechanic_tickets\": {},\n                \"quantity\": 4,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Oil Change\",\n                    \"price\": 69.95\n                },\n                \"service_id\": 1\n            }\n        ],\n        \"stock\": 100\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Oil Filter\",\n        \"price\": 29.99,\n        \"service_items\": [\n            {\n                \"id\": 2,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Oil Change\",\n                    \"price\": 69.95\n                },\n                \"service_id\": 1\n            }\n        ],\n        \"stock\": 50\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Brake Pads (Set)\",\n        \"price\": 129.99,\n        \"service_items\": [\n            {\n                \"id\": 3,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Brake Service\",\n                    \"price\": 189.99\n                },\n                \"service_id\": 2\n            }\n        ],\n        \"stock\": 30\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Brake Cleaner Spray\",\n        \"price\": 9.99,\n        \"service_items\": [\n            {\n                \"id\": 4,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Brake Service\",\n                    \"price\": 189.99\n                },\n                \"service_id\": 2\n            }\n        ],\n        \"stock\": 50\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Car Battery\",\n        \"price\": 139.99,\n        \"service_items\": [\n            {\n                \"id\": 5,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Battery Replacement\",\n                    \"price\": 179.99\n                },\n                \"service_id\": 3\n            }\n        ],\n        \"stock\": 20\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Battery Terminal Cleaner\",\n        \"price\": 7.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 7,\n        \"name\": \"Spark Plug\",\n        \"price\": 12.99,\n        \"service_items\": [],\n        \"stock\": 80\n    },\n    {\n        \"id\": 8,\n        \"name\": \"Anti-Seize Compound\",\n        \"price\": 5.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 9,\n        \"name\": \"Transmission Fluid\",\n        \"price\": 11.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 10,\n        \"name\": \"Flush Additive\",\n        \"price\": 9.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 11,\n        \"name\": \"Coolant\",\n        \"price\": 15.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 12,\n        \"name\": \"Flush Kit\",\n        \"price\": 8.99,\n        \"service_items\": [],\n        \"stock\": 15\n    },\n    {\n        \"id\": 13,\n        \"name\": \"Refrigerant (R134a)\",\n        \"price\": 12.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 14,\n        \"name\": \"Cabin Air Filter\",\n        \"price\": 24.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 15,\n        \"name\": \"Fuel System Cleaner\",\n        \"price\": 14.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 16,\n        \"name\": \"Fuel Filter\",\n        \"price\": 19.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 17,\n        \"name\": \"Timing Belt Kit\",\n        \"price\": 239.99,\n        \"service_items\": [],\n        \"stock\": 10\n    },\n    {\n        \"id\": 18,\n        \"name\": \"Headlight Bulb\",\n        \"price\": 19.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 19,\n        \"name\": \"Power Steering Fluid\",\n        \"price\": 7.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 20,\n        \"name\": \"Air Freshener\",\n        \"price\": 7.99,\n        \"service_items\": [],\n        \"stock\": 50\n    },\n    {\n        \"id\": 21,\n        \"name\": \"Windshield Washer Fluid\",\n        \"price\": 6.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 22,\n        \"name\": \"Wiper Blades\",\n        \"price\": 21.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 23,\n        \"name\": \"Engine Oil (Quart)\",\n        \"price\": 11.99,\n        \"service_items\": [],\n        \"stock\": 100\n    },\n    {\n        \"id\": 24,\n        \"name\": \"Tire Sealant\",\n        \"price\": 17.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 25,\n        \"name\": \"Portable Jump Starter\",\n        \"price\": 79.99,\n        \"service_items\": [],\n        \"stock\": 10\n    },\n    {\n        \"id\": 26,\n        \"name\": \"Phone Mount\",\n        \"price\": 19.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 27,\n        \"name\": \"Car Battery Charger\",\n        \"price\": 99.99,\n        \"service_items\": [],\n        \"stock\": 15\n    },\n    {\n        \"id\": 28,\n        \"name\": \"Floor Mats (Set)\",\n        \"price\": 69.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 29,\n        \"name\": \"Fuel Injector Cleaner\",\n        \"price\": 8.99,\n        \"service_items\": [],\n        \"stock\": 35\n    },\n    {\n        \"id\": 30,\n        \"name\": \"Motor Flush Additive\",\n        \"price\": 13.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 31,\n        \"name\": \"All-Weather Windshield Fluid\",\n        \"price\": 11.99,\n        \"service_items\": [],\n        \"stock\": 30\n    }\n]"
+						},
+						{
+							"name": "Fixed Duplication",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:40:57 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "4649"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"name\": \"Motor Oil (5W-30)\",\n        \"price\": 9.99,\n        \"service_items\": [\n            {\n                \"id\": 1,\n                \"quantity\": 4,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Oil Change\",\n                    \"price\": 69.95\n                },\n                \"service_id\": 1\n            }\n        ],\n        \"stock\": 100\n    },\n    {\n        \"id\": 2,\n        \"name\": \"Oil Filter\",\n        \"price\": 29.99,\n        \"service_items\": [\n            {\n                \"id\": 2,\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Oil Change\",\n                    \"price\": 69.95\n                },\n                \"service_id\": 1\n            }\n        ],\n        \"stock\": 50\n    },\n    {\n        \"id\": 3,\n        \"name\": \"Brake Pads (Set)\",\n        \"price\": 129.99,\n        \"service_items\": [\n            {\n                \"id\": 3,\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Brake Service\",\n                    \"price\": 189.99\n                },\n                \"service_id\": 2\n            }\n        ],\n        \"stock\": 30\n    },\n    {\n        \"id\": 4,\n        \"name\": \"Brake Cleaner Spray\",\n        \"price\": 9.99,\n        \"service_items\": [\n            {\n                \"id\": 4,\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Brake Service\",\n                    \"price\": 189.99\n                },\n                \"service_id\": 2\n            }\n        ],\n        \"stock\": 50\n    },\n    {\n        \"id\": 5,\n        \"name\": \"Car Battery\",\n        \"price\": 139.99,\n        \"service_items\": [\n            {\n                \"id\": 5,\n                \"quantity\": 1,\n                \"service\": {\n                    \"mechanic_tickets\": [],\n                    \"name\": \"Battery Replacement\",\n                    \"price\": 179.99\n                },\n                \"service_id\": 3\n            }\n        ],\n        \"stock\": 20\n    },\n    {\n        \"id\": 6,\n        \"name\": \"Battery Terminal Cleaner\",\n        \"price\": 7.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 7,\n        \"name\": \"Spark Plug\",\n        \"price\": 12.99,\n        \"service_items\": [],\n        \"stock\": 80\n    },\n    {\n        \"id\": 8,\n        \"name\": \"Anti-Seize Compound\",\n        \"price\": 5.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 9,\n        \"name\": \"Transmission Fluid\",\n        \"price\": 11.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 10,\n        \"name\": \"Flush Additive\",\n        \"price\": 9.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 11,\n        \"name\": \"Coolant\",\n        \"price\": 15.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 12,\n        \"name\": \"Flush Kit\",\n        \"price\": 8.99,\n        \"service_items\": [],\n        \"stock\": 15\n    },\n    {\n        \"id\": 13,\n        \"name\": \"Refrigerant (R134a)\",\n        \"price\": 12.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 14,\n        \"name\": \"Cabin Air Filter\",\n        \"price\": 24.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 15,\n        \"name\": \"Fuel System Cleaner\",\n        \"price\": 14.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 16,\n        \"name\": \"Fuel Filter\",\n        \"price\": 19.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 17,\n        \"name\": \"Timing Belt Kit\",\n        \"price\": 239.99,\n        \"service_items\": [],\n        \"stock\": 10\n    },\n    {\n        \"id\": 18,\n        \"name\": \"Headlight Bulb\",\n        \"price\": 19.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 19,\n        \"name\": \"Power Steering Fluid\",\n        \"price\": 7.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 20,\n        \"name\": \"Air Freshener\",\n        \"price\": 7.99,\n        \"service_items\": [],\n        \"stock\": 50\n    },\n    {\n        \"id\": 21,\n        \"name\": \"Windshield Washer Fluid\",\n        \"price\": 6.99,\n        \"service_items\": [],\n        \"stock\": 30\n    },\n    {\n        \"id\": 22,\n        \"name\": \"Wiper Blades\",\n        \"price\": 21.99,\n        \"service_items\": [],\n        \"stock\": 40\n    },\n    {\n        \"id\": 23,\n        \"name\": \"Engine Oil (Quart)\",\n        \"price\": 11.99,\n        \"service_items\": [],\n        \"stock\": 100\n    },\n    {\n        \"id\": 24,\n        \"name\": \"Tire Sealant\",\n        \"price\": 17.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 25,\n        \"name\": \"Portable Jump Starter\",\n        \"price\": 79.99,\n        \"service_items\": [],\n        \"stock\": 10\n    },\n    {\n        \"id\": 26,\n        \"name\": \"Phone Mount\",\n        \"price\": 19.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 27,\n        \"name\": \"Car Battery Charger\",\n        \"price\": 99.99,\n        \"service_items\": [],\n        \"stock\": 15\n    },\n    {\n        \"id\": 28,\n        \"name\": \"Floor Mats (Set)\",\n        \"price\": 69.99,\n        \"service_items\": [],\n        \"stock\": 20\n    },\n    {\n        \"id\": 29,\n        \"name\": \"Fuel Injector Cleaner\",\n        \"price\": 8.99,\n        \"service_items\": [],\n        \"stock\": 35\n    },\n    {\n        \"id\": 30,\n        \"name\": \"Motor Flush Additive\",\n        \"price\": 13.99,\n        \"service_items\": [],\n        \"stock\": 25\n    },\n    {\n        \"id\": 31,\n        \"name\": \"All-Weather Windshield Fluid\",\n        \"price\": 11.99,\n        \"service_items\": [],\n        \"stock\": 30\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Inventory by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"1"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Motor Oil",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/1",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 23:18:01 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "249"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"name\": \"Motor Oil (5W-30)\",\n    \"price\": 9.99,\n    \"service_items\": [\n        {\n            \"mechanic_tickets\": {},\n            \"service\": {\n                \"name\": \"Oil Change\",\n                \"price\": 69.95\n            },\n            \"service_id\": 1\n        }\n    ],\n    \"stock\": 100\n}"
+						},
+						{
+							"name": "Brake Pads After Update",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/3",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 23:23:23 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "253"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"name\": \"Brake Pads (Set)\",\n    \"price\": 119.99,\n    \"service_items\": [\n        {\n            \"mechanic_tickets\": {},\n            \"service\": {\n                \"name\": \"Brake Service\",\n                \"price\": 189.99\n            },\n            \"service_id\": 2\n        }\n    ],\n    \"stock\": 50\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Inventory",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"stock\": 50,\n    \"price\": 119.99\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"3"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Brake Pads Stock & Price",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"stock\": 50,\n    \"price\": 119.99\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/3",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"3"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 23:22:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "253"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"name\": \"Brake Pads (Set)\",\n    \"price\": 119.99,\n    \"service_items\": [\n        {\n            \"mechanic_tickets\": {},\n            \"service\": {\n                \"name\": \"Brake Service\",\n                \"price\": 189.99\n            },\n            \"service_id\": 2\n        }\n    ],\n    \"stock\": 50\n}"
+						}
+					]
+				}
+			],
+			"description": "### Any and All Endpoint Requests for Inventory.\n\nInventory is associated with ServiceItems, and Services.\n\nA Mechanic would need to be logged in to create one and need to be added to the database to associate them with ServiceItems or Services.\n\n**These endpoints have a URL prefixed with:**\n\n`/inventory`"
+		},
+		{
+			"name": "ServiceItems",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item_id\": 1,\n    \"quantity\": 5,\n    \"service_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/items/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"items",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All ServiceItems",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/items/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"items",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "All ServiceItems",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/items/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"items",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 08:07:35 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1415"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"inventory\": {\n            \"name\": \"Motor Oil (5W-30)\",\n            \"price\": 9.99,\n            \"stock\": 100\n        },\n        \"item_id\": 1,\n        \"mechanic_tickets\": {},\n        \"quantity\": 4,\n        \"service\": {\n            \"name\": \"Oil Change\",\n            \"price\": 69.95\n        },\n        \"service_id\": 1\n    },\n    {\n        \"id\": 2,\n        \"inventory\": {\n            \"name\": \"Oil Filter\",\n            \"price\": 29.99,\n            \"stock\": 50\n        },\n        \"item_id\": 2,\n        \"mechanic_tickets\": {},\n        \"quantity\": 1,\n        \"service\": {\n            \"name\": \"Oil Change\",\n            \"price\": 69.95\n        },\n        \"service_id\": 1\n    },\n    {\n        \"id\": 3,\n        \"inventory\": {\n            \"name\": \"Brake Pads (Set)\",\n            \"price\": 129.99,\n            \"stock\": 30\n        },\n        \"item_id\": 3,\n        \"mechanic_tickets\": {},\n        \"quantity\": 1,\n        \"service\": {\n            \"name\": \"Brake Service\",\n            \"price\": 189.99\n        },\n        \"service_id\": 2\n    },\n    {\n        \"id\": 4,\n        \"inventory\": {\n            \"name\": \"Brake Cleaner Spray\",\n            \"price\": 9.99,\n            \"stock\": 50\n        },\n        \"item_id\": 4,\n        \"mechanic_tickets\": {},\n        \"quantity\": 1,\n        \"service\": {\n            \"name\": \"Brake Service\",\n            \"price\": 189.99\n        },\n        \"service_id\": 2\n    },\n    {\n        \"id\": 5,\n        \"inventory\": {\n            \"name\": \"Car Battery\",\n            \"price\": 139.99,\n            \"stock\": 20\n        },\n        \"item_id\": 5,\n        \"mechanic_tickets\": {},\n        \"quantity\": 1,\n        \"service\": {\n            \"name\": \"Battery Replacement\",\n            \"price\": 179.99\n        },\n        \"service_id\": 3\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "ServiceItem by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/items/5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"items",
+								"5"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Car Battery",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/inventory/items/5",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"inventory",
+										"items",
+										"5"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 08:08:56 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "253"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"inventory\": {\n        \"name\": \"Car Battery\",\n        \"price\": 139.99,\n        \"stock\": 20\n    },\n    \"item_id\": 5,\n    \"mechanic_tickets\": {},\n    \"quantity\": 1,\n    \"service\": {\n        \"name\": \"Battery Replacement\",\n        \"price\": 179.99\n    },\n    \"service_id\": 3\n}"
+						}
+					]
+				},
+				{
+					"name": "Update ServiceItem",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"item_id\": 1,\n    \"quantity\": 25,\n    \"service_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/inventory/items/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"inventory",
+								"items",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Any and All Endpoint Requests for ServiceItems.\n\nServiceItems are associated with Services and/or MechanicTickets.\n\nThey need to be added to the database in order to include quantity with them.\n\n**These endpoints have a URL prefixed with:**\n\n`/inventory/items`"
+		},
+		{
+			"name": "Services",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Battery Replacement\",\n    \"price\": 179.99,\n    \"service_items\": [\n        {\"item_id\": 5, \"quantity\": 1}\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/services/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"services",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Oil Change",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Oil Change\",\n    \"price\": 69.95,\n    \"service_items\": [\n        {\"item_id\": 1, \"quantity\": 4},\n        {\"item_id\": 2, \"quantity\": 1}\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/services/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"services",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:13:03 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1342"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 1,\n    \"mechanic_tickets\": [],\n    \"name\": \"Oil Change\",\n    \"price\": 69.95,\n    \"service_items\": [\n        {\n            \"id\": 1,\n            \"inventory\": {\n                \"name\": \"Motor Oil (5W-30)\",\n                \"price\": 9.99,\n                \"service_items\": [\n                    {\n                        \"id\": 1,\n                        \"mechanic_tickets\": {\n                            \"services\": []\n                        },\n                        \"quantity\": 4,\n                        \"service\": {\n                            \"mechanic_tickets\": [],\n                            \"name\": \"Oil Change\",\n                            \"price\": 69.95\n                        },\n                        \"service_id\": 1\n                    }\n                ],\n                \"stock\": 100\n            },\n            \"item_id\": 1,\n            \"mechanic_tickets\": {\n                \"services\": []\n            },\n            \"quantity\": 4,\n            \"service_id\": 1\n        },\n        {\n            \"id\": 2,\n            \"inventory\": {\n                \"name\": \"Oil Filter\",\n                \"price\": 29.99,\n                \"service_items\": [\n                    {\n                        \"id\": 2,\n                        \"mechanic_tickets\": {\n                            \"services\": []\n                        },\n                        \"quantity\": 1,\n                        \"service\": {\n                            \"mechanic_tickets\": [],\n                            \"name\": \"Oil Change\",\n                            \"price\": 69.95\n                        },\n                        \"service_id\": 1\n                    }\n                ],\n                \"stock\": 50\n            },\n            \"item_id\": 2,\n            \"mechanic_tickets\": {\n                \"services\": []\n            },\n            \"quantity\": 1,\n            \"service_id\": 1\n        }\n    ]\n}"
+						},
+						{
+							"name": "Brake Service",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Brake Service\",\n    \"price\": 189.99,\n    \"service_items\": [\n        {\"item_id\": 3, \"quantity\": 1},\n        {\"item_id\": 4, \"quantity\": 1}\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/services/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"services",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:16:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "636"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 2,\n    \"mechanic_tickets\": [],\n    \"name\": \"Brake Service\",\n    \"price\": 189.99,\n    \"service_items\": [\n        {\n            \"id\": 3,\n            \"inventory\": {\n                \"name\": \"Brake Pads (Set)\",\n                \"price\": 129.99,\n                \"stock\": 30\n            },\n            \"item_id\": 3,\n            \"mechanic_tickets\": {\n                \"services\": []\n            },\n            \"quantity\": 1,\n            \"service_id\": 2\n        },\n        {\n            \"id\": 4,\n            \"inventory\": {\n                \"name\": \"Brake Cleaner Spray\",\n                \"price\": 9.99,\n                \"stock\": 50\n            },\n            \"item_id\": 4,\n            \"mechanic_tickets\": {\n                \"services\": []\n            },\n            \"quantity\": 1,\n            \"service_id\": 2\n        }\n    ]\n}"
+						},
+						{
+							"name": "Battery Replacement",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Battery Replacement\",\n    \"price\": 179.99,\n    \"service_items\": [\n        {\"item_id\": 5, \"quantity\": 1}\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:5000/services/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"services",
+										""
+									]
+								}
+							},
+							"status": "CREATED",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:24:11 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "344"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 3,\n    \"mechanic_tickets\": [],\n    \"name\": \"Battery Replacement\",\n    \"price\": 179.99,\n    \"service_items\": [\n        {\n            \"id\": 5,\n            \"inventory\": {\n                \"name\": \"Car Battery\",\n                \"price\": 139.99,\n                \"stock\": 20\n            },\n            \"item_id\": 5,\n            \"mechanic_tickets\": {},\n            \"quantity\": 1,\n            \"service_id\": 3\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "All Services",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/services/all",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"services",
+								"all"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "After Schema Adjustments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://127.0.0.1:5000/services/all",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "5000",
+									"path": [
+										"services",
+										"all"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "Werkzeug/3.1.3 Python/3.12.5"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:25:48 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1533"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 1,\n        \"mechanic_tickets\": [],\n        \"name\": \"Oil Change\",\n        \"price\": 69.95,\n        \"service_items\": [\n            {\n                \"id\": 1,\n                \"inventory\": {\n                    \"name\": \"Motor Oil (5W-30)\",\n                    \"price\": 9.99,\n                    \"stock\": 100\n                },\n                \"item_id\": 1,\n                \"mechanic_tickets\": {},\n                \"quantity\": 4\n            },\n            {\n                \"id\": 2,\n                \"inventory\": {\n                    \"name\": \"Oil Filter\",\n                    \"price\": 29.99,\n                    \"stock\": 50\n                },\n                \"item_id\": 2,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1\n            }\n        ]\n    },\n    {\n        \"id\": 2,\n        \"mechanic_tickets\": [],\n        \"name\": \"Brake Service\",\n        \"price\": 189.99,\n        \"service_items\": [\n            {\n                \"id\": 3,\n                \"inventory\": {\n                    \"name\": \"Brake Pads (Set)\",\n                    \"price\": 129.99,\n                    \"stock\": 30\n                },\n                \"item_id\": 3,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1\n            },\n            {\n                \"id\": 4,\n                \"inventory\": {\n                    \"name\": \"Brake Cleaner Spray\",\n                    \"price\": 9.99,\n                    \"stock\": 50\n                },\n                \"item_id\": 4,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1\n            }\n        ]\n    },\n    {\n        \"id\": 3,\n        \"mechanic_tickets\": [],\n        \"name\": \"Battery Replacement\",\n        \"price\": 179.99,\n        \"service_items\": [\n            {\n                \"id\": 5,\n                \"inventory\": {\n                    \"name\": \"Car Battery\",\n                    \"price\": 139.99,\n                    \"stock\": 20\n                },\n                \"item_id\": 5,\n                \"mechanic_tickets\": {},\n                \"quantity\": 1\n            }\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Service by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:5000/services/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"services",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Service",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"\",\n    \"price\": 29.99,\n    \"service_items\": [\n        {\n            \"item_id\": 1,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 2,\n            \"quantity\": 1\n        }, {\n            \"item_id\": 3,\n            \"quantity\": 1\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:5000/services/1",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "5000",
+							"path": [
+								"services",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "### Any and All Endpoint Requests for Services.\n\nServices are operations that can be done on Vehicles.\n\nThey are typically associated with ServiceItems and have their own prices (which do not include the price for ServiceItems).\n\n**These endpoints have a URL prefixed with:**\n\n`/services`"
+		}
+	]
+}

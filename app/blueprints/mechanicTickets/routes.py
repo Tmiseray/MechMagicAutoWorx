@@ -7,28 +7,30 @@ from app.models import MechanicTicket, db, Mechanic, ServiceTicket, Service, Ser
 from app.extensions import limiter, cache
 from .schemas import mechanic_ticket_schema, mechanic_tickets_schema
 from app.blueprints.serviceItems.schemas import service_item_schema
-from app.utils.validation_creation import validate_and_create, check_and_update_inventory, validate_foreign_key, validate_and_update
+from app.utils.validation_creation import validate_and_create, check_and_update_inventory, validate_and_update
 from app.utils.util import mechanic_token_required
 from datetime import date
 
 
 # Create MechanicTicket
 @mechanic_tickets_bp.route('/', methods=['POST'])
-# @mechanic_token_required
+@mechanic_token_required
 def create_mechanic_ticket():
     payload = request.json.copy()
     payload['start_date'] = date.today()
     service_ids = payload.pop('service_ids', [])
     additional_items = payload.pop('additional_items', [])
 
-    # Validate foreign keys
-    try:
-        validate_foreign_key(Mechanic, payload.get('mechanic_id'), "Mechanic ID")
-        validate_foreign_key(ServiceTicket, payload.get('service_ticket_id'), "Service Ticket ID")
-    except ValueError as e:
-        return jsonify({"message": str(e)}), 404
-
-    new_ticket = validate_and_create(MechanicTicket, payload, mechanic_ticket_schema, commit=False)
+    new_ticket = validate_and_create(
+        model=MechanicTicket, 
+        payload=payload, 
+        schema=mechanic_ticket_schema, 
+        foreign_keys={
+            "mechanic_id": Mechanic,
+            "service_ticket_id": ServiceTicket
+        },
+        commit=False
+        )
 
     # Attach services
     if service_ids:
@@ -69,13 +71,13 @@ def create_mechanic_ticket():
 
 # Read/Get All MechanicTickets
 @mechanic_tickets_bp.route('/all', methods=['GET'])
-# @limiter.limit("10 per hour")
+@limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve all MechanicTickets more than 10 per hour
-# @cache.cached(timeout=60)
+@cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve all MechanicTickets
 def get_mechanic_tickets():
     try:
@@ -93,10 +95,10 @@ def get_mechanic_tickets():
 
 # Read/Get Specific MechanicTicket
 @mechanic_tickets_bp.route('/<int:id>', methods=['GET'])
-# @limiter.limit("10 per hour")
+@limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a single MechanicTicket more than 10 per hour
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve a single MechanicTicket
 def get_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
@@ -107,11 +109,12 @@ def get_mechanic_ticket(id):
     return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 200
 
 # Get Mechanic's tickets
-@mechanic_tickets_bp.route('/my-tickets/<int:id>', methods=['GET'])
-# @limiter.limit("10 per hour")
+# @mechanic_tickets_bp.route('/my-tickets/<int:id>', methods=['GET'])
+@mechanic_tickets_bp.route('/my-tickets/', methods=['GET'])
+@limiter.limit("10 per hour")
 # Limit the number of retrievals to 10 per hour
 # There shouldn't be a need to retrieve a mechanic's tickets more than 10 per hour
-# @mechanic_token_required
+@mechanic_token_required
 def get_my_tickets(id):
     query = select(MechanicTicket).where(MechanicTicket.mechanic_id == id)
     mechanic_tickets = db.session.execute(query).scalars().all()
@@ -120,8 +123,9 @@ def get_my_tickets(id):
 
 
 # Update MechanicTicket
-@mechanic_tickets_bp.route('/<int:id>', methods=['PUT'])
-# @mechanic_token_required
+# @mechanic_tickets_bp.route('/<int:id>', methods=['PUT'])
+@mechanic_tickets_bp.route('/', methods=['PUT'])
+@mechanic_token_required
 def update_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
     if not mechanic_ticket:
@@ -131,20 +135,15 @@ def update_mechanic_ticket(id):
     service_ids = payload.pop("service_ids", None)
     additional_items = payload.pop("additional_items", None)
 
-    # Validate foreign keys
-    fk_result = validate_foreign_key(payload, {
-        "mechanic_id": Mechanic,
-        "service_ticket_id": ServiceTicket
-    })
-    if fk_result:
-        return fk_result
-
     # Update basic fields using validation
     success, response, status = validate_and_update(
         instance=mechanic_ticket,
         schema=mechanic_ticket_schema,
         payload=payload,
-        foreign_keys={},  # already validated
+        foreign_keys={
+            "mechanic_id": Mechanic,
+            "service_ticket_id": ServiceTicket
+        },
         return_json=True
     )
     if not success:
@@ -184,7 +183,12 @@ def update_mechanic_ticket(id):
                 "item_id": item["item_id"],
                 "quantity": item["quantity"]
             }
-            service_item = validate_and_create(ServiceItem, si_payload, service_item_schema, commit=False)
+            service_item = validate_and_create(
+                model=ServiceItem, 
+                payload=si_payload, 
+                schema=service_item_schema, 
+                commit=False
+                )
             mechanic_ticket.additional_items.append(service_item)
 
     db.session.commit()

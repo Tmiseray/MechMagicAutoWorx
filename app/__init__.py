@@ -1,7 +1,7 @@
 
 from flask import Flask
 from .models import db
-from .extensions import ma, limiter, cache
+from .extensions import ma, limiter
 from .blueprints.customerAccounts import customer_accounts_bp
 from .blueprints.customers import customers_bp
 from .blueprints.inventory import inventory_bp

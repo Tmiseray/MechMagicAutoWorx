@@ -1,5 +1,4 @@
 
-from app.extensions import ma
 from app.models import MechanicTicket, db
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from marshmallow import fields, validates, ValidationError
@@ -13,7 +12,7 @@ class MechanicTicketSchema(SQLAlchemyAutoSchema):
         sqla_session = db.session
 
     id = fields.Int(dump_only=True)
-    start_date = fields.Date(required=True, dump_only=True)
+    start_date = fields.Date(required=False, dump_only=True)
     end_date = fields.Date(required=False)
     hours_worked = fields.Float(required=False)
     service_ticket_id = fields.Int(required=True)
