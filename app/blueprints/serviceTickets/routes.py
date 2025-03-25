@@ -19,19 +19,24 @@ from datetime import date
 def create_service_ticket():
     payload = request.json
 
-    try:
-        validate_foreign_key(Customer, payload.get('customer_id'), "Customer ID")
-    except ValueError as e:
-        return jsonify({"message": str(e)}), 404
-
-    payload["service_desc"] = payload["service_desc"].lower()
-    payload["service_date"] = date.today()
-
-    new_ticket, err = validate_and_create(ServiceTicket, payload, service_ticket_schema)
-    if err:
-        return err
-
-    return jsonify(service_ticket_schema.dump(new_ticket)), 201
+    return validate_and_create(
+        model=ServiceTicket, 
+        payload=payload, 
+        schema=service_ticket_schema,
+        unique_fields=[
+            'service_desc',
+            'service_date'
+        ],
+        case_insensitive_fields=[
+            'service_desc',
+            'service_date'
+        ],
+        foreign_keys={
+            'customer_id': Customer
+        },
+        commit=True,
+        return_json=True
+        )
 
 
 # Get all service_tickets

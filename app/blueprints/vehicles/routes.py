@@ -15,11 +15,6 @@ from app.utils.validation_creation import validate_and_create, validate_foreign_
 # @mechanic_token_required
 def create_vehicle():
     payload = request.json
-
-    try:
-        validate_foreign_key(Customer, payload.get('customer_id'), "Customer ID")
-    except ValueError as e:
-        return jsonify({"message": str(e)}), 404
     
     return validate_and_create(
         model=Vehicle,
@@ -27,6 +22,9 @@ def create_vehicle():
         schema=vehicle_schema,
         unique_fields=['VIN'],
         case_insensitive_fields=['VIN'],
+        foreign_keys={
+            "customer_id": Customer
+        },
         commit=True,
         return_json=True
     )
@@ -77,18 +75,14 @@ def update_vehicle(VIN):
 
     payload = request.json
 
-    # Validate foreign key (customer_id)
-    fk_checks = [(Customer, payload.get("customer_id"))] if "customer_id" in payload else []
-    fk_error = validate_foreign_key(fk_checks)
-    if fk_error:
-        return fk_error
-
     # Proceed with update
     success, response, status_code = validate_and_update(
         instance=vehicle,
         schema=vehicle_schema,
         payload=payload,
-        foreign_keys={},
+        foreign_keys={
+            "customer_id": Customer
+        },
         return_json=True
     )
     return response, status_code

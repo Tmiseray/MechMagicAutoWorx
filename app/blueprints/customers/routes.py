@@ -23,6 +23,7 @@ def create_customer():
         schema=customer_schema,
         unique_fields=['email'],
         case_insensitive_fields=['email'],
+        foreign_keys=None,
         commit=True,
         return_json=True
     )

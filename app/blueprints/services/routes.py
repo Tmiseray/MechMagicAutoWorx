@@ -18,14 +18,12 @@ def create_service():
     payload = request.json.copy()
     service_items_payload = payload.pop("service_items", [])
 
-    new_service, err = validate_and_create(
+    new_service = validate_and_create(
         model=Service,
         payload=payload,
         schema=service_schema,
         commit=False
     )
-    if err:
-        return err
 
     for item in service_items_payload:
         if "item_id" not in item or "quantity" not in item:
@@ -35,7 +33,7 @@ def create_service():
             "quantity": item["quantity"],
             "service_id": None
         }
-        service_item, _ = validate_and_create(
+        service_item = validate_and_create(
             model=ServiceItem,
             payload=si_payload,
             schema=service_item_schema,

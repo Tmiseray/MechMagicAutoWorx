@@ -22,9 +22,7 @@ def create_invoice():
     except ValueError as e:
         return jsonify({"message": str(e)}), 404
 
-    new_invoice, err = validate_and_create(Invoice, payload, invoice_schema)
-    if err:
-        return err
+    new_invoice = validate_and_create(Invoice, payload, invoice_schema)
 
     return jsonify(invoice_schema.dump(new_invoice)), 201
 

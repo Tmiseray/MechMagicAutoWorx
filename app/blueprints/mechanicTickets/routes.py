@@ -28,13 +28,11 @@ def create_mechanic_ticket():
     except ValueError as e:
         return jsonify({"message": str(e)}), 404
 
-    new_ticket, err = validate_and_create(MechanicTicket, payload, mechanic_ticket_schema, commit=False)
-    if err:
-        return err
+    new_ticket = validate_and_create(MechanicTicket, payload, mechanic_ticket_schema, commit=False)
 
     # Attach services
     if service_ids:
-        services = Service.query.filter(Service.id.in_(service_ids)).all()
+        services = db.session.query(Service).filter(Service.id.in_(service_ids)).all()
         if len(services) != len(service_ids):
             return jsonify({"message": "One or more service IDs are invalid."}), 404
         new_ticket.services.extend(services)
@@ -60,7 +58,7 @@ def create_mechanic_ticket():
             "item_id": item["item_id"],
             "quantity": item["quantity"]
         }
-        service_item, _ = validate_and_create(ServiceItem, si_payload, service_item_schema, commit=False)
+        service_item = validate_and_create(ServiceItem, si_payload, service_item_schema, commit=False)
         new_ticket.additional_items.append(service_item)
 
     db.session.add(new_ticket)
@@ -155,7 +153,7 @@ def update_mechanic_ticket(id):
     # Update service associations if provided
     all_uses = []
     if service_ids is not None:
-        services = Service.query.filter(Service.id.in_(service_ids)).all()
+        services = db.session.query(Service).filter(Service.id.in_(service_ids)).all()
         if len(services) != len(service_ids):
             return jsonify({"message": "One or more service IDs are invalid."}), 404
         mechanic_ticket.services = services
@@ -186,7 +184,7 @@ def update_mechanic_ticket(id):
                 "item_id": item["item_id"],
                 "quantity": item["quantity"]
             }
-            service_item, _ = validate_and_create(ServiceItem, si_payload, service_item_schema, commit=False)
+            service_item = validate_and_create(ServiceItem, si_payload, service_item_schema, commit=False)
             mechanic_ticket.additional_items.append(service_item)
 
     db.session.commit()

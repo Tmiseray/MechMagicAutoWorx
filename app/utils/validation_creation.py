@@ -1,6 +1,5 @@
 
 from flask import jsonify
-from marshmallow import ValidationError
 from sqlalchemy import func
 from app.models import db, Inventory
 
@@ -33,22 +32,49 @@ def validate_foreign_key(model, id_, field_name="ID"):
     return instance
 
 
+# Incase there are many FK to check
+def validate_foreign_keys(payload: dict, model_map: dict):
+    for key, model in model_map.items():
+        id_ = payload.get(key)
+        if id_ is not None:
+            validate_foreign_key(model, id_, key)
+
+
 # Validation and Creation
-def validate_and_create(model, payload, schema=None, unique_fields=None, case_insensitive_fields=None, commit=True, return_json=False):
+def validate_and_create(
+        model, 
+        payload, 
+        schema=None, 
+        unique_fields=None, 
+        case_insensitive_fields=None, 
+        foreign_keys=None,
+        commit=True, 
+        return_json=False
+        ):
     '''
     Universal reusable function
+    Calls the validate_foreign_keys before continuation
     Calls the is_duplicate check before continuation
     Then if not duplicate data allows for creation
     '''
 
+    # 1. Validate Foreign Keys (if needed)
+    if foreign_keys:
+        try:
+            validate_foreign_keys(payload, foreign_keys)
+        except ValueError as e:
+            msg = {"message": str(e)}
+            return (jsonify(msg), 404) if return_json else msg
+    
+    # 2. Validate Unique Fields for Duplicate Data
     if unique_fields:
         filters = {field: payload[field] for field in unique_fields if field in payload}
         if is_duplicate(model, filters, case_insensitive_fields or []):
             msg = {"message": f"{model.__name__} with similar data already exists."}
             return (jsonify(msg), 409) if return_json else msg
 
+    # 3. Create Instance & Continue Creation
     instance = model(**payload)
-
     db.session.add(instance)
     if commit:
         db.session.commit()
@@ -56,44 +82,6 @@ def validate_and_create(model, payload, schema=None, unique_fields=None, case_in
     if return_json and schema:
         return jsonify(schema.dump(instance)), 201
     return instance
-
-
-# # Create ServiceItem
-# def create_service_item(payload=None, commit=True, return_json=False):
-#     from app.blueprints.serviceItems.schemas import service_item_schema
-#     if payload is None:
-#         payload = request.json
-
-#     try:
-#         service_item_data = service_item_schema.load(payload)
-#     except ValidationError as ve:
-#         if return_json:
-#             return jsonify(ve.messages), 400
-#         else:
-#             raise
-    
-#     service_id = service_item_data.service_id
-#     if service_id:
-#         service = db.session.get(Service, service_id)
-#         if not service:
-#             if return_json:
-#                 return jsonify({"message": "Invalid Service ID"}), 404
-#             else:
-#                 raise ValueError("Invalid Service ID")
-        
-#     new_service_item = ServiceItem(
-#         item_id=service_item_data.item_id,
-#         quantity=service_item_data.quantity,
-#         service_id=service_id
-#     )
-
-#     db.session.add(new_service_item)
-#     if commit:
-#         db.session.commit()
-
-#     if return_json:
-#         return jsonify(service_item_schema.dump(new_service_item)), 201
-#     return new_service_item
 
 
 def check_and_update_inventory(uses=list[dict], commit=False):
@@ -107,7 +95,7 @@ def check_and_update_inventory(uses=list[dict], commit=False):
     
     item_ids = [u['item_id'] for u in uses]
     inventory_map = {
-        item.id: item for item in Inventory.query.filter(Inventory.id.in_(item_ids)).all()
+        item.id: item for item in db.session.query(Inventory).filter(Inventory.id.in_(item_ids)).all()
     }
 
     updated_items = []
@@ -137,7 +125,13 @@ def check_and_update_inventory(uses=list[dict], commit=False):
 
 
 
-def validate_and_update(instance, schema, payload, foreign_keys=None, return_json=False):
+def validate_and_update(
+        instance, 
+        schema, 
+        payload, 
+        foreign_keys=None, 
+        return_json=False
+        ):
     '''
     Validate and partially update a model instance using schema.
 
@@ -151,13 +145,13 @@ def validate_and_update(instance, schema, payload, foreign_keys=None, return_jso
     - (True, updated_instance, 200) on success.
     - (False, response, error_code) on failure.
     '''
-    # Validate foreign keys
+    # 1. Validate foreign keys
     if foreign_keys:
-        fk_result = validate_foreign_key(payload, foreign_keys)
+        fk_result = validate_foreign_keys(payload, foreign_keys)
         if fk_result:
             return False, fk_result, 404
 
-    # Load into existing instance to avoid __init__ call
+    # 2. Load into existing instance to avoid __init__ call
     updated_instance = schema.load(payload, instance=instance, partial=True)
 
     db.session.commit()
