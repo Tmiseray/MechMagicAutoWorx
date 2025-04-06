@@ -110,7 +110,7 @@ def check_and_update_inventory(uses=list[dict], commit=False):
         
         if item.stock < qty:
             return False, {
-                "message": f"Insuficient stock for item '{item.name}' (ID {item.id})",
+                "message": f"Insufficient stock for item '{item.name}' (ID {item.id})",
                 "available": item.stock,
                 "requested": qty
             }

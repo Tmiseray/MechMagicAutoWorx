@@ -1,0 +1,138 @@
+serviceTickets:
+  createServiceTicket:
+    summary: Create a new service ticket
+    value:
+      request:
+        service_desc: "Brake inspection and pad replacement"
+        VIN: "1HGCM82633A004352"
+        customer_id: 2
+      response:
+        status: 201
+        body:
+          id: 101
+          service_date: "2024-04-05"
+          service_desc: "Brake inspection and pad replacement"
+          VIN: "1HGCM82633A004352"
+          vehicle:
+            VIN: "1HGCM82633A004352"
+            year: 2010
+            make: "Honda"
+            model: "Accord"
+            mileage: 120000
+          customer_id: 2
+          customer:
+            id: 2
+            name: "Jane Doe"
+            email: "jane@example.com"
+            phone: "555-987-6543"
+          mechanic_tickets: []
+          invoice: null
+
+  getAllServiceTickets:
+    summary: Retrieve all service tickets
+    value:
+      response:
+        status: 200
+        body:
+          - id: 101
+            service_date: "2024-04-05"
+            service_desc: "Brake inspection and pad replacement"
+            VIN: "1HGCM82633A004352"
+            vehicle:
+              VIN: "1HGCM82633A004352"
+              year: 2010
+              make: "Honda"
+              model: "Accord"
+              mileage: 120000
+            customer_id: 2
+            customer:
+              id: 2
+              name: "Jane Doe"
+              email: "jane@example.com"
+              phone: "555-987-6543"
+            mechanic_tickets: []
+            invoice: null
+
+  getServiceTicketById:
+    summary: Get a specific service ticket by ID
+    value:
+      request:
+        id: 101
+      response:
+        status: 200
+        body:
+          id: 101
+          service_date: "2024-04-05"
+          service_desc: "Brake inspection and pad replacement"
+          VIN: "1HGCM82633A004352"
+          vehicle:
+            VIN: "1HGCM82633A004352"
+            year: 2010
+            make: "Honda"
+            model: "Accord"
+            mileage: 120000
+          customer_id: 2
+          customer:
+            id: 2
+            name: "Jane Doe"
+            email: "jane@example.com"
+            phone: "555-987-6543"
+          mechanic_tickets: []
+          invoice: null
+
+  getCustomerServiceTickets:
+    summary: Retrieve service tickets for a specific customer
+    value:
+      request:
+        customer_id: 2
+      response:
+        status: 200
+        body:
+          - id: 101
+            service_date: "2024-04-05"
+            service_desc: "Brake inspection and pad replacement"
+            VIN: "1HGCM82633A004352"
+            vehicle:
+              VIN: "1HGCM82633A004352"
+              year: 2010
+              make: "Honda"
+              model: "Accord"
+              mileage: 120000
+            customer_id: 2
+            customer:
+              id: 2
+              name: "Jane Doe"
+              email: "jane@example.com"
+              phone: "555-987-6543"
+            mechanic_tickets: []
+            invoice: null
+
+  updateServiceTicket:
+    summary: Update an existing service ticket
+    value:
+      request:
+        id: 101
+        service_desc: "Full brake system check"
+        VIN: "1HGCM82633A004352"
+        customer_id: 2
+      response:
+        status: 200
+        body:
+          id: 101
+          service_date: "2024-04-05"
+          service_desc: "Full brake system check"
+          VIN: "1HGCM82633A004352"
+          vehicle:
+            VIN: "1HGCM82633A004352"
+            year: 2010
+            make: "Honda"
+            model: "Accord"
+            mileage: 120000
+          customer_id: 2
+          customer:
+            id: 2
+            name: "Jane Doe"
+            email: "jane@example.com"
+            phone: "555-987-6543"
+          mechanic_tickets: []
+          invoice: null

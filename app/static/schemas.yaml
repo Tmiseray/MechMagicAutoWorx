@@ -1,0 +1,297 @@
+definitions:
+  mechanic_ticket_services:
+    type: "object"
+    description: "Association between MechanicTicket and Service, used to track services performed on a ticket"
+    properties:
+      mechanic_ticket_id:
+        type: "integer"
+        description: "ID of the associated MechanicTicket"
+      service_id:
+        type: "integer"
+        description: "ID of the associated Service"
+
+  mechanic_ticket_items:
+    type: "object"
+    description: "Association between MechanicTicket and ServiceItem, used to track inventory items used on a ticket"
+    properties:
+      mechanic_ticket_id:
+        type: "integer"
+        description: "ID of the associated MechanicTicket"
+      service_item_id:
+        type: "integer"
+        description: "ID of the associated ServiceItem"
+
+  Customer:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      phone:
+        type: "string"
+      vehicles:
+        type: "array"
+        description: "List of vehicles owned by the customer"
+        items:
+          $ref: "#/definitions/Vehicle"
+      account:
+        description: "The account associated with the customer for authentication purposes"
+        $ref: "#/definitions/CustomerAccount"
+      service_tickets:
+        type: "array"
+        description: "List of service tickets associated with the customer"
+        items:
+          $ref: "#/definitions/ServiceTicket"
+
+  CustomerAccount:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      customer_id:
+        type: "integer"
+        description: "ID of the associated customer for authentication purposes"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+      customer:
+        description: "The customer associated with this account for authentication purposes"
+        $ref: "#/definitions/Customer"
+
+  Invoice:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      invoice_date:
+        type: "string"
+        format: "date"
+      total:
+        type: "number"
+        format: "float"
+      paid:
+        type: "boolean"
+      service_ticket_id:
+        type: "integer"
+        description: "ID of the associated service ticket"
+      service_ticket:
+        description: "The service ticket associated with this invoice for payment tracking"
+        $ref: "#/definitions/ServiceTicket"
+
+  Vehicle:
+    type: "object"
+    properties:
+      vin:
+        type: "string"
+        description: "Vehicle Identification Number (VIN)"
+      year:
+        type: "integer"
+      make:
+        type: "string"
+      model:
+        type: "string"
+      mileage:
+        type: "integer"
+        description: "Current mileage of the vehicle"
+      customer_id:
+        type: "integer"
+        description: "ID of the owner (customer) of the vehicle"
+      customer:
+        description: "The customer who owns this vehicle, used for relationship mapping"
+        $ref: "#/definitions/Customer"
+      service_tickets:
+        type: "array"
+        description: "List of service tickets associated with this vehicle, used for tracking service history"
+        items:
+          $ref: "#/definitions/ServiceTicket"
+
+  Mechanic:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      email:
+        type: "string"
+        format: "email"
+      phone:
+        type: "string"
+      salary:
+        type: "number"
+        format: "float"
+      account:
+        description: "The account associated with the mechanic for authentication purposes"
+        $ref: "#/definitions/MechanicAccount"
+      mechanic_tickets:
+        type: "array"
+        description: "List of tickets assigned to the mechanic, used for tracking work assignments"
+        items:
+          $ref: "#/definitions/MechanicTicket"
+
+  MechanicAccount:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      role:
+        type: "string"
+        default: "Mechanic"
+        description: "Role of the mechanic in the shop, used during authentication"
+      mechanic_id:
+        type: "integer"
+        description: "ID of the associated mechanic for authentication purposes"
+      email:
+        type: "string"
+        format: "email"
+      password:
+        type: "string"
+      mechanic:
+        description: "The mechanic associated with this account for authentication purposes"
+        $ref: "#/definitions/Mechanic"
+
+  MechanicTicket:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      start_date:
+        type: "string"
+        format: "date"
+        description: "The date when the mechanic started working on the ticket"
+      end_date:
+        type: "string"
+        format: "date"
+        description: "The date when the mechanic completed the work on the ticket"
+      service_ticket_id:
+        type: "integer"
+        description: "ID of the associated service ticket"
+      service_ticket:
+        description: "The service ticket associated with this mechanic ticket for tracking work done"
+        $ref: "#/definitions/ServiceTicket"
+      mechanic_id:
+        type: "integer"
+        description: "ID of the mechanic assigned to the ticket"
+      mechanic:
+        description: "The mechanic who worked on this ticket, used for relationship mapping"
+        $ref: "#/definitions/Mechanic"
+      services:
+        type: "array"
+        description: "List of services performed on this ticket, used for tracking work done"
+        items:
+          $ref: "#/definitions/mechanic_ticket_services"
+      additional_items:
+        type: "array"
+        description: "List of additional service items used on this ticket, used for tracking parts used"
+        items:
+          $ref: "#/definitions/mechanic_ticket_items"
+
+  Inventory:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+        description: "Name of the inventory item"
+      stock:
+        type: "integer"
+        description: "Current stock level of the inventory item"
+        minimum: 0
+      price:
+        type: "number"
+        format: "float"
+        description: "Price per unit of the inventory item"
+      service_items:
+        type: "array"
+        description: "List of service items associated with this inventory item, used for tracking parts used in services"
+        items:
+          $ref: "#/definitions/ServiceItem"
+
+  ServiceItem:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      item_id:
+        type: "integer"
+        description: "ID of the associated inventory item, used for relationship mapping"
+      inventory:
+        description: "The inventory item associated with this service item for tracking parts used in services"
+        $ref: "#/definitions/Inventory"
+      service_id:
+        type: "integer"
+        description: "ID of the associated service, used for relationship mapping"
+      service:
+        description: "The service associated with this service item for tracking parts used in services"
+        $ref: "#/definitions/Service"
+      quantity:
+        type: "integer"
+        description: "Quantity of the inventory item used in this service item"
+        minimum: 1
+      mechanic_tickets:
+        type: "array"
+        description: "List of mechanic tickets that used this service item, used for tracking parts used in services and/or tickets"
+        items:
+          $ref: "#/definitions/mechanic_ticket_items"
+
+  Service:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      name:
+        type: "string"
+      price:
+        type: "number"
+        format: "float"
+      service_items:
+        type: "array"
+        description: "List of service items associated with this service, used for tracking parts used in services"
+        items:
+          $ref: "#/definitions/ServiceItem"
+      mechanic_tickets:
+        type: "array"
+        description: "List of mechanic tickets that performed this service, used for tracking work done on tickets"
+        items:
+          $ref: "#/definitions/mechanic_ticket_services"
+
+  ServiceTicket:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      service_date:
+        type: "string"
+        format: "date"
+        description: "The date when customer brought the vehicle in for service"
+      service_desc:
+        type: "string"
+        description: "Description of the service requested by the customer"
+      VIN:
+        type: "string"
+        description: "Vehicle Identification Number (VIN) of the vehicle being serviced"
+      vehicle:
+        description: "The vehicle associated with this service ticket, used for relationship mapping"
+        $ref: "#/definitions/Vehicle"
+      customer_id:
+        type: "integer"
+        description: "ID of the customer who brought the vehicle in for service"
+      customer:
+        description: "The customer who brought in the vehicle for service, used for relationship mapping"
+        $ref: "#/definitions/Customer"
+      mechanic_tickets:
+        type: "array"
+        description: "List of mechanic tickets associated with this service ticket, used for tracking work done by which mechanics"
+        items:
+          $ref: "#/definitions/MechanicTicket"
+      invoice:
+        description: "The invoice associated with this service ticket for payment tracking"
+        $ref: "#/definitions/Invoice"
+

@@ -1,0 +1,64 @@
+/vehicles:
+  post:
+    tags:
+      - Vehicle
+    summary: Create a new vehicle
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas.yaml#/definitions/Vehicle'
+    responses:
+      201:
+        description: Vehicle created
+      400:
+        description: Validation error or duplicate VIN
+
+  /vehicles/all:
+    get:
+      tags:
+        - Vehicle
+      summary: Get all vehicles
+      responses:
+        200:
+          description: List of vehicles
+
+  /vehicles/{VIN}:
+    get:
+      tags:
+        - Vehicle
+      summary: Get a specific vehicle by VIN
+      parameters:
+        - name: VIN
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Vehicle found
+        404:
+          description: Invalid vehicle ID
+
+    put:
+      tags:
+        - Vehicle
+      summary: Update a vehicle
+      parameters:
+        - name: VIN
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '../schemas.yaml#/definitions/Vehicle'
+      responses:
+        200:
+          description: Vehicle updated
+        404:
+          description: Vehicle not found

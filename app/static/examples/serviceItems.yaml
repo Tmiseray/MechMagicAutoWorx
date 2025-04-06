@@ -1,0 +1,114 @@
+serviceItems:
+  createServiceItem:
+    summary: Create a new service item
+    value:
+      request:
+        item_id: 1
+        quantity: 2
+      response:
+        status: 201
+        body:
+          id: 10
+          item_id: 1
+          quantity: 2
+          inventory:
+            id: 1
+            name: "Oil Filter"
+            stock: 98
+            price: 15.99
+          service_id: 5
+          service:
+            id: 5
+            name: "Oil Change"
+            price: 49.99
+          mechanic_tickets:
+            - mechanic_ticket_id: 3
+              service_item_id: 10
+
+  getAllServiceItems:
+    summary: Retrieve all service items
+    value:
+      response:
+        status: 200
+        body:
+          - id: 10
+            item_id: 1
+            quantity: 2
+            inventory:
+              id: 1
+              name: "Oil Filter"
+              stock: 98
+              price: 15.99
+            service_id: 5
+            service:
+              id: 5
+              name: "Oil Change"
+              price: 49.99
+            mechanic_tickets:
+              - mechanic_ticket_id: 3
+                service_item_id: 10
+          - id: 11
+            item_id: 2
+            quantity: 4
+            inventory:
+              id: 2
+              name: "Brake Pads"
+              stock: 45
+              price: 32.50
+            service_id: 6
+            service:
+              id: 6
+              name: "Brake Service"
+              price: 89.99
+            mechanic_tickets: []
+
+  getServiceItemById:
+    summary: Retrieve a specific service item by ID
+    value:
+      request:
+        id: 10
+      response:
+        status: 200
+        body:
+          id: 10
+          item_id: 1
+          quantity: 2
+          inventory:
+            id: 1
+            name: "Oil Filter"
+            stock: 98
+            price: 15.99
+          service_id: 5
+          service:
+            id: 5
+            name: "Oil Change"
+            price: 49.99
+          mechanic_tickets:
+            - mechanic_ticket_id: 3
+              service_item_id: 10
+
+  updateServiceItem:
+    summary: Update an existing service item
+    value:
+      request:
+        id: 10
+        quantity: 3
+      response:
+        status: 200
+        body:
+          id: 10
+          item_id: 1
+          quantity: 3
+          inventory:
+            id: 1
+            name: "Oil Filter"
+            stock: 97
+            price: 15.99
+          service_id: 5
+          service:
+            id: 5
+            name: "Oil Change"
+            price: 49.99
+          mechanic_tickets:
+            - mechanic_ticket_id: 3
+              service_item_id: 10

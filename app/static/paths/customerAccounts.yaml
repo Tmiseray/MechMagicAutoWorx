@@ -1,0 +1,125 @@
+/customers/accounts/login:
+  post:
+    tags:
+      - CustomerAccount
+    summary: Customer Login
+    description: Authenticates a customer using email and password and returns a JWT token.
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - email
+              - password
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+                format: password
+    responses:
+      200:
+        description: Login successful, returns JWT token
+      400:
+        description: Invalid request format
+      401:
+        description: Invalid credentials
+
+/customers/accounts:
+  post:
+    tags:
+      - CustomerAccount
+    summary: Create a new customer account
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+          $ref: "../schemas.yaml#/definitions/CustomerAccount"
+  responses:
+    201:
+      description: Account successfully created
+    400:
+      description: Invalid input or duplicate email
+
+  get:
+    tags:
+      - CustomerAccount
+    summary: Get a customer account by ID (token required)
+    parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Customer account retrieved
+      404:
+        description: Account not found or unauthorized
+
+  put:
+    tags:
+      - CustomerAccount
+    summary: Update a customer account (token required)
+    parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+                minLength: 8
+    responses:
+      200:
+        description: Customer account updated
+      404:
+        description: Customer or account not found
+
+  delete:
+    tags:
+      - CustomerAccount
+    summary: Delete a customer account (token required)
+    parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Account successfully deleted
+      404:
+        description: Account not found
+
+/customers/accounts/all:
+  get:
+    tags:
+      - CustomerAccount
+    summary: Get all customer accounts (mechanic token required)
+    parameters:
+      - in: query
+        name: page
+        schema:
+        type: integer
+      - in: query
+        name: per_page
+        schema:
+        type: integer
+    responses:
+      200:
+        description: Paginated list of all customer accounts

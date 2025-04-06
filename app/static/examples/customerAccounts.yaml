@@ -1,0 +1,79 @@
+customerAccounts:
+  create:
+    summary: Create a new customer account
+    value:
+      request:
+        email: "john.doe@example.com"
+        password: "SecurePass123"
+        customer_id: 1
+      response:
+        status: 201
+        body:
+          id: 1
+          email: "john.doe@example.com"
+          role: "Customer"
+          customer_id: 1
+
+  login:
+    summary: Login a customer
+    value:
+      request:
+        email: "john.doe@example.com"
+        password: "SecurePass123"
+      response:
+        status: 200
+        body:
+          status: "success"
+          message: "Successfully Logged In"
+          auth_token: "eyJhbGciOiJIUzI1NiIs..."
+
+  getAll:
+    summary: Retrieve all customer accounts
+    value:
+      response:
+        status: 200
+        body:
+          - id: 1
+            email: "john.doe@example.com"
+            customer_id: 1
+            role: "Customer"
+          - id: 2
+            email: "jane.smith@example.com"
+            customer_id: 2
+            role: "Customer"
+
+  getByCustomerId:
+    summary: Get customer account by customer ID
+    value:
+      request:
+        id: 1
+      response:
+        status: 200
+        body:
+          id: 1
+          email: "john.doe@example.com"
+          customer_id: 1
+          role: "Customer"
+
+  update:
+    summary: Update a customer account
+    value:
+      request:
+        email: "john.new@example.com"
+      response:
+        status: 200
+        body:
+          id: 1
+          email: "john.new@example.com"
+          customer_id: 1
+          role: "Customer"
+
+  delete:
+    summary: Delete a customer account
+    value:
+      request:
+        id: 1
+      response:
+        status: 200
+        body:
+          message: "Account Successfully Deleted"

@@ -1,0 +1,78 @@
+invoices:
+  createInvoice:
+    summary: Create a new invoice
+    value:
+      request:
+        service_ticket_id: 1
+        paid: false
+      response:
+        status: 201
+        body:
+          id: 1
+          invoice_date: "2024-04-01"
+          total: 289.97
+          paid: false
+          service_ticket_id: 1
+          service_ticket:
+            service_desc: "Brake and Oil Change"
+            VIN: "1HGCM82633A004352"
+
+  getAllInvoices:
+    summary: Retrieve all invoices
+    value:
+      response:
+        status: 200
+        body:
+          - id: 1
+            invoice_date: "2024-04-01"
+            total: 289.97
+            paid: false
+            service_ticket_id: 1
+          - id: 2
+            invoice_date: "2024-04-03"
+            total: 180.50
+            paid: true
+            service_ticket_id: 2
+
+  getInvoiceById:
+    summary: Retrieve invoice by ID
+    value:
+      request:
+        id: 1
+      response:
+        status: 200
+        body:
+          id: 1
+          invoice_date: "2024-04-01"
+          total: 289.97
+          paid: false
+          service_ticket_id: 1
+
+  getMyInvoices:
+    summary: Retrieve all invoices for a customer
+    value:
+      request:
+        customer_id: 5
+      response:
+        status: 200
+        body:
+          - id: 3
+            invoice_date: "2024-04-05"
+            total: 134.00
+            paid: true
+            service_ticket_id: 7
+
+  updateInvoice:
+    summary: Update an invoice
+    value:
+      request:
+        id: 1
+        paid: true
+      response:
+        status: 200
+        body:
+          id: 1
+          invoice_date: "2024-04-01"
+          total: 289.97
+          paid: true
+          service_ticket_id: 1

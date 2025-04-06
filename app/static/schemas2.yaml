@@ -1,0 +1,275 @@
+definitions:
+  mechanic_ticket_services:
+    type: object
+    description: Association between MechanicTicket and Service, used to track services performed on a ticket
+    required: [mechanic_ticket_id, service_id]
+    properties:
+      mechanic_ticket_id:
+        type: integer
+        description: ID of the associated MechanicTicket
+      service_id:
+        type: integer
+        description: ID of the associated Service
+
+  mechanic_ticket_items:
+    type: object
+    description: Association between MechanicTicket and ServiceItem, used to track inventory items used on a ticket
+    required: [mechanic_ticket_id, service_item_id]
+    properties:
+      mechanic_ticket_id:
+        type: integer
+        description: ID of the associated MechanicTicket
+      service_item_id:
+        type: integer
+        description: ID of the associated ServiceItem
+
+  Customer:
+    type: object
+    required: [name, email, phone]
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        minLength: 2
+        maxLength: 100
+      email:
+        type: string
+        format: email
+      phone:
+        type: string
+        minLength: 7
+        maxLength: 20
+      vehicles:
+        type: array
+        items:
+          $ref: "#/definitions/Vehicle"
+      account:
+        $ref: "#/definitions/CustomerAccount"
+      service_tickets:
+        type: array
+        items:
+          $ref: "#/definitions/ServiceTicket"
+
+  CustomerAccount:
+    type: object
+    required: [email, password]
+    properties:
+      id:
+        type: integer
+      customer_id:
+        type: integer
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        minLength: 6
+      customer:
+        $ref: "#/definitions/Customer"
+
+  Invoice:
+    type: object
+    required: [invoice_date, total, paid, service_ticket_id]
+    properties:
+      id:
+        type: integer
+      invoice_date:
+        type: string
+        format: date
+      total:
+        type: number
+        format: float
+      paid:
+        type: boolean
+      service_ticket_id:
+        type: integer
+      service_ticket:
+        $ref: "#/definitions/ServiceTicket"
+
+  Vehicle:
+    type: object
+    required: [vin, year, make, model, mileage]
+    properties:
+      vin:
+        type: string
+        minLength: 5
+        maxLength: 100
+      year:
+        type: integer
+      make:
+        type: string
+      model:
+        type: string
+      mileage:
+        type: integer
+      customer_id:
+        type: integer
+      customer:
+        $ref: "#/definitions/Customer"
+      service_tickets:
+        type: array
+        items:
+          $ref: "#/definitions/ServiceTicket"
+
+  Mechanic:
+    type: object
+    required: [name, email, phone, salary]
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+        format: email
+      phone:
+        type: string
+      salary:
+        type: number
+        format: float
+      account:
+        $ref: "#/definitions/MechanicAccount"
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: "#/definitions/MechanicTicket"
+
+  MechanicAccount:
+    type: object
+    required: [email, password, role]
+    properties:
+      id:
+        type: integer
+      role:
+        type: string
+        default: Mechanic
+      mechanic_id:
+        type: integer
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+      mechanic:
+        $ref: "#/definitions/Mechanic"
+
+  MechanicTicket:
+    type: object
+    required: [start_date, hours_worked, service_ticket_id]
+    properties:
+      id:
+        type: integer
+      start_date:
+        type: string
+        format: date
+      end_date:
+        type: string
+        format: date
+      hours_worked:
+        type: number
+        format: float
+      service_ticket_id:
+        type: integer
+      service_ticket:
+        $ref: "#/definitions/ServiceTicket"
+      mechanic_id:
+        type: integer
+      mechanic:
+        $ref: "#/definitions/Mechanic"
+      services:
+        type: array
+        items:
+          $ref: "#/definitions/mechanic_ticket_services"
+      additional_items:
+        type: array
+        items:
+          $ref: "#/definitions/mechanic_ticket_items"
+
+  Inventory:
+    type: object
+    required: [name, stock, price]
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      stock:
+        type: integer
+        minimum: 0
+      price:
+        type: number
+        format: float
+      service_items:
+        type: array
+        items:
+          $ref: "#/definitions/ServiceItem"
+
+  ServiceItem:
+    type: object
+    required: [item_id, quantity]
+    properties:
+      id:
+        type: integer
+      item_id:
+        type: integer
+      inventory:
+        $ref: "#/definitions/Inventory"
+      service_id:
+        type: integer
+      service:
+        $ref: "#/definitions/Service"
+      quantity:
+        type: integer
+        minimum: 1
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: "#/definitions/mechanic_ticket_items"
+
+  Service:
+    type: object
+    required: [name, price]
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+        format: float
+      service_items:
+        type: array
+        items:
+          $ref: "#/definitions/ServiceItem"
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: "#/definitions/mechanic_ticket_services"
+
+  ServiceTicket:
+    type: object
+    required: [service_date, service_desc, VIN]
+    properties:
+      id:
+        type: integer
+      service_date:
+        type: string
+        format: date
+      service_desc:
+        type: string
+      VIN:
+        type: string
+      vehicle:
+        $ref: "#/definitions/Vehicle"
+      customer_id:
+        type: integer
+      customer:
+        $ref: "#/definitions/Customer"
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: "#/definitions/MechanicTicket"
+      invoice:
+        $ref: "#/definitions/Invoice"
+

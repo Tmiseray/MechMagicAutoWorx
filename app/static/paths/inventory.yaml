@@ -1,0 +1,83 @@
+/inventory:
+  post:
+    tags:
+      - Inventory
+    summary: Create a new inventory item (mechanic token required)
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas.yaml#/definitions/Inventory"
+    responses:
+      201:
+        description: Inventory created
+      400:
+        description: Validation error or duplicate name
+
+/inventory/all:
+  get:
+    tags:
+      - Inventory
+    summary: Get all inventory items (mechanic token required)
+    description: Cached for 60 seconds. Supports optional pagination.
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+    responses:
+      200:
+        description: List of inventory items
+
+/inventory/{id}:
+  get:
+    tags:
+      - Inventory
+    summary: Get a specific inventory item by ID (mechanic token required)
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Inventory item found
+      404:
+        description: Invalid Inventory ID
+
+  put:
+    tags:
+      - Inventory
+    summary: Update inventory item by ID (mechanic token required)
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                minLength: 1
+                maxLength: 100
+              stock:
+                type: integer
+              price:
+                type: number
+    responses:
+      200:
+        description: Inventory updated
+      404:
+        description: Inventory not found

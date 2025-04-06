@@ -177,9 +177,9 @@ class MechanicTicket(Base):
     mechanic_id: Mapped[Optional[int]] = mapped_column(db.ForeignKey('mechanics.id', ondelete='SET NULL'), nullable=True)
     mechanic: Mapped['Mechanic'] = db.relationship('Mechanic', back_populates='mechanic_tickets')
 
-    services = db.relationship('Service', secondary=mechanic_ticket_services, back_populates='mechanic_tickets')
+    services: Mapped[Optional[List['Service']]] = db.relationship('Service', secondary=mechanic_ticket_services, back_populates='mechanic_tickets')
 
-    additional_items = db.relationship('ServiceItem', secondary=mechanic_ticket_items, back_populates='mechanic_tickets')
+    additional_items: Mapped[Optional[List['ServiceItem']]] = db.relationship('ServiceItem', secondary=mechanic_ticket_items, back_populates='mechanic_tickets')
 
 
 # Inventory Model

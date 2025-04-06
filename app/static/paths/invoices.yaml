@@ -1,0 +1,95 @@
+/customers/tickets/invoices:
+  post:
+    tags:
+      - Invoice
+    summary: Create a new invoice (mechanic token required)
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas.yaml#/definitions/Invoice"
+    responses:
+      201:
+        description: Invoice created
+      400:
+        description: Validation or FK error
+
+/customers/tickets/invoices/all:
+  get:
+    tags:
+      - Invoice
+    summary: Get all invoices (mechanic token required)
+    description: Supports pagination, cached for 60s
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+    responses:
+      200:
+        description: List of invoices
+
+/customers/tickets/invoices/{id}:
+  get:
+    tags:
+      - Invoice
+    summary: Get a specific invoice by ID (mechanic token required)
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: Invoice found
+      404:
+        description: Invalid invoice ID
+
+  put:
+    tags:
+      - Invoice
+    summary: Update invoice by ID (mechanic token required)
+    parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              paid:
+                type: boolean
+              service_ticket_id:
+                type: integer
+    responses:
+      200:
+        description: Invoice updated
+      404:
+        description: Invoice not found
+
+/customers/tickets/invoices/my-invoices:
+  get:
+    tags:
+      - Invoice
+    summary: Get customer's invoices (token required)
+    description: Requires customer login
+    parameters:
+      - in: query
+        name: customer_id
+        required: true
+        schema:
+          type: integer
+    responses:
+      200:
+        description: List of customer invoices

@@ -1,7 +1,7 @@
 
 from flask import Flask
 from .models import db
-from .extensions import ma, limiter
+from .extensions import ma, limiter, cache
 from .blueprints.customerAccounts import customer_accounts_bp
 from .blueprints.customers import customers_bp
 from .blueprints.inventory import inventory_bp
@@ -13,6 +13,18 @@ from .blueprints.serviceItems import service_items_bp
 from .blueprints.services import services_bp
 from .blueprints.serviceTickets import service_tickets_bp
 from .blueprints.vehicles import vehicles_bp
+from flask_swagger_ui import get_swaggerui_blueprint
+
+# Swagger UI setup
+SWAGGER_URL = '/api/docs'
+API_URL = '/static/swagger.yaml'
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_URL,
+    config={
+        'app_name': "MechMagic AutoWorx API"
+    }
+)
 
 
 def create_app(config_name):
@@ -26,6 +38,7 @@ def create_app(config_name):
     # Extensions initialization
     ma.init_app(app)
     limiter.init_app(app)
+    cache.init_app(app)
 
     # Registering our blueprints
     app.register_blueprint(customers_bp, url_prefix='/customers')
@@ -39,5 +52,6 @@ def create_app(config_name):
     app.register_blueprint(inventory_bp, url_prefix='/inventory')
     app.register_blueprint(service_items_bp, url_prefix='/inventory/items')
     app.register_blueprint(services_bp, url_prefix='/services')
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
     return app
