@@ -9,7 +9,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/Customer"
+            $ref: "#/definitions/Customer"
     responses:
       201:
         description: Customer created
@@ -31,18 +31,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-                minLength: 1
-                maxLength: 100
-              email:
-                type: string
-                format: email
-              phone:
-                type: string
-                minLength: 10
+            $ref: '#/definitions/CustomerUpdate'
     responses:
       200:
         description: Customer updated

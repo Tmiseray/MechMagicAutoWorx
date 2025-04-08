@@ -1,31 +1,6 @@
 definitions:
-  mechanic_ticket_services:
+  CustomerUpdate:
     type: object
-    description: Association between MechanicTicket and Service, used to track services performed on a ticket
-    required: [mechanic_ticket_id, service_id]
-    properties:
-      mechanic_ticket_id:
-        type: integer
-        description: ID of the associated MechanicTicket
-      service_id:
-        type: integer
-        description: ID of the associated Service
-
-  mechanic_ticket_items:
-    type: object
-    description: Association between MechanicTicket and ServiceItem, used to track inventory items used on a ticket
-    required: [mechanic_ticket_id, service_item_id]
-    properties:
-      mechanic_ticket_id:
-        type: integer
-        description: ID of the associated MechanicTicket
-      service_item_id:
-        type: integer
-        description: ID of the associated ServiceItem
-
-  Customer:
-    type: object
-    required: [name, email, phone]
     properties:
       id:
         type: integer
@@ -43,17 +18,15 @@ definitions:
       vehicles:
         type: array
         items:
-          $ref: "#/definitions/Vehicle"
+          $ref: '#/definitions/Vehicle'
       account:
-        $ref: "#/definitions/CustomerAccount"
+        $ref: '#/definitions/CustomerAccount'
       service_tickets:
         type: array
         items:
-          $ref: "#/definitions/ServiceTicket"
-
-  CustomerAccount:
+          $ref: '#/definitions/ServiceTicket'
+  CustomerAccountUpdate:
     type: object
-    required: [email, password]
     properties:
       id:
         type: integer
@@ -66,11 +39,9 @@ definitions:
         type: string
         minLength: 6
       customer:
-        $ref: "#/definitions/Customer"
-
-  Invoice:
+        $ref: '#/definitions/Customer'
+  InvoiceUpdate:
     type: object
-    required: [invoice_date, total, paid, service_ticket_id]
     properties:
       id:
         type: integer
@@ -85,11 +56,9 @@ definitions:
       service_ticket_id:
         type: integer
       service_ticket:
-        $ref: "#/definitions/ServiceTicket"
-
-  Vehicle:
+        $ref: '#/definitions/ServiceTicket'
+  VehicleUpdate:
     type: object
-    required: [vin, year, make, model, mileage]
     properties:
       vin:
         type: string
@@ -106,15 +75,13 @@ definitions:
       customer_id:
         type: integer
       customer:
-        $ref: "#/definitions/Customer"
+        $ref: '#/definitions/Customer'
       service_tickets:
         type: array
         items:
-          $ref: "#/definitions/ServiceTicket"
-
-  Mechanic:
+          $ref: '#/definitions/ServiceTicket'
+  MechanicUpdate:
     type: object
-    required: [name, email, phone, salary]
     properties:
       id:
         type: integer
@@ -129,15 +96,13 @@ definitions:
         type: number
         format: float
       account:
-        $ref: "#/definitions/MechanicAccount"
+        $ref: '#/definitions/MechanicAccount'
       mechanic_tickets:
         type: array
         items:
-          $ref: "#/definitions/MechanicTicket"
-
-  MechanicAccount:
+          $ref: '#/definitions/MechanicTicket'
+  MechanicAccountUpdate:
     type: object
-    required: [email, password, role]
     properties:
       id:
         type: integer
@@ -152,11 +117,9 @@ definitions:
       password:
         type: string
       mechanic:
-        $ref: "#/definitions/Mechanic"
-
-  MechanicTicket:
+        $ref: '#/definitions/Mechanic'
+  MechanicTicketUpdate:
     type: object
-    required: [start_date, hours_worked, service_ticket_id]
     properties:
       id:
         type: integer
@@ -172,23 +135,21 @@ definitions:
       service_ticket_id:
         type: integer
       service_ticket:
-        $ref: "#/definitions/ServiceTicket"
+        $ref: '#/definitions/ServiceTicket'
       mechanic_id:
         type: integer
       mechanic:
-        $ref: "#/definitions/Mechanic"
+        $ref: '#/definitions/Mechanic'
       services:
         type: array
         items:
-          $ref: "#/definitions/mechanic_ticket_services"
+          $ref: '#/definitions/mechanic_ticket_services'
       additional_items:
         type: array
         items:
-          $ref: "#/definitions/mechanic_ticket_items"
-
-  Inventory:
+          $ref: '#/definitions/mechanic_ticket_items'
+  InventoryUpdate:
     type: object
-    required: [name, stock, price]
     properties:
       id:
         type: integer
@@ -203,33 +164,29 @@ definitions:
       service_items:
         type: array
         items:
-          $ref: "#/definitions/ServiceItem"
-
-  ServiceItem:
+          $ref: '#/definitions/ServiceItem'
+  ServiceItemUpdate:
     type: object
-    required: [item_id, quantity]
     properties:
       id:
         type: integer
       item_id:
         type: integer
       inventory:
-        $ref: "#/definitions/Inventory"
+        $ref: '#/definitions/Inventory'
       service_id:
         type: integer
       service:
-        $ref: "#/definitions/Service"
+        $ref: '#/definitions/Service'
       quantity:
         type: integer
         minimum: 1
       mechanic_tickets:
         type: array
         items:
-          $ref: "#/definitions/mechanic_ticket_items"
-
-  Service:
+          $ref: '#/definitions/mechanic_ticket_items'
+  ServiceUpdate:
     type: object
-    required: [name, price]
     properties:
       id:
         type: integer
@@ -241,15 +198,13 @@ definitions:
       service_items:
         type: array
         items:
-          $ref: "#/definitions/ServiceItem"
+          $ref: '#/definitions/ServiceItem'
       mechanic_tickets:
         type: array
         items:
-          $ref: "#/definitions/mechanic_ticket_services"
-
-  ServiceTicket:
+          $ref: '#/definitions/mechanic_ticket_services'
+  ServiceTicketUpdate:
     type: object
-    required: [service_date, service_desc, VIN]
     properties:
       id:
         type: integer
@@ -261,15 +216,14 @@ definitions:
       VIN:
         type: string
       vehicle:
-        $ref: "#/definitions/Vehicle"
+        $ref: '#/definitions/Vehicle'
       customer_id:
         type: integer
       customer:
-        $ref: "#/definitions/Customer"
+        $ref: '#/definitions/Customer'
       mechanic_tickets:
         type: array
         items:
-          $ref: "#/definitions/MechanicTicket"
+          $ref: '#/definitions/MechanicTicket'
       invoice:
-        $ref: "#/definitions/Invoice"
-
+        $ref: '#/definitions/Invoice'

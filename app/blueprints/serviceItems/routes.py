@@ -13,7 +13,7 @@ from app.utils.validation_creation import validate_and_create, validate_and_upda
 
 # Create Service Item
 @service_items_bp.route('/', methods=['POST'])
-@mechanic_token_required
+# @mechanic_token_required
 def create_service_item():
     return validate_and_create(
         model=ServiceItem,
@@ -26,10 +26,10 @@ def create_service_item():
 
 # Read/Get All ServiceItems
 @service_items_bp.route('/all', methods=['GET'])
-@cache.cached(timeout=60)
-# Cache the response for 60 seconds
-# This will help reduce the load on the database
-@mechanic_token_required
+# @cache.cached(timeout=60)
+# # Cache the response for 60 seconds
+# # This will help reduce the load on the database
+# @mechanic_token_required
 # Only mechanics can retrieve all ServiceItems
 def get_all_service_items():
     try:
@@ -47,7 +47,7 @@ def get_all_service_items():
 
 # Read/Get Specific ServiceItem
 @service_items_bp.route('/<int:id>')
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve a single ServiceItem
 def get_service_item(id):
     service_item = db.session.get(ServiceItem, id)
@@ -60,7 +60,7 @@ def get_service_item(id):
 
 # Update ServiceItem
 @service_items_bp.route('/<int:id>', methods=['PUT'])
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can update ServiceItem
 def update_service_item(id):
     service_item = db.session.get(ServiceItem, id)

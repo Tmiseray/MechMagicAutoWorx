@@ -13,7 +13,7 @@ from app.utils.validation_creation import validate_and_create, validate_and_upda
 
 # Create Service
 @services_bp.route('/', methods=['POST'])
-@mechanic_token_required
+# @mechanic_token_required
 def create_service():
     payload = request.json.copy()
     service_items_payload = payload.pop("service_items", [])
@@ -48,7 +48,7 @@ def create_service():
 
 # Read/Get All Services
 @services_bp.route('/all', methods=['GET'])
-@cache.cached(timeout=60)
+# @cache.cached(timeout=60)
 # Cache the response for 60 seconds
 # This will help reduce the load on the database
 def get_all_services():
@@ -76,7 +76,7 @@ def get_service(id):
 
 # Update Service
 @services_bp.route('/<int:id>', methods=['PUT'])
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can update service
 def update_service(id):
     service = db.session.get(Service, id)

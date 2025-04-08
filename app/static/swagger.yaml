@@ -24,32 +24,6 @@ securityDefinitions:
     in: header
     description: "Enter your mechanic token in the format `Bearer {token}`. This token is required for all endpoints that require mechanic authentication."
 
-paths:
-  /customerAccounts:
-    $ref: './paths/customerAccounts.yaml'
-  /customers:
-    $ref: './paths/customers.yaml'
-  /inventory:
-    $ref: './paths/inventory.yaml'
-  /invoices:
-    $ref: './paths/invoices.yaml'
-  /mechanicAccounts:
-    $ref: './paths/mechanicAccounts.yaml'
-  /mechanics:
-    $ref: './paths/mechanics.yaml'
-  /mechanicTickets:
-    $ref: './paths/mechanicTickets.yaml'
-  /serviceItems:
-    $ref: './paths/serviceItem.yaml'
-  /services:
-    $ref: './paths/services.yaml'
-  /serviceTickets:
-    $ref: './paths/serviceTickets.yaml'
-  /vehicles:
-    $ref: './paths/vehicles.yaml'
 
-
-definitions:
-#  Reusable Schemas/Models
-  schemas:
-    $ref: './schemas.yaml'
+paths: {}
+definitions: {}

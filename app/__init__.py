@@ -14,10 +14,11 @@ from .blueprints.services import services_bp
 from .blueprints.serviceTickets import service_tickets_bp
 from .blueprints.vehicles import vehicles_bp
 from flask_swagger_ui import get_swaggerui_blueprint
+from .utils.swagger_merge import combine_swagger_docs
 
 # Swagger UI setup
 SWAGGER_URL = '/api/docs'
-API_URL = '/static/swagger.yaml'
+API_URL = '/static/combined_swagger.yaml'
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
@@ -31,6 +32,9 @@ def create_app(config_name):
 
     app = Flask(__name__)
     app.config.from_object(f'config.{config_name}')
+
+    # Load the combined Swagger documentation
+    combine_swagger_docs()
 
     # Database initialization
     db.init_app(app)

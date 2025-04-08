@@ -38,7 +38,7 @@
       content:
         application/json:
           schema:
-          $ref: "../schemas.yaml#/definitions/CustomerAccount"
+          $ref: "#/definitions/CustomerAccount"
   responses:
     201:
       description: Account successfully created
@@ -76,14 +76,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              email:
-                type: string
-                format: email
-              password:
-                type: string
-                minLength: 8
+            $ref: '#/definitions/CustomerAccountUpdate'
     responses:
       200:
         description: Customer account updated

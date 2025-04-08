@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/Mechanic"
+            $ref: "#/definitions/Mechanic"
     responses:
       201:
         description: Mechanic created
@@ -30,17 +30,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-              email:
-                type: string
-                format: email
-              phone:
-                type: string
-              salary:
-                type: number
+            $ref: '#/definitions/MechanicUpdate'
     responses:
       200:
         description: Mechanic updated

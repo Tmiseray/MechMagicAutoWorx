@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/Invoice"
+            $ref: "#/definitions/Invoice"
     responses:
       201:
         description: Invoice created
@@ -66,12 +66,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              paid:
-                type: boolean
-              service_ticket_id:
-                type: integer
+            $ref: '#/definitions/InvoiceUpdate'
     responses:
       200:
         description: Invoice updated

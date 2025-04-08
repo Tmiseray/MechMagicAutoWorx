@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/Inventory"
+            $ref: "#/definitions/Inventory"
     responses:
       201:
         description: Inventory created
@@ -66,16 +66,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-                minLength: 1
-                maxLength: 100
-              stock:
-                type: integer
-              price:
-                type: number
+            $ref: '#/definitions/InventoryUpdate'
     responses:
       200:
         description: Inventory updated

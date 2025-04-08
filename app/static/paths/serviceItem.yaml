@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/ServiceItem"
+            $ref: "#/definitions/ServiceItem"
     responses:
       201:
         description: Service item created
@@ -65,7 +65,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/ServiceItem"
+            $ref: "#/definitions/ServiceItemUpdate"
     responses:
       200:
         description: Service item updated

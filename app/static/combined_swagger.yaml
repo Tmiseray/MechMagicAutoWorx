@@ -1,0 +1,1495 @@
+swagger: '2.0'
+info:
+  title: MechMagic AutoWorx API
+  description: This API provides endpoints for managing a mechanic shop, including
+    services, inventory, service tickets, mechanic information, and customer information.
+  version: 1.0.0
+host: 127.0.0.1:5000
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions:
+  CustomerToken:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Enter your customer token in the format `Bearer {token}`. This token
+      is required for all endpoints that require specific customer authentication.
+  MechanicToken:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: Enter your mechanic token in the format `Bearer {token}`. This token
+      is required for all endpoints that require mechanic authentication.
+paths:
+  /customers/accounts/login:
+    post:
+      tags:
+      - CustomerAccount
+      summary: Customer Login
+      description: Authenticates a customer using email and password and returns a
+        JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: Login successful, returns JWT token
+        400:
+          description: Invalid request format
+        401:
+          description: Invalid credentials
+  /customers/accounts:
+    post:
+      tags:
+      - CustomerAccount
+      summary: Create a new customer account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: null
+            $ref: '#/definitions/CustomerAccount'
+    responses:
+      201:
+        description: Account successfully created
+      400:
+        description: Invalid input or duplicate email
+    get:
+      tags:
+      - CustomerAccount
+      summary: Get a customer account by ID (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Customer account retrieved
+        404:
+          description: Account not found or unauthorized
+    put:
+      tags:
+      - CustomerAccount
+      summary: Update a customer account (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/CustomerAccountUpdate'
+      responses:
+        200:
+          description: Customer account updated
+        404:
+          description: Customer or account not found
+    delete:
+      tags:
+      - CustomerAccount
+      summary: Delete a customer account (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Account successfully deleted
+        404:
+          description: Account not found
+  /customers/accounts/all:
+    get:
+      tags:
+      - CustomerAccount
+      summary: Get all customer accounts (mechanic token required)
+      parameters:
+      - in: query
+        name: page
+        schema: null
+        type: integer
+      - in: query
+        name: per_page
+        schema: null
+        type: integer
+      responses:
+        200:
+          description: Paginated list of all customer accounts
+  /customers:
+    post:
+      tags:
+      - Customer
+      summary: Create a new customer
+      description: Limited to 3 per hour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Customer'
+      responses:
+        201:
+          description: Customer created
+        400:
+          description: Validation error or duplicate email
+    put:
+      tags:
+      - Customer
+      summary: Update customer data (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/CustomerUpdate'
+      responses:
+        200:
+          description: Customer updated
+        404:
+          description: Customer not found
+    delete:
+      tags:
+      - Customer
+      summary: Delete a customer (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Customer successfully deleted
+        404:
+          description: Invalid customer ID
+  /customers/all:
+    get:
+      tags:
+      - Customer
+      summary: Get all customers (mechanic token required)
+      description: Returns all customers, supports optional pagination
+      parameters:
+      - in: query
+        name: page
+        schema: null
+        type: integer
+      - in: query
+        name: per_page
+        schema: null
+        type: integer
+      responses:
+        200:
+          description: List of customers
+  /customers/{id}:
+    get:
+      tags:
+      - Customer
+      summary: Get a specific customer by ID (mechanic token required)
+      parameters:
+      - in: path
+        name: id
+        required: true
+        schema: null
+        type: integer
+    responses:
+      200:
+        description: Customer found
+      404:
+        description: Invalid customer ID
+  /inventory:
+    post:
+      tags:
+      - Inventory
+      summary: Create a new inventory item (mechanic token required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Inventory'
+      responses:
+        201:
+          description: Inventory created
+        400:
+          description: Validation error or duplicate name
+  /inventory/all:
+    get:
+      tags:
+      - Inventory
+      summary: Get all inventory items (mechanic token required)
+      description: Cached for 60 seconds. Supports optional pagination.
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of inventory items
+  /inventory/{id}:
+    get:
+      tags:
+      - Inventory
+      summary: Get a specific inventory item by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Inventory item found
+        404:
+          description: Invalid Inventory ID
+    put:
+      tags:
+      - Inventory
+      summary: Update inventory item by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/InventoryUpdate'
+      responses:
+        200:
+          description: Inventory updated
+        404:
+          description: Inventory not found
+  /customers/tickets/invoices:
+    post:
+      tags:
+      - Invoice
+      summary: Create a new invoice (mechanic token required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Invoice'
+      responses:
+        201:
+          description: Invoice created
+        400:
+          description: Validation or FK error
+  /customers/tickets/invoices/all:
+    get:
+      tags:
+      - Invoice
+      summary: Get all invoices (mechanic token required)
+      description: Supports pagination, cached for 60s
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of invoices
+  /customers/tickets/invoices/{id}:
+    get:
+      tags:
+      - Invoice
+      summary: Get a specific invoice by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Invoice found
+        404:
+          description: Invalid invoice ID
+    put:
+      tags:
+      - Invoice
+      summary: Update invoice by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/InvoiceUpdate'
+      responses:
+        200:
+          description: Invoice updated
+        404:
+          description: Invoice not found
+  /customers/tickets/invoices/my-invoices:
+    get:
+      tags:
+      - Invoice
+      summary: Get customer's invoices (token required)
+      description: Requires customer login
+      parameters:
+      - in: query
+        name: customer_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of customer invoices
+  /mechanics/accounts:
+    post:
+      tags:
+      - MechanicAccount
+      summary: Create a new mechanic account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicAccount'
+      responses:
+        201:
+          description: Mechanic account created
+        400:
+          description: Validation error or duplicate email
+    put:
+      tags:
+      - MechanicAccount
+      summary: Update mechanic account (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicAccountUpdate'
+      responses:
+        200:
+          description: Mechanic account updated
+        404:
+          description: Mechanic or account not found
+    delete:
+      tags:
+      - MechanicAccount
+      summary: Delete mechanic account (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Mechanic account deleted
+        404:
+          description: Mechanic or account not found
+    get:
+      tags:
+      - MechanicAccount
+      summary: Get a specific mechanic account (token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Mechanic account found
+        404:
+          description: Mechanic or account not found
+  /mechanics/accounts/login:
+    post:
+      tags:
+      - MechanicAccount
+      summary: Mechanic Login
+      description: Authenticates a mechanic using email and password and returns a
+        JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: Login successful, returns JWT token
+        400:
+          description: Invalid request format
+        401:
+          description: Invalid credentials
+  /mechanics/accounts/all:
+    get:
+      tags:
+      - MechanicAccount
+      summary: Get all mechanic accounts (mechanic token required)
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of mechanic accounts
+  /mechanics/tickets:
+    post:
+      tags:
+      - MechanicTicket
+      summary: Create a new mechanic ticket (mechanic token required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicTicket'
+      responses:
+        201:
+          description: Mechanic ticket created
+        400:
+          description: Validation error or bad inventory reference
+        404:
+          description: Invalid service or item ID
+    put:
+      tags:
+      - MechanicTicket
+      summary: Update mechanic ticket by ID (mechanic token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicTicketUpdate'
+      responses:
+        200:
+          description: Mechanic ticket updated
+        404:
+          description: Mechanic ticket not found
+  /mechanics/tickets/all:
+    get:
+      tags:
+      - MechanicTicket
+      summary: Get all mechanic tickets (mechanic token required)
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of mechanic tickets
+  /mechanics/tickets/{id}:
+    get:
+      tags:
+      - MechanicTicket
+      summary: Get a specific mechanic ticket by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Mechanic ticket found
+        404:
+          description: Invalid mechanic ticket ID
+  /mechanics/tickets/my-tickets:
+    get:
+      tags:
+      - MechanicTicket
+      summary: Get tickets for a specific mechanic (mechanic token required)
+      parameters:
+      - in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of mechanic's tickets
+  /mechanics:
+    post:
+      tags:
+      - Mechanic
+      summary: Create a new mechanic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Mechanic'
+      responses:
+        201:
+          description: Mechanic created
+        400:
+          description: Validation error or duplicate email
+    put:
+      tags:
+      - Mechanic
+      summary: Update mechanic data (token required)
+      parameters:
+      - in: query
+        name: mechanic_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicUpdate'
+      responses:
+        200:
+          description: Mechanic updated
+        404:
+          description: Mechanic not found
+    delete:
+      tags:
+      - Mechanic
+      summary: Delete a mechanic (token required)
+      parameters:
+      - in: query
+        name: mechanic_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Mechanic successfully deleted
+        404:
+          description: Invalid mechanic ID
+    get:
+      tags:
+      - Mechanic
+      summary: Get a specific mechanic by ID (token required)
+      parameters:
+      - in: query
+        name: mechanic_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Mechanic found
+        404:
+          description: Invalid mechanic ID
+  /mechanics/all:
+    get:
+      tags:
+      - Mechanic
+      summary: Get all mechanics
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of mechanics
+  /mechanics/top-mechanics:
+    get:
+      tags:
+      - Mechanic
+      summary: Get top mechanics based on ticket count
+      responses:
+        200:
+          description: List of top mechanics
+  /inventory/items:
+    post:
+      tags:
+      - ServiceItem
+      summary: Create a new service item (mechanic token required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceItem'
+      responses:
+        201:
+          description: Service item created
+        400:
+          description: Validation error
+  /inventory/items/all:
+    get:
+      tags:
+      - ServiceItem
+      summary: Get all service items (mechanic token required)
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of service items
+  /inventory/items/{id}:
+    get:
+      tags:
+      - ServiceItem
+      summary: Get a specific service item by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Service item found
+        404:
+          description: Invalid service item ID
+    put:
+      tags:
+      - ServiceItem
+      summary: Update a service item by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceItemUpdate'
+      responses:
+        200:
+          description: Service item updated
+        404:
+          description: Service item not found
+  /customers/tickets:
+    post:
+      tags:
+      - ServiceTicket
+      summary: Create a new service ticket
+      description: Limited to 20 per hour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceTicket'
+      responses:
+        201:
+          description: Service ticket created
+        400:
+          description: Validation error
+  /customers/tickets/all:
+    get:
+      tags:
+      - ServiceTicket
+      summary: Get all service tickets (mechanic token required)
+      parameters:
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of service tickets
+  /customers/tickets/{service_ticket_id}:
+    get:
+      tags:
+      - ServiceTicket
+      summary: Get a specific service ticket by ID (mechanic token required)
+      parameters:
+      - name: service_ticket_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Service ticket found
+        404:
+          description: Invalid Service Ticket ID or not found
+    put:
+      tags:
+      - ServiceTicket
+      summary: Update a service ticket (mechanic token required)
+      parameters:
+      - name: service_ticket_id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceTicketUpdate'
+      responses:
+        200:
+          description: Service ticket updated
+        404:
+          description: Invalid Service Ticket ID
+  /customers/tickets/my-tickets:
+    get:
+      tags:
+      - ServiceTicket
+      summary: Get all service tickets for a customer (token required)
+      parameters:
+      - name: customer_id
+        in: query
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of customer's service tickets
+        404:
+          description: Customer not found
+  /services:
+    post:
+      tags:
+      - Service
+      summary: Create a new service (mechanic token required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Service'
+      responses:
+        201:
+          description: Service created
+        400:
+          description: Validation error or bad service item reference
+  /services/all:
+    get:
+      tags:
+      - Service
+      summary: Get all services
+      parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          type: integer
+      responses:
+        200:
+          description: List of services
+  /services/{id}:
+    get:
+      tags:
+      - Service
+      summary: Get a specific service by ID
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: Service found
+        404:
+          description: Invalid service ID
+    put:
+      tags:
+      - Service
+      summary: Update a service by ID (mechanic token required)
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceUpdate'
+      responses:
+        200:
+          description: Service updated
+        404:
+          description: Service not found
+  /vehicles:
+    post:
+      tags:
+      - Vehicle
+      summary: Create a new vehicle
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Vehicle'
+      responses:
+        201:
+          description: Vehicle created
+        400:
+          description: Validation error or duplicate VIN
+    /vehicles/all:
+      get:
+        tags:
+        - Vehicle
+        summary: Get all vehicles
+        responses:
+          200:
+            description: List of vehicles
+    /vehicles/{VIN}:
+      get:
+        tags:
+        - Vehicle
+        summary: Get a specific vehicle by VIN
+        parameters:
+        - name: VIN
+          in: path
+          required: true
+          schema:
+            type: string
+        responses:
+          200:
+            description: Vehicle found
+          404:
+            description: Invalid vehicle ID
+      put:
+        tags:
+        - Vehicle
+        summary: Update a vehicle
+        parameters:
+        - name: VIN
+          in: path
+          required: true
+          schema:
+            type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/VehicleUpdate'
+        responses:
+          200:
+            description: Vehicle updated
+          404:
+            description: Vehicle not found
+definitions:
+  mechanic_ticket_services:
+    type: object
+    description: Association between MechanicTicket and Service, used to track services
+      performed on a ticket
+    required:
+    - mechanic_ticket_id
+    - service_id
+    properties:
+      mechanic_ticket_id:
+        type: integer
+        description: ID of the associated MechanicTicket
+      service_id:
+        type: integer
+        description: ID of the associated Service
+  mechanic_ticket_items:
+    type: object
+    description: Association between MechanicTicket and ServiceItem, used to track
+      inventory items used on a ticket
+    required:
+    - mechanic_ticket_id
+    - service_item_id
+    properties:
+      mechanic_ticket_id:
+        type: integer
+        description: ID of the associated MechanicTicket
+      service_item_id:
+        type: integer
+        description: ID of the associated ServiceItem
+  Customer:
+    type: object
+    required:
+    - name
+    - email
+    - phone
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        minLength: 2
+        maxLength: 100
+      email:
+        type: string
+        format: email
+      phone:
+        type: string
+        minLength: 7
+        maxLength: 20
+      vehicles:
+        type: array
+        items:
+          $ref: '#/definitions/Vehicle'
+      account:
+        $ref: '#/definitions/CustomerAccount'
+      service_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceTicket'
+  CustomerAccount:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      id:
+        type: integer
+      customer_id:
+        type: integer
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        minLength: 6
+      customer:
+        $ref: '#/definitions/Customer'
+  Invoice:
+    type: object
+    required:
+    - invoice_date
+    - total
+    - paid
+    - service_ticket_id
+    properties:
+      id:
+        type: integer
+      invoice_date:
+        type: string
+        format: date
+      total:
+        type: number
+        format: float
+      paid:
+        type: boolean
+      service_ticket_id:
+        type: integer
+      service_ticket:
+        $ref: '#/definitions/ServiceTicket'
+  Vehicle:
+    type: object
+    required:
+    - vin
+    - year
+    - make
+    - model
+    - mileage
+    properties:
+      vin:
+        type: string
+        minLength: 5
+        maxLength: 100
+      year:
+        type: integer
+      make:
+        type: string
+      model:
+        type: string
+      mileage:
+        type: integer
+      customer_id:
+        type: integer
+      customer:
+        $ref: '#/definitions/Customer'
+      service_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceTicket'
+  Mechanic:
+    type: object
+    required:
+    - name
+    - email
+    - phone
+    - salary
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+        format: email
+      phone:
+        type: string
+      salary:
+        type: number
+        format: float
+      account:
+        $ref: '#/definitions/MechanicAccount'
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/MechanicTicket'
+  MechanicAccount:
+    type: object
+    required:
+    - email
+    - password
+    - role
+    properties:
+      id:
+        type: integer
+      role:
+        type: string
+        default: Mechanic
+      mechanic_id:
+        type: integer
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+      mechanic:
+        $ref: '#/definitions/Mechanic'
+  MechanicTicket:
+    type: object
+    required:
+    - start_date
+    - hours_worked
+    - service_ticket_id
+    properties:
+      id:
+        type: integer
+      start_date:
+        type: string
+        format: date
+      end_date:
+        type: string
+        format: date
+      hours_worked:
+        type: number
+        format: float
+      service_ticket_id:
+        type: integer
+      service_ticket:
+        $ref: '#/definitions/ServiceTicket'
+      mechanic_id:
+        type: integer
+      mechanic:
+        $ref: '#/definitions/Mechanic'
+      services:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_services'
+      additional_items:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_items'
+  Inventory:
+    type: object
+    required:
+    - name
+    - stock
+    - price
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      stock:
+        type: integer
+        minimum: 0
+      price:
+        type: number
+        format: float
+      service_items:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceItem'
+  ServiceItem:
+    type: object
+    required:
+    - item_id
+    - quantity
+    properties:
+      id:
+        type: integer
+      item_id:
+        type: integer
+      inventory:
+        $ref: '#/definitions/Inventory'
+      service_id:
+        type: integer
+      service:
+        $ref: '#/definitions/Service'
+      quantity:
+        type: integer
+        minimum: 1
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_items'
+  Service:
+    type: object
+    required:
+    - name
+    - price
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+        format: float
+      service_items:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceItem'
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_services'
+  ServiceTicket:
+    type: object
+    required:
+    - service_date
+    - service_desc
+    - VIN
+    properties:
+      id:
+        type: integer
+      service_date:
+        type: string
+        format: date
+      service_desc:
+        type: string
+      VIN:
+        type: string
+      vehicle:
+        $ref: '#/definitions/Vehicle'
+      customer_id:
+        type: integer
+      customer:
+        $ref: '#/definitions/Customer'
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/MechanicTicket'
+      invoice:
+        $ref: '#/definitions/Invoice'
+  CustomerUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+        minLength: 2
+        maxLength: 100
+      email:
+        type: string
+        format: email
+      phone:
+        type: string
+        minLength: 7
+        maxLength: 20
+      vehicles:
+        type: array
+        items:
+          $ref: '#/definitions/Vehicle'
+      account:
+        $ref: '#/definitions/CustomerAccount'
+      service_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceTicket'
+  CustomerAccountUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      customer_id:
+        type: integer
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+        minLength: 6
+      customer:
+        $ref: '#/definitions/Customer'
+  InvoiceUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      invoice_date:
+        type: string
+        format: date
+      total:
+        type: number
+        format: float
+      paid:
+        type: boolean
+      service_ticket_id:
+        type: integer
+      service_ticket:
+        $ref: '#/definitions/ServiceTicket'
+  VehicleUpdate:
+    type: object
+    properties:
+      vin:
+        type: string
+        minLength: 5
+        maxLength: 100
+      year:
+        type: integer
+      make:
+        type: string
+      model:
+        type: string
+      mileage:
+        type: integer
+      customer_id:
+        type: integer
+      customer:
+        $ref: '#/definitions/Customer'
+      service_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceTicket'
+  MechanicUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      email:
+        type: string
+        format: email
+      phone:
+        type: string
+      salary:
+        type: number
+        format: float
+      account:
+        $ref: '#/definitions/MechanicAccount'
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/MechanicTicket'
+  MechanicAccountUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      role:
+        type: string
+        default: Mechanic
+      mechanic_id:
+        type: integer
+      email:
+        type: string
+        format: email
+      password:
+        type: string
+      mechanic:
+        $ref: '#/definitions/Mechanic'
+  MechanicTicketUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      start_date:
+        type: string
+        format: date
+      end_date:
+        type: string
+        format: date
+      hours_worked:
+        type: number
+        format: float
+      service_ticket_id:
+        type: integer
+      service_ticket:
+        $ref: '#/definitions/ServiceTicket'
+      mechanic_id:
+        type: integer
+      mechanic:
+        $ref: '#/definitions/Mechanic'
+      services:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_services'
+      additional_items:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_items'
+  InventoryUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      stock:
+        type: integer
+        minimum: 0
+      price:
+        type: number
+        format: float
+      service_items:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceItem'
+  ServiceItemUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      item_id:
+        type: integer
+      inventory:
+        $ref: '#/definitions/Inventory'
+      service_id:
+        type: integer
+      service:
+        $ref: '#/definitions/Service'
+      quantity:
+        type: integer
+        minimum: 1
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_items'
+  ServiceUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: number
+        format: float
+      service_items:
+        type: array
+        items:
+          $ref: '#/definitions/ServiceItem'
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/mechanic_ticket_services'
+  ServiceTicketUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      service_date:
+        type: string
+        format: date
+      service_desc:
+        type: string
+      VIN:
+        type: string
+      vehicle:
+        $ref: '#/definitions/Vehicle'
+      customer_id:
+        type: integer
+      customer:
+        $ref: '#/definitions/Customer'
+      mechanic_tickets:
+        type: array
+        items:
+          $ref: '#/definitions/MechanicTicket'
+      invoice:
+        $ref: '#/definitions/Invoice'

@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/MechanicTicket"
+            $ref: "#/definitions/MechanicTicket"
     responses:
       201:
         description: Mechanic ticket created
@@ -32,30 +32,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              hours_worked:
-                type: number
-              end_date:
-                type: string
-                format: date
-              service_ticket_id:
-                type: integer
-              mechanic_id:
-                type: integer
-              service_ids:
-                type: array
-                items:
-                  type: integer
-              additional_items:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    item_id:
-                      type: integer
-                    quantity:
-                      type: integer
+            $ref: '#/definitions/MechanicTicketUpdate'
     responses:
       200:
         description: Mechanic ticket updated

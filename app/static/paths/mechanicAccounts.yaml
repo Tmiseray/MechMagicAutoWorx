@@ -8,7 +8,7 @@
       content:
         application/json:
           schema:
-            $ref: "../schemas.yaml#/definitions/MechanicAccount"
+            $ref: "#/definitions/MechanicAccount"
     responses:
       201:
         description: Mechanic account created
@@ -30,13 +30,7 @@
       content:
         application/json:
           schema:
-            type: object
-            properties:
-              email:
-                type: string
-                format: email
-              password:
-                type: string
+            $ref: '#/definitions/MechanicAccountUpdate'
     responses:
       200:
         description: Mechanic account updated

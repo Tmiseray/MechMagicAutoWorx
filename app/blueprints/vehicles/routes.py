@@ -12,7 +12,7 @@ from app.utils.validation_creation import validate_and_create, validate_and_upda
 
 # Create Vehicle
 @vehicles_bp.route('/', methods=['POST'])
-@mechanic_token_required
+# @mechanic_token_required
 def create_vehicle():
     payload = request.json
     
@@ -32,10 +32,10 @@ def create_vehicle():
 
 # Read/Get All Vehicles
 @vehicles_bp.route('/all', methods=['GET'])
-@cache.cached(timeout=60)
-# Cache the response for 60 seconds
-# This will help reduce the load on the database
-@mechanic_token_required
+# @cache.cached(timeout=60)
+# # Cache the response for 60 seconds
+# # This will help reduce the load on the database
+# @mechanic_token_required
 # Only mechanics can retrieve all vehicles
 def get_all_vehicles():
     try:
@@ -53,7 +53,7 @@ def get_all_vehicles():
 
 # Read/Get Specific Vehicle
 @vehicles_bp.route('/<VIN>')
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can retrieve a single vehicle
 def get_vehicles(VIN):
     vehicle = db.session.get(Vehicle, VIN)
@@ -66,7 +66,7 @@ def get_vehicles(VIN):
 
 # Update Vehicle
 @vehicles_bp.route('/<VIN>', methods=['PUT'])
-@mechanic_token_required
+# @mechanic_token_required
 # Only mechanics can update vehicle
 def update_vehicle(VIN):
     vehicle = db.session.get(Vehicle, VIN)
