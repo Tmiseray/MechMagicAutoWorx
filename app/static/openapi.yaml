@@ -37,7 +37,7 @@ components:
   requestBodies:
     $ref: './components/requestBodies/index.yaml'
   responses:
-    $ref: './components/responses/index.yaml'
+    $ref: './components/responses/errors.yaml'
   examples:
     $ref: './components/examples/index.yaml'
   securitySchemes:

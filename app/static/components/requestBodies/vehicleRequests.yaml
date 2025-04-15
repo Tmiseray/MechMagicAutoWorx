@@ -1,0 +1,17 @@
+components:
+  requestBodies:
+    VehicleCreate:
+      description: Vehicle Creation Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/vehicles.yaml#/components/schemas/Vehicle'
+
+    VehicleUpdate:
+      description: Vehicle Update Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/vehicleUpdate.yaml#/components/schemas/VehicleUpdate'

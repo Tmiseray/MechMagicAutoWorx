@@ -104,7 +104,7 @@ def get_my_service_tickets(customer_id):
 def update_service_ticket(service_ticket_id):
     service_ticket = db.session.get(ServiceTicket, service_ticket_id)
     if not service_ticket:
-        return jsonify({"message": "Invalid Service Ticket ID"}), 404
+        return jsonify({"message": "Invalid Service Ticket ID or Service Ticket Not in Database"}), 404
 
     payload = request.json
 

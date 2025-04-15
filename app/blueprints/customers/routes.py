@@ -64,7 +64,7 @@ def get_customer(id):
     customer = db.session.get(Customer, id)
 
     if not customer:
-        return jsonify({"message": "Invalid customer ID"}), 404
+        return jsonify({"message": "Invalid Customer ID or Customer Not in Database"}), 404
 
     return jsonify(customer_schema.dump(customer)), 200
 
@@ -76,7 +76,7 @@ def get_customer(id):
 def update_customer(id):
     customer = db.session.get(Customer, id)
     if not customer:
-        return jsonify({"message": "Customer not found"}), 404
+        return jsonify({"message": "Invalid Customer ID or Customer Not in Database"}), 404
 
     payload = request.json
 
@@ -98,7 +98,7 @@ def delete_customer(id):
     customer = db.session.get(Customer, id)
 
     if not customer:
-        return jsonify({"message": "Invalid customer ID"}), 404
+        return jsonify({"message": "Invalid Customer ID or Customer Not in Database"}), 404
 
     # Set customer_id to NULL for related service tickets
     for service_ticket in customer.service_tickets:

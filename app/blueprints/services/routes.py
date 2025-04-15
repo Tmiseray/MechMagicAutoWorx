@@ -70,7 +70,7 @@ def get_service(id):
     service = db.session.get(Service, id)
 
     if not service:
-        return jsonify({"message": "Invalid service ID"}), 404
+        return jsonify({"message": "Invalid Service ID or Service Not in Database"}), 404
 
     return jsonify(service_schema.dump(service)), 200
 
@@ -81,7 +81,7 @@ def get_service(id):
 def update_service(id):
     service = db.session.get(Service, id)
     if not service:
-        return jsonify({"message": "Invalid Service ID"}), 404
+        return jsonify({"message": "Invalid Service ID or Service Not in Database"}), 404
 
     payload = request.json.copy()
     service_items_payload = payload.pop("service_items", None)

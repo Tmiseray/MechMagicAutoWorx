@@ -1,0 +1,16 @@
+components:
+  requestBodies:
+    ServiceTicketCreate:
+      description: Service Ticket Creation Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/serviceTickets.yaml#/components/schemas/ServiceTicket'
+    ServiceTicketUpdate:
+      description: Service Ticket Update Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/serviceTicketUpdate.yaml#/components/schemas/ServiceTicketUpdate'

@@ -32,3 +32,19 @@ components:
       $ref: './mechanicTicketRequests.yaml#/components/requestBodies/MechanicTicketCreate'
     MechanicTicketUpdate:
       $ref: './mechanicTicketRequests.yaml#/components/requestBodies/MechanicTicketUpdate'
+    ServiceItemCreate:
+      $ref: './serviceItemRequests.yaml#/components/requestBodies/ServiceItemCreate'
+    ServiceItemUpdate:
+      $ref: './serviceItemRequests.yaml#/components/requestBodies/ServiceItemUpdate'
+    ServiceCreate:
+      $ref: './serviceRequests.yaml#/components/requestBodies/ServiceCreate'
+    ServiceUpdate:
+      $ref: './serviceRequests.yaml#/components/requestBodies/ServiceUpdate'
+    ServiceTicketCreate:
+      $ref: './serviceTicketRequests.yaml#/components/requestBodies/ServiceTicketCreate'
+    ServiceTicketUpdate:
+      $ref: './serviceTicketRequests.yaml#/components/requestBodies/ServiceTicketUpdate'
+    VehicleCreate:
+      $ref: './vehicleRequests.yaml#/components/requestBodies/VehicleCreate'
+    VehicleUpdate:
+      $ref: './vehicleRequests.yaml#/components/requestBodies/VehicleUpdate'

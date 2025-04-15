@@ -68,7 +68,7 @@ def get_invoice(id):
     invoice = db.session.get(Invoice, id)
 
     if not invoice:
-        return jsonify({"message": "Invalid Invoice ID"}), 404
+        return jsonify({"message": "Invalid Invoice ID or Invoice Not in Database"}), 404
 
     return jsonify(invoice_schema.dump(invoice)), 200
 
@@ -93,7 +93,7 @@ def get_my_invoices(customer_id):
 def update_invoice(id):
     invoice = db.session.get(Invoice, id)
     if not invoice:
-        return jsonify({"message": "Invalid Invoice ID"}), 404
+        return jsonify({"message": "Invalid Invoice ID or Invoice Not in Database"}), 404
 
     payload = request.json
 

@@ -60,7 +60,7 @@ def get_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
     if not mechanic:
-        return jsonify({"message": "Invalid mechanic ID"}), 404
+        return jsonify({"message": "Invalid Mechanic ID or Mechanic Not in Database"}), 404
 
     return jsonify(mechanic_schema.dump(mechanic)), 200
 
@@ -72,7 +72,7 @@ def get_mechanic(mechanic_id):
 def update_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
     if not mechanic:
-        return jsonify({"message": "Mechanic not found"}), 404
+        return jsonify({"message": "Invalid Mechanic ID or Mechanic Not in Database"}), 404
 
     payload = request.json
 
@@ -95,7 +95,7 @@ def delete_mechanic(mechanic_id):
     mechanic = db.session.get(Mechanic, mechanic_id)
 
     if not mechanic:
-        return jsonify({"message": "Invalid mechanic ID"}), 404
+        return jsonify({"message": "Invalid Mechanic ID or Mechanic Not in Database"}), 404
 
     # Set mechanic_id to NULL for related service mechanics
     for mt in mechanic.mechanic_tickets:

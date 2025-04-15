@@ -1,0 +1,17 @@
+components:
+  requestBodies:
+    ServiceCreate:
+      description: Service Creation Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/services.yaml#/components/schemas/Service'
+
+    ServiceUpdate:
+      description: Service Update Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/serviceUpdate.yaml#/components/schemas/ServiceUpdate'

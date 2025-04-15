@@ -54,7 +54,7 @@ def get_inventory(id):
     inventory = db.session.get(Inventory, id)
 
     if not inventory:
-        return jsonify({"message": "Invalid Inventory ID"}), 404
+        return jsonify({"message": "Invalid Inventory ID or Inventory Not in Database"}), 404
 
     return jsonify(inventory_schema.dump(inventory)), 200
 
@@ -66,7 +66,7 @@ def get_inventory(id):
 def update_inventory(id):
     inventory = db.session.get(Inventory, id)
     if not inventory:
-        return jsonify({"message": "Invalid Inventory ID"}), 404
+        return jsonify({"message": "Invalid Inventory ID or Inventory Not in Database"}), 404
 
     success, response, status_code = validate_and_update(
         instance=inventory,

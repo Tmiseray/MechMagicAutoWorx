@@ -59,7 +59,7 @@ def get_vehicles(VIN):
     vehicle = db.session.get(Vehicle, VIN)
 
     if not vehicle:
-        return jsonify({"message": "Invalid vehicle ID"}), 404
+        return jsonify({"message": "Invalid VIN or Vehicle Not in Database"}), 404
 
     return jsonify(vehicle_schema.dump(vehicle)), 200
 
@@ -71,7 +71,7 @@ def get_vehicles(VIN):
 def update_vehicle(VIN):
     vehicle = db.session.get(Vehicle, VIN)
     if not vehicle:
-        return jsonify({"message": "Vehicle not found"}), 404
+        return jsonify({"message": "Invalid VIN or Vehicle Not in Database"}), 404
 
     payload = request.json
 

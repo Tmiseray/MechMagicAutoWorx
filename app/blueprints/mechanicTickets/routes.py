@@ -104,7 +104,7 @@ def get_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
 
     if not mechanic_ticket:
-        return jsonify({"message": "Invalid Mechanic Ticket ID"}), 404
+        return jsonify({"message": "Invalid Mechanic Ticket ID or Mechanic Ticket Not in Database"}), 404
 
     return jsonify(mechanic_ticket_schema.dump(mechanic_ticket)), 200
 
@@ -129,7 +129,7 @@ def get_my_tickets(id):
 def update_mechanic_ticket(id):
     mechanic_ticket = db.session.get(MechanicTicket, id)
     if not mechanic_ticket:
-        return jsonify({"message": "Mechanic Ticket not found"}), 404
+        return jsonify({"message": "Invalid Mechanic Ticket ID or Mechanic Ticket Not in Database"}), 404
 
     payload = request.json.copy()
     service_ids = payload.pop("service_ids", None)
