@@ -108,7 +108,7 @@ def delete_mechanic(mechanic_id):
     db.session.delete(mechanic)
     db.session.commit()
 
-    return jsonify({"message": "Mechanic deleted"}), 200
+    return jsonify({"message": "Mechanic Successfully Deleted"}), 200
 
 
 # Top Mechanics

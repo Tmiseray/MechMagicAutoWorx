@@ -18,8 +18,8 @@ class CustomerSchema(SQLAlchemyAutoSchema):
     phone = fields.Str(required=True, validate=Length(min=10, max=100))
 
     vehicles = fields.List(fields.Nested('VehicleSchema', exclude=('customer', 'customer_id', 'service_tickets',)), default=[])
-    account = fields.Nested('CustomerAccountSchema', exclude=('customer', 'customer_id',))
-    service_tickets = fields.List(fields.Nested('ServiceTicketSchema', exclude=('customer', 'customer_id',)), default=[])
+    account = fields.Nested('CustomerAccountSchema', exclude=('customer', 'customer_id', 'email',))
+    service_tickets = fields.List(fields.Nested('ServiceTicketSchema', exclude=('customer', 'customer_id', 'vehicle',)), default=[])
 
     @validates('name')
     def validate_name(self, value):

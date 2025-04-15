@@ -1,0 +1,30 @@
+components:
+  examples:
+    LoginSuccess:
+      $ref: 'login.yaml#/components/examples/LoginSuccess'
+
+    # Customer Examples
+    Customer1:
+      $ref: 'customers.yaml#/components/examples/Customer1'
+    Customer2:
+      $ref: 'customers.yaml#/components/examples/Customer2'
+    Customer3:
+      $ref: 'customers.yaml#/components/examples/Customer3'
+    Customer4:
+      $ref: 'customers.yaml#/components/examples/Customer4'
+    Customer5:
+      $ref: 'customers.yaml#/components/examples/Customer5'
+    Customer6:
+      $ref: 'customers.yaml#/components/examples/Customer6'
+    AllCustomers:
+      $ref: 'customers.yaml#/components/examples/AllCustomers'
+
+    # Mechanic Examples
+    Mechanic1:
+      $ref: 'mechanics.yaml#/components/examples/Mechanic1'
+    Mechanic2:
+      $ref: 'mechanics.yaml#/components/examples/Mechanic2'
+    Mechanic3:
+      $ref: 'mechanics.yaml#/components/examples/Mechanic3'
+    AllMechanics:
+      $ref: 'mechanics.yaml#/components/examples/AllMechanics'

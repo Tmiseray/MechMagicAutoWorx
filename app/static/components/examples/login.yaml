@@ -1,0 +1,9 @@
+components:
+  examples:
+    LoginSuccess:
+      summary: Successful login, returns auth token
+      value:
+        status: success
+        message: Successfully Logged In
+        auth_token: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+

@@ -138,4 +138,4 @@ def delete_mechanic_account(id):
     account = db.session.get(MechanicAccount, mechanic.account.id)
     db.session.delete(account)
     db.session.commit()
-    return jsonify({"message": "Mechanic Account Successfully Deleted"}), 200
+    return jsonify({"message": "Account Successfully Deleted"}), 200

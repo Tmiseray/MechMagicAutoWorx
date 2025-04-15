@@ -14,16 +14,65 @@ components:
           type: string
           minLength: 8
         customer:
-          $ref: "#/components/schemas/Customer"
-
-    Customer:
-      allOf:
-        - $ref: "customers.yaml#/components/schemas/Customer"
-        - type: object
+          type: object
           properties:
-            id:
-              not: {}
-            email:
-              not: {}
-            account:
-              not: {}
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+            vehicles:
+              type: array
+              items:
+                type: object
+                properties:
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 100
+                  year:
+                    type: integer
+                  make:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  model:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  mileage:
+                    type: integer
+            service_tickets:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  service_date:
+                    type: string
+                    format: date
+                  service_desc:
+                    type: string
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 255
+                  vehicle:
+                    type: object
+                    properties:
+                      year:
+                        type: integer
+                      make:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      model:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      mileage:
+                        type: integer

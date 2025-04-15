@@ -27,7 +27,7 @@ def create_service():
 
     for item in service_items_payload:
         if "item_id" not in item or "quantity" not in item:
-            return jsonify({"message": "Each additional item must include 'item_id' and 'quantity'."}), 400
+            return jsonify({"message": "Each Additional Item Must Include 'item_id' and 'quantity'."}), 400
         si_payload = {
             "item_id": item["item_id"],
             "quantity": item["quantity"],
@@ -101,7 +101,7 @@ def update_service(id):
         service.service_items.clear()
         for item in service_items_payload:
             if "item_id" not in item or "quantity" not in item:
-                return jsonify({"message": "Each additional item must include 'item_id' and 'quantity'."}), 400
+                return jsonify({"message": "Each Additional Item Must Include 'item_id' and 'quantity'."}), 400
             si_payload = {
                 "item_id": item["item_id"],
                 "quantity": item["quantity"],

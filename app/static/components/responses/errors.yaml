@@ -1,2 +1,142 @@
 components:
   responses:
+    400Login:
+      description: Bad Request, Missing Credentials
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Expecting Email and Password"
+    401Login:
+      description: Unauthorized, Invalid Credentials
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Credentials"
+    404CustomerAccount:
+      description: Not Found, Customer or Account Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Customer or Account not found"
+    404Customer:
+      description: Not Found, Customer Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Customer ID or Customer Not in Database"
+    404Inventory:
+      description: Not Found, Inventory Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Inventory ID or Inventory Not in Database"
+    404Invoice:
+      description: Not Found, Invoice Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Invoice ID or Invoice Not in Database"
+    404MechanicAccount:
+      description: Not Found, Mechanic or Account Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Mechanic or Account not found"
+    404Mechanic:
+      description: Not Found, Mechanic Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Mechanic ID or Mechanic Not in Database"
+    404MechanicTicket:
+      description: Not Found, Mechanic Ticket Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Mechanic Ticket ID or Mechanic Ticket Not in Database"
+    404MechanicTicketServices:
+      description: Not Found, Mechanic Ticket Service Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "One or More Service IDs are Invalid"
+    400Items:
+      description: Bad Request, Missing Items Data
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Each Additional Item Must Include 'item_id' and 'quantity'"
+    404ServiceItem:
+      description: Not Found, Service Item Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Service Item ID or Service Item Not in Database"
+    404ServiceTicket:
+      description: Not Found, Service Ticket Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid Service Ticket ID or Service Ticket Not in Database"
+    404Vehicle:
+      description: Not Found, Vehicle Not Found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Invalid VIN or Vehicle Not in Database"

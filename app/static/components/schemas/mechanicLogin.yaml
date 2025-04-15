@@ -6,11 +6,11 @@ components:
         - email
         - password
       properties:
-        id:
+        - id:
           type: integer
-        email:
+        - email:
           type: string
           format: email
-        password:
+        - password:
           type: string
           minLength: 8

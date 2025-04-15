@@ -10,27 +10,27 @@ components:
         - mileage
         - customer_id
       properties:
-        VIN:
+        - VIN:
           type: string
           minLength: 17
           maxLength: 100
-        year:
+        - year:
           type: integer
-        make:
+        - make:
           type: string
           minLength: 1
           maxLength: 100
-        model:
+        - model:
           type: string
           minLength: 1
           maxLength: 100
-        mileage:
+        - mileage:
           type: integer
-        customer_id:
+        - customer_id:
           type: integer
-        customer:
+        - customer:
           $ref: "#/components/schemas/Customer"
-        service_tickets:
+        - service_tickets:
           type: array
           items:
             $ref: "#/components/schemas/ServiceTicket"

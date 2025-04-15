@@ -1,0 +1,41 @@
+components:
+  responses:
+    # Success Responses
+    200Login:
+      $ref: 'success.yaml#/components/responses/200Login'
+    200AccountDelete:
+      $ref: 'success.yaml#/components/responses/200AccountDelete'
+    200CustomerDelete:
+      $ref: 'success.yaml#/components/responses/200CustomerDelete'
+    200MechanicDelete:
+      $ref: 'success.yaml#/components/responses/200MechanicDelete'
+
+    # Error Responses
+    400Login:
+      $ref: 'errors.yaml#/components/responses/400Login'
+    401Login:
+      $ref: 'errors.yaml#/components/responses/401Login'
+    404CustomerAccount:
+      $ref: 'errors.yaml#/components/responses/404CustomerAccount'
+    404Customer:
+      $ref: 'errors.yaml#/components/responses/404Customer'
+    404Inventory:
+      $ref: 'errors.yaml#/components/responses/404Inventory'
+    404Invoice:
+      $ref: 'errors.yaml#/components/responses/404Invoice'
+    404MechanicAccount:
+      $ref: 'errors.yaml#/components/responses/404MechanicAccount'
+    404Mechanic:
+      $ref: 'errors.yaml#/components/responses/404Mechanic'
+    404MechanicTicket:
+      $ref: 'errors.yaml#/components/responses/404MechanicTicket'
+    404MechanicTicketServices:
+      $ref: 'errors.yaml#/components/responses/404MechanicTicketServices'
+    400Items:
+      $ref: 'errors.yaml#/components/responses/400Items'
+    404ServiceItem:
+      $ref: 'errors.yaml#/components/responses/404ServiceItem'
+    404ServiceTicket:
+      $ref: 'errors.yaml#/components/responses/404ServiceTicket'
+    404Vehicle:
+        $ref: 'errors.yaml#/components/responses/404Vehicle'

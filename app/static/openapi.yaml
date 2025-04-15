@@ -33,18 +33,15 @@ tags:
 
 components:
   schemas:
-    $ref: './components/schemas/index.yaml'
-  requestBodies:
-    $ref: './components/requestBodies/index.yaml'
-  responses:
-    $ref: './components/responses/errors.yaml'
-  examples:
-    $ref: './components/examples/index.yaml'
+    $ref: "./components/schemas/index.yaml"
   securitySchemes:
-    $ref: './components/securitySchemes.yaml'
-
-
-
+    $ref: "./components/securitySchemes.yaml"
+  examples:
+    $ref: "./components/examples/index.yaml"
+  requestBodies:
+    $ref: "./components/requestBodies/index.yaml"
+  responses:
+    $ref: "./components/responses/index.yaml"
 security:
   - CustomerToken: []
   - MechanicToken: []

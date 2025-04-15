@@ -1,0 +1,336 @@
+components:
+  examples:
+    Mechanic1:
+      value:
+        id: 1
+        name: Johnny Blaze
+        email: hellcycle.tuneup@example.com
+        phone: 999-666-0001
+        salary: 51.00
+        account:
+          - id: 1
+            email: hellcycle.tuneup@example.com
+            password: $2a$12$oHHaiIdYdPZiRMdC7uZyj.o80Rso.15iiEZrz5IkRnJD.P9thHFAu
+        mechanic_tickets:
+          - id: 1
+            start_date: 2024-03-01
+            end_date: 2024-03-02
+            hours_worked: 8.5
+            service_ticket:
+              - id: 1
+                service_date: 2023-10-01
+                service_desc: Oil change
+                VIN: 1FA6P8TH4L5500001
+            services:
+              - id: 1
+                name: Flameproof Exhaust Mod
+                price: 299.99
+            additional_items:
+              - id: 1
+                item_id: 101
+                quantity: 2
+                inventory:
+                  id: 101
+                  name: Fireproof Exhaust Wrap
+                  stock: 50
+                  price: 25.00
+          - id: 2
+            start_date: 2024-03-03
+            end_date: 2024-03-03
+            hours_worked: 6.0
+            service_ticket:
+              - id: 2
+                service_date: 2024-01-15
+                service_desc: Armor plating upgrade
+                VIN: WAUZZZF49JA000002
+            services:
+              - id: 2
+                name: Chassis Armor Buff
+                price: 449.99
+            additional_items:
+              - id: 2
+                item_id: 102
+                quantity: 1
+                inventory:
+                  id: 102
+                  name: Titanium Reinforcement Kit
+                  stock: 5
+                  price: 399.99
+    Mechanic2:
+      value:
+        id: 2
+        name: Anthony Stark
+        email: ironman.tech@example.com
+        phone: 212-777-IRON
+        salary: 88.00
+        account:
+          - id: 2
+            email: ironman.tech@example.com
+            password: $2a$12$KsLo/6I6/D7MRj6.j9s9YeRDB/x/y.B2bu/wbKmKRweFalbnz3QN2
+        mechanic_tickets:
+          - id: 3
+            start_date: 2024-04-01
+            end_date: 2024-04-03
+            hours_worked: 16.0
+            service_ticket:
+              - id: 3
+                service_date: 2024-03-31
+                service_desc: Custom horn install (laugh track)
+                VIN: JHMFA16586S000003
+            services:
+              - id: 3
+                name: AI Diagnostic
+                price: 149.00
+            additional_items:
+              - id: 3
+                item_id: 103
+                quantity: 1
+                inventory:
+                  id: 103
+                  name: Nano-calibrated Sensors
+                  stock: 7
+                  price: 599.99
+          - id: 5
+            start_date: 2024-04-10
+            end_date: 2024-04-11
+            hours_worked: 9.0
+            service_ticket:
+              - id: 5
+                service_date: 2023-11-20
+                service_desc: Biofuel filter replacement
+                VIN: YV4952DL3F2000005
+            services:
+              - id: 5
+                name: Environmental System Tuning
+                price: 299.00
+            additional_items:
+              - id: 5
+                item_id: 105
+                quantity: 2
+                inventory:
+                  id: 105
+                  name: Organic Fuel Cell
+                  stock: 12
+                  price: 199.99
+    Mechanic3:
+      value:
+        id: 3
+        name: James Howlett
+        email: adamantiumGarage@example.com
+        phone: 867-530-XMEN
+        salary: 43.00
+        account:
+          - id: 3
+            email: adamantiumGarage@example.com
+            password: $2a$12$189HX7GNr9mM/RC2gvlb5ufmKL5w6EcgpHx4uTwIxlbhcWCnYK69a
+        mechanic_tickets:
+          - id: 4
+            start_date: 2024-01-12
+            end_date: 2024-01-12
+            hours_worked: 5.0
+            service_ticket:
+              - id: 4
+                service_date: 2024-02-14
+                service_desc: Tire rotation and bubblegum scent refresh
+                VIN: KM8JU3AG6BU000004
+            services:
+              - id: 4
+                name: Claw Guard Installation
+                price: 189.99
+            additional_items:
+              - id: 4
+                item_id: 104
+                quantity: 4
+                inventory:
+                  id: 104
+                  name: Reinforced Seat Covers
+                  stock: 20
+                  price: 45.00
+          - id: 6
+            start_date: 2024-04-14
+            end_date: 2024-04-14
+            hours_worked: 6.0
+            service_ticket:
+              - id: 6
+                service_date: 2024-04-01
+                service_desc: ECU reprogrammed for puzzle mode
+                VIN: 1C4RJFBG0JC000006
+            services:
+              - id: 6
+                name: System Decryption
+                price: 399.99
+            additional_items:
+              - id: 6
+                item_id: 106
+                quantity: 3
+                inventory:
+                  id: 106
+                  name: Neural Unlock Chip
+                  stock: 10
+                  price: 349.00
+
+    AllMechanics:
+      summary: List of All Mechanics
+      value:
+        - id: 1
+          name: Johnny Blaze
+          email: hellcycle.tuneup@example.com
+          phone: 999-666-0001
+          salary: 51.00
+          account:
+            - id: 1
+              email: hellcycle.tuneup@example.com
+              password: $2a$12$oHHaiIdYdPZiRMdC7uZyj.o80Rso.15iiEZrz5IkRnJD.P9thHFAu
+          mechanic_tickets:
+            - id: 1
+              start_date: 2024-03-01
+              end_date: 2024-03-02
+              hours_worked: 8.5
+              service_ticket:
+                - id: 1
+                  service_date: 2023-10-01
+                  service_desc: Oil change
+                  VIN: 1FA6P8TH4L5500001
+              services:
+                - id: 1
+                  name: Flameproof Exhaust Mod
+                  price: 299.99
+              additional_items:
+                - id: 1
+                  item_id: 101
+                  quantity: 2
+                  inventory:
+                    id: 101
+                    name: Fireproof Exhaust Wrap
+                    stock: 50
+                    price: 25.00
+            - id: 2
+              start_date: 2024-03-03
+              end_date: 2024-03-03
+              hours_worked: 6.0
+              service_ticket:
+                - id: 2
+                  service_date: 2024-01-15
+                  service_desc: Armor plating upgrade
+                  VIN: WAUZZZF49JA000002
+              services:
+                - id: 2
+                  name: Chassis Armor Buff
+                  price: 449.99
+              additional_items:
+                - id: 2
+                  item_id: 102
+                  quantity: 1
+                  inventory:
+                    id: 102
+                    name: Titanium Reinforcement Kit
+                    stock: 5
+                    price: 399.99
+        - id: 2
+          name: Anthony Stark
+          email: ironman.tech@example.com
+          phone: 212-777-IRON
+          salary: 88.00
+          account:
+            - id: 2
+              email: ironman.tech@example.com
+              password: $2a$12$KsLo/6I6/D7MRj6.j9s9YeRDB/x/y.B2bu/wbKmKRweFalbnz3QN2
+          mechanic_tickets:
+            - id: 3
+              start_date: 2024-04-01
+              end_date: 2024-04-03
+              hours_worked: 16.0
+              service_ticket:
+                - id: 3
+                  service_date: 2024-03-31
+                  service_desc: Custom horn install (laugh track)
+                  VIN: JHMFA16586S000003
+              services:
+                - id: 3
+                  name: AI Diagnostic
+                  price: 149.00
+              additional_items:
+                - id: 3
+                  item_id: 103
+                  quantity: 1
+                  inventory:
+                    id: 103
+                    name: Nano-calibrated Sensors
+                    stock: 7
+                    price: 599.99
+            - id: 5
+              start_date: 2024-04-10
+              end_date: 2024-04-11
+              hours_worked: 9.0
+              service_ticket:
+                - id: 5
+                  service_date: 2023-11-20
+                  service_desc: Biofuel filter replacement
+                  VIN: YV4952DL3F2000005
+              services:
+                - id: 5
+                  name: Environmental System Tuning
+                  price: 299.00
+              additional_items:
+                - id: 5
+                  item_id: 105
+                  quantity: 2
+                  inventory:
+                    id: 105
+                    name: Organic Fuel Cell
+                    stock: 12
+                    price: 199.99
+        - id: 3
+          name: James Howlett
+          email: adamantiumGarage@example.com
+          phone: 867-530-XMEN
+          salary: 43.00
+          account:
+            - id: 3
+              email: adamantiumGarage@example.com
+              password: $2a$12$189HX7GNr9mM/RC2gvlb5ufmKL5w6EcgpHx4uTwIxlbhcWCnYK69a
+          mechanic_tickets:
+            - id: 4
+              start_date: 2024-01-12
+              end_date: 2024-01-12
+              hours_worked: 5.0
+              service_ticket:
+                - id: 4
+                  service_date: 2024-02-14
+                  service_desc: Tire rotation and bubblegum scent refresh
+                  VIN: KM8JU3AG6BU000004
+              services:
+                - id: 4
+                  name: Claw Guard Installation
+                  price: 189.99
+              additional_items:
+                - id: 4
+                  item_id: 104
+                  quantity: 4
+                  inventory:
+                    id: 104
+                    name: Reinforced Seat Covers
+                    stock: 20
+                    price: 45.00
+            - id: 6
+              start_date: 2024-04-14
+              end_date: 2024-04-14
+              hours_worked: 6.0
+              service_ticket:
+                - id: 6
+                  service_date: 2024-04-01
+                  service_desc: ECU reprogrammed for puzzle mode
+                  VIN: 1C4RJFBG0JC000006
+              services:
+                - id: 6
+                  name: System Decryption
+                  price: 399.99
+              additional_items:
+                - id: 6
+                  item_id: 106
+                  quantity: 3
+                  inventory:
+                    id: 106
+                    name: Neural Unlock Chip
+                    stock: 10
+                    price: 349.00

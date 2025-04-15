@@ -6,9 +6,9 @@ components:
         - email
         - password
       properties:
-        email:
+        - email:
           type: string
           format: email
-        password:
+        - password:
           type: string
           minLength: 8

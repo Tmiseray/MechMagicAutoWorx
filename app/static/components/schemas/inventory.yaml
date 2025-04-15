@@ -1,4 +1,3 @@
-openapi: 3.0.3
 components:
   schemas:
     Inventory:
@@ -8,20 +7,20 @@ components:
         - stock
         - price
       properties:
-        id:
+        - id:
           type: integer
-        name:
+        - name:
           type: string
           minLength: 1
           maxLength: 100
-        stock:
+        - stock:
           type: integer
           minimum: 0
-        price:
+        - price:
           type: number
           format: float
           minimum: 0.0
-        service_items:
+        - service_items:
             type: array
             items:
                 $ref: "#/components/schemas/ServiceItem"

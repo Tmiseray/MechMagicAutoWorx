@@ -154,7 +154,7 @@ def update_mechanic_ticket(id):
     if service_ids is not None:
         services = db.session.query(Service).filter(Service.id.in_(service_ids)).all()
         if len(services) != len(service_ids):
-            return jsonify({"message": "One or more service IDs are invalid."}), 404
+            return jsonify({"message": "One or More Service IDs are Invalid"}), 404
         mechanic_ticket.services = services
 
         for s in services:
@@ -167,7 +167,7 @@ def update_mechanic_ticket(id):
 
         for item in additional_items:
             if "item_id" not in item or "quantity" not in item:
-                return jsonify({"message": "Each additional item must include 'item_id' and 'quantity'."}), 400
+                return jsonify({"message": "Each Additional Item Must Include 'item_id' and 'quantity'"}), 400
             all_uses.append({"item_id": item["item_id"], "quantity": item["quantity"]})
 
     # Check inventory usage

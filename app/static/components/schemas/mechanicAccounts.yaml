@@ -22,16 +22,17 @@ components:
           minLength: 8
           maxLength: 100
         - mechanic:
-          $ref: "#/components/schemas/Mechanic"
-
-    Mechanic:
-      allOf:
-        - $ref: 'mechanics.yaml#/components/schemas/Mechanic'
-        - type: object
+          type: object
           properties:
-            id:
-              not: {}
-            email:
-              not: {}
-            account:
-              not: {}
+            - name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            - phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+            - salary:
+              type: number
+              format: float
+

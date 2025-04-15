@@ -3,58 +3,152 @@ components:
     CustomerUpdate:
       type: object
       properties:
-        id:
+        - id:
           type: integer
-        name:
+        - name:
           type: string
           minLength: 1
           maxLength: 100
-        email:
+        - email:
           type: string
           format: email
-        phone:
+        - phone:
           type: string
           minLength: 10
           maxLength: 100
-        vehicles:
+        - vehicles:
           type: array
           items:
-            $ref: "#/components/schemas/Vehicle"
-        account:
-          $ref: "#/components/schemas/CustomerAccount"
-        service_tickets:
+            type: object
+            properties:
+              - VIN:
+                type: string
+                minLength: 17
+                maxLength: 100
+              - year:
+                type: integer
+              - make:
+                type: string
+                minLength: 1
+                maxLength: 100
+              - model:
+                type: string
+                minLength: 1
+                maxLength: 100
+              - mileage:
+                type: integer
+        - account:
+          type: object
+          properties:
+            - id:
+              type: integer
+            - password:
+              type: string
+              minLength: 8
+        - service_tickets:
           type: array
           items:
-            $ref: "#/components/schemas/ServiceTicket"
+            type: object
+            properties:
+              - id:
+                type: integer
+              - service_date:
+                type: string
+                format: date
+              - service_desc:
+                type: string
+              - VIN:
+                type: string
+                minLength: 17
+                maxLength: 255
+              - mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    - id:
+                      type: integer
+                    - start_date:
+                      type: string
+                      format: date
+                    - end_date:
+                      type: string
+                      format: date
+                    - hours_worked:
+                      type: number
+                      format: float
+                    - mechanic_id:
+                      type: integer
+                    - mechanic:
+                      type: object
+                      properties:
+                        - name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                    - services:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          - id:
+                            type: integer
+                          - name:
+                            type: string
+                            minLength: 1
+                            maxLength: 100
+                          - price:
+                            type: number
+                            format: float
+                            minimum: 0.0
+                          - service_items:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                - item_id:
+                                  type: integer
+                                - quantity:
+                                  type: integer
+                                  minimum: 1
+                                - inventory:
+                                  type: object
+                                  properties:
+                                    - name:
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 100
+                                    - stock:
+                                      type: integer
+                                      minimum: 0
+                                    - price:
+                                      type: number
+                                      format: float
+                                      minimum: 0.0
+                    - additional_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          - id:
+                            type: integer
+                          - item_id:
+                            type: integer
+                          - quantity:
+                            type: integer
+                            minimum: 1
+                          - inventory:
+                            type: object
+                            properties:
+                              - name:
+                                type: string
+                                minLength: 1
+                                maxLength: 100
+                              - stock:
+                                type: integer
+                                minimum: 0
+                              - price:
+                                type: number
+                                format: float
+                                minimum: 0.0
 
-    Vehicle:
-      allOf:
-        - $ref: "vehicles.yaml#/components/schemas/Vehicle"
-        - type: object
-          properties:
-            customer_id:
-              not: {}
-            customer:
-              not: {}
-            service_tickets:
-              not: {}
-
-    CustomerAccount:
-      allOf:
-        - $ref: "customerAccounts.yaml#/components/schemas/CustomerAccount"
-        - type: object
-          properties:
-            customer_id:
-              not: {}
-            customer:
-              not: {}
-
-    ServiceTicket:
-      allOf:
-        - $ref: "serviceTickets.yaml#/components/schemas/ServiceTicket"
-        - type: object
-          properties:
-            customer_id:
-              not: {}
-            customer:
-              not: {}
