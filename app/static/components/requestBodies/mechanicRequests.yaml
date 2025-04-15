@@ -1,0 +1,17 @@
+components:
+  requestBodies:
+    MechanicCreate:
+      description: Mechanic Information Creation Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/mechanics.yaml#/components/schemas/Mechanic'
+
+    MechanicUpdate:
+      description: Mechanic Information Update Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/mechanicUpdate.yaml#/components/schemas/MechanicUpdate'

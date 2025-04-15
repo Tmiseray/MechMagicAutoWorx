@@ -1,0 +1,53 @@
+openapi: 3.0.3
+info:
+  title: "MechMagic AutoWorx API"
+  description: "This API provides endpoints for managing a mechanic shop, including services, inventory, service tickets, mechanic information, and customer information."
+  version: "1.0.0"
+
+servers:
+  - url: http://127.0.0.1:5000
+
+tags:
+  - name: CustomerAccount
+    description: Operations for Account Information associated with Customers
+  - name: Customer
+    description: Operations for Customer Information
+  - name: Inventory
+    description: Operations for Inventory Information associated with ServiceItems
+  - name: Invoices
+    description: Operations for Invoice Information associated with ServiceTickets
+  - name: MechanicAccount
+    description: Operations for Account Information associated with Mechanics
+  - name: Mechanic
+    description: Operations for Mechanic Information
+  - name: MechanicTicket
+    description: Operations for Mechanic Ticket Information associated with Mechanics, Services, ServiceItems, and ServiceTickets
+  - name: ServiceItem
+    description: Operations for Service Item Information associated with Services and/or MechanicTickets
+  - name: Service
+    description: Operations for Service Information associated with ServiceItems and MechanicTickets
+  - name: ServiceTicket
+    description: Operations for Service Ticket Information associated with Customers, Vehicles, and Invoices
+  - name: Vehicle
+    description: Operations for Vehicle Information associated with Customers and ServiceTickets
+
+components:
+  schemas:
+    $ref: './components/schemas/index.yaml'
+  requestBodies:
+    $ref: './components/requestBodies/index.yaml'
+  responses:
+    $ref: './components/responses/index.yaml'
+  examples:
+    $ref: './components/examples/index.yaml'
+  securitySchemes:
+    $ref: './components/securitySchemes.yaml'
+
+
+
+security:
+  - CustomerToken: []
+  - MechanicToken: []
+
+paths: {}
+

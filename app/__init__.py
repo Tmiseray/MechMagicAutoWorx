@@ -18,7 +18,7 @@ from .utils.swagger_merge import combine_swagger_docs
 
 # Swagger UI setup
 SWAGGER_URL = '/api/docs'
-API_URL = '/static/combined_swagger.yaml'
+API_URL = '/static/openapi.yaml'
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
@@ -34,7 +34,7 @@ def create_app(config_name):
     app.config.from_object(f'config.{config_name}')
 
     # Load the combined Swagger documentation
-    combine_swagger_docs()
+    # combine_swagger_docs()
 
     # Database initialization
     db.init_app(app)

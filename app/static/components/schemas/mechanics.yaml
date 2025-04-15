@@ -1,0 +1,52 @@
+components:
+  schemas:
+    Mechanic:
+      type: object
+      required:
+        - name
+        - email
+        - phone
+        - salary
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        salary:
+          type: number
+          format: float
+        account:
+          $ref: "#/components/schemas/MechanicAccount"
+        mechanic_tickets:
+          type: array
+          items:
+            $ref: "#/components/schemas/MechanicTicket"
+
+    MechanicAccount:
+      allOf:
+        - $ref: "mechanicAccounts.yaml#/components/schemas/MechanicAccount"
+        - type: object
+          properties:
+            mechanic_id:
+              not: {}
+            mechanic:
+              not: {}
+
+    MechanicTicket:
+      allOf:
+        - $ref: "mechanicTickets.yaml#/components/schemas/MechanicTicket"
+        - type: object
+          properties:
+            mechanic_id:
+              not: {}
+            mechanic:
+              not: {}

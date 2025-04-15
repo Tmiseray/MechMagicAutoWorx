@@ -1,0 +1,62 @@
+components:
+  schemas:
+    ServiceItemUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        item_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+        service_id:
+          type: integer
+        inventory:
+          $ref: "#/components/schemas/Inventory"
+        service:
+          $ref: "#/components/schemas/Service"
+        mechanic_tickets:
+          type: array
+          items:
+            $ref: "#/components/schemas/MechanicTicket"
+
+    Inventory:
+      allOf:
+        - $ref: "inventory.yaml#/components/schemas/Inventory"
+        - type: object
+          properties:
+            id:
+              not: {}
+            service_items:
+              not: {}
+
+    Service:
+      allOf:
+        - $ref: "services.yaml#/components/schemas/Service"
+        - type: object
+          properties:
+            id:
+              not: {}
+            service_items:
+              not: {}
+            mechanic_tickets:
+              not: {}
+
+    MechanicTicket:
+      allOf:
+        - $ref: "mechanicTickets.yaml#/components/schemas/MechanicTicket"
+        - type: object
+          properties:
+            hours_worked:
+              not: {}
+            service_ticket_id:
+              not: {}
+            service_ticket:
+              not: {}
+            mechanic:
+              not: {}
+            services:
+              not: {}
+            additional_items:
+              not: {}

@@ -1,0 +1,77 @@
+components:
+  schemas:
+    ServiceTicket:
+      type: object
+      required:
+        - service_desc
+        - VIN
+      properties:
+        id:
+          type: integer
+        service_date:
+          type: string
+          format: date
+        service_desc:
+          type: string
+        VIN:
+          type: string
+          minLength: 17
+          maxLength: 255
+        customer_id:
+          type: integer
+        vehicle:
+          $ref: "#/components/schemas/Vehicle"
+        customer:
+          $ref: "#/components/schemas/Customer"
+        mechanic_tickets:
+          type: array
+          items:
+            $ref: "#/components/schemas/MechanicTicket"
+        invoice:
+          $ref: "#/components/schemas/Invoice"
+
+    Vehicle:
+      allOf:
+        - $ref: "vehicles.yaml#/components/schemas/Vehicle"
+        - type: object
+          properties:
+            VIN:
+              not: {}
+            customer_id:
+              not: {}
+            customer:
+              not: {}
+            service_tickets:
+              not: {}
+
+    Customer:
+      allOf:
+        - $ref: "customers.yaml#/components/schemas/Customer"
+        - type: object
+          properties:
+            vehicles:
+              not: {}
+            account:
+              not: {}
+            service_tickets:
+              not: {}
+            id:
+              not: {}
+
+    MechanicTicket:
+      allOf:
+        - $ref: "mechanicTickets.yaml#/components/schemas/MechanicTicket"
+        - type: object
+          properties:
+            service_ticket:
+              not: {}
+
+    Invoice:
+      allOf:
+        - $ref: "invoices.yaml#/components/schemas/Invoice"
+        - type: object
+          properties:
+            service_ticket:
+              not: {}
+            service_ticket_id:
+              not: {}

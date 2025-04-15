@@ -1,0 +1,50 @@
+components:
+  schemas:
+    Customer:
+      $ref: 'customers.yaml#/components/schemas/Customer'
+    CustomerAccount:
+      $ref: 'customerAccounts.yaml#/components/schemas/CustomerAccount'
+    Inventory:
+      $ref: 'inventory.yaml#/components/schemas/Inventory'
+    Invoice:
+      $ref: 'invoices.yaml#/components/schemas/Invoice'
+    MechanicAccount:
+      $ref: 'mechanicAccounts.yaml#/components/schemas/MechanicAccount'
+    Mechanic:
+      $ref: 'mechanics.yaml#/components/schemas/Mechanic'
+    MechanicTicket:
+      $ref: 'mechanicTickets.yaml#/components/schemas/MechanicTicket'
+    ServiceItem:
+      $ref: 'serviceItems.yaml#/components/schemas/ServiceItem'
+    Service:
+      $ref: 'services.yaml#/components/schemas/Service'
+    ServiceTicket:
+      $ref: 'serviceTickets.yaml#/components/schemas/ServiceTicket'
+    Vehicle:
+      $ref: 'vehicles.yaml#/components/schemas/Vehicle'
+    CustomerUpdate:
+      $ref: 'customerUpdate.yaml#/components/schemas/CustomerUpdate'
+    CustomerAccountUpdate:
+      $ref: 'customerAccountUpdate.yaml#/components/schemas/CustomerAccountUpdate'
+    InventoryUpdate:
+      $ref: 'inventoryUpdate.yaml#/components/schemas/InventoryUpdate'
+    InvoiceUpdate:
+      $ref: 'invoiceUpdate.yaml#/components/schemas/InvoiceUpdate'
+    MechanicAccountUpdate:
+      $ref: 'mechanicAccountUpdate.yaml#/components/schemas/MechanicAccountUpdate'
+    MechanicUpdate:
+      $ref: 'mechanicUpdate.yaml#/components/schemas/MechanicUpdate'
+    MechanicTicketUpdate:
+      $ref: 'mechanicTicketUpdate.yaml#/components/schemas/MechanicTicketUpdate'
+    ServiceItemUpdate:
+      $ref: 'serviceItemUpdate.yaml#/components/schemas/ServiceItemUpdate'
+    ServiceUpdate:
+      $ref: 'serviceUpdate.yaml#/components/schemas/ServiceUpdate'
+    ServiceTicketUpdate:
+      $ref: 'serviceTicketUpdate.yaml#/components/schemas/ServiceTicketUpdate'
+    VehicleUpdate:
+      $ref: 'vehicleUpdate.yaml#/components/schemas/VehicleUpdate'
+    CustomerLogin:
+      $ref: 'customerLogin.yaml#/components/schemas/CustomerLogin'
+    MechanicLogin:
+      $ref: 'mechanicLogin.yaml#/components/schemas/MechanicLogin'

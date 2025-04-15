@@ -1,0 +1,34 @@
+components:
+  requestBodies:
+    CustomerCreate:
+      $ref: './customerRequests.yaml#/components/requestBodies/CustomerCreate'
+    CustomerUpdate:
+      $ref: './customerRequests.yaml#/components/requestBodies/CustomerUpdate'
+    CustomerAccountCreate:
+      $ref: './customerAccountRequests.yaml#/components/requestBodies/CustomerAccountCreate'
+    CustomerAccountUpdate:
+      $ref: './customerAccountRequests.yaml#/components/requestBodies/CustomerAccountUpdate'
+    CustomerLogin:
+      $ref: './customerAccountRequests.yaml#/components/requestBodies/CustomerLogin'
+    InventoryCreate:
+      $ref: './inventoryRequests.yaml#/components/requestBodies/InventoryCreate'
+    InventoryUpdate:
+      $ref: './inventoryRequests.yaml#/components/requestBodies/InventoryUpdate'
+    InvoiceCreate:
+      $ref: './invoiceRequests.yaml#/components/requestBodies/InvoiceCreate'
+    InvoiceUpdate:
+      $ref: './invoiceRequests.yaml#/components/requestBodies/InvoiceUpdate'
+    MechanicAccountCreate:
+      $ref: './mechanicAccountRequests.yaml#/components/requestBodies/MechanicAccountCreate'
+    MechanicAccountUpdate:
+      $ref: './mechanicAccountRequests.yaml#/components/requestBodies/MechanicAccountUpdate'
+    MechanicLogin:
+      $ref: './mechanicAccountRequests.yaml#/components/requestBodies/MechanicLogin'
+    MechanicCreate:
+      $ref: './mechanicRequests.yaml#/components/requestBodies/MechanicCreate'
+    MechanicUpdate:
+      $ref: './mechanicRequests.yaml#/components/requestBodies/MechanicUpdate'
+    MechanicTicketCreate:
+      $ref: './mechanicTicketRequests.yaml#/components/requestBodies/MechanicTicketCreate'
+    MechanicTicketUpdate:
+      $ref: './mechanicTicketRequests.yaml#/components/requestBodies/MechanicTicketUpdate'

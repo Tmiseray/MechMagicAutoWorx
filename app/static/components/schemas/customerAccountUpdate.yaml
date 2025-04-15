@@ -1,0 +1,29 @@
+components:
+  schemas:
+    CustomerAccountUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer_id:
+          type: integer
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        customer:
+          $ref: "#/components/schemas/Customer"
+
+    Customer:
+      allOf:
+        - $ref: "customers.yaml#/components/schemas/Customer"
+        - type: object
+          properties:
+            id:
+              not: {}
+            email:
+              not: {}
+            account:
+              not: {}

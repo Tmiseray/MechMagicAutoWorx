@@ -1,0 +1,33 @@
+components:
+  schemas:
+    MechanicAccountUpdate:
+      type: object
+      properties:
+        - id:
+          type: integer
+        - role:
+          type: string
+          default: Mechanic
+        - mechanic_id:
+          type: integer
+        - email:
+          type: string
+          format: email
+        - password:
+          type: string
+          minLength: 8
+          maxLength: 100
+        - mechanic:
+          $ref: "#/components/schemas/Mechanic"
+
+    Mechanic:
+      allOf:
+        - $ref: 'mechanics.yaml#/components/schemas/Mechanic'
+        - type: object
+          properties:
+            id:
+              not: {}
+            email:
+              not: {}
+            account:
+              not: {}

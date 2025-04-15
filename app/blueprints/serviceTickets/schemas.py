@@ -15,7 +15,7 @@ class ServiceTicketSchema(SQLAlchemyAutoSchema):
     id = fields.Int(dump_only=True)
     service_date = fields.Date(required=False, dump_only=True)
     service_desc = fields.Str(required=True, validate=Length(min=1, max=255))
-    VIN = fields.Str(required=True)
+    VIN = fields.Str(required=True, validate=Length(min=17, max=255))
     customer_id = fields.Int(required=False)
 
     vehicle = fields.Nested('VehicleSchema', exclude=('VIN', 'service_tickets', 'customer', 'customer_id',))

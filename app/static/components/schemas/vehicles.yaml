@@ -1,0 +1,64 @@
+components:
+  schemas:
+    Vehicle:
+      type: object
+      required:
+        - VIN
+        - year
+        - make
+        - model
+        - mileage
+        - customer_id
+      properties:
+        VIN:
+          type: string
+          minLength: 17
+          maxLength: 100
+        year:
+          type: integer
+        make:
+          type: string
+          minLength: 1
+          maxLength: 100
+        model:
+          type: string
+          minLength: 1
+          maxLength: 100
+        mileage:
+          type: integer
+        customer_id:
+          type: integer
+        customer:
+          $ref: "#/components/schemas/Customer"
+        service_tickets:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceTicket"
+
+    Customer:
+      allOf:
+        - $ref: "customers.yaml#/components/schemas/Customer"
+        - type: object
+          properties:
+            vehicles:
+              not: {}
+            id:
+              not: {}
+            account:
+              not: {}
+            service_tickets:
+              not: {}
+
+    ServiceTicket:
+      allOf:
+        - $ref: "serviceTickets.yaml#/components/schemas/ServiceTicket"
+        - type: object
+          properties:
+            VIN:
+              not: {}
+            customer_id:
+              not: {}
+            customer:
+              not: {}
+            vehicle:
+              not: {}

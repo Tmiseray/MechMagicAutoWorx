@@ -1,0 +1,34 @@
+components:
+  schemas:
+    InventoryUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        stock:
+          type: integer
+          minimum: 0
+        price:
+          type: number
+          format: float
+          minimum: 0.0
+        service_items:
+            type: array
+            items:
+                $ref: "#/components/schemas/ServiceItem"
+
+    ServiceItem:
+      allOf:
+        - $ref: "serviceItems.yaml#/components/schemas/ServiceItem"
+        - type: object
+          properties:
+            service_id:
+              not: {}
+            service:
+              not: {}
+            mechanic_tickets:
+              not: {}

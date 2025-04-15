@@ -14,8 +14,8 @@ def combine_swagger_docs():
     base_dir = Path(__file__).resolve().parent.parent / "static"
     combined = OrderedDict()
 
-    # Load main swagger.yaml
-    with open(base_dir / "swagger.yaml", "r", encoding="utf-8") as f:
+    # Load main openapi.yaml
+    with open(base_dir / "openapi.yaml", "r", encoding="utf-8") as f:
         combined = yaml.safe_load(f)
         combined = OrderedDict(combined)
 

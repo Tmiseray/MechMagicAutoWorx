@@ -15,10 +15,10 @@ class MechanicSchema(SQLAlchemyAutoSchema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True, validate=Length(min=1, max=100))
     email = fields.Str(required=True, validate=Email())
-    phone = fields.Str(required=True, validate=Length(min=1, max=100))
+    phone = fields.Str(required=True, validate=Length(min=10, max=100))
     salary = fields.Float(required=True)
 
-    account = fields.Nested('MechanicAccountSchema', exclude=('mechanic',))
+    account = fields.Nested('MechanicAccountSchema', exclude=('mechanic', 'mechanic_id',))
     mechanic_tickets = fields.List(fields.Nested('MechanicTicketSchema', exclude=('mechanic', 'mechanic_id',)), default=[])
 
     @validates('name')

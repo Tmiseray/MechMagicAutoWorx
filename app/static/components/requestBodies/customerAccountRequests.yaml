@@ -1,0 +1,25 @@
+components:
+  requestBodies:
+    CustomerAccountCreate:
+      description: Customer Account Creation Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/customerAccounts.yaml#/components/schemas/CustomerAccount'
+
+    CustomerAccountUpdate:
+      description: Customer Account Update Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/customerAccountUpdate.yaml#/components/schemas/CustomerAccountUpdate'
+
+    CustomerLogin:
+      description: Customer Account Login Request Body
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '../schemas/customerLogin.yaml#/components/schemas/CustomerLogin'

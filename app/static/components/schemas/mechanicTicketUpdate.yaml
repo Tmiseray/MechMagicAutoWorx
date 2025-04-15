@@ -1,0 +1,66 @@
+components:
+  schemas:
+    MechanicTicketUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        hours_worked:
+          type: number
+          format: float
+        service_ticket_id:
+          type: integer
+        mechanic_id:
+          type: integer
+        service_ticket:
+          $ref: "#/components/schemas/ServiceTicket"
+        mechanic:
+          $ref: "#/components/schemas/Mechanic"
+        services:
+          type: array
+          items:
+            $ref: "#/components/schemas/Service"
+        additional_items:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceItem"
+
+    ServiceTicket:
+      allOf:
+        - $ref: "serviceTickets.yaml#/components/schemas/ServiceTicket"
+        - type: object
+          properties:
+            id:
+              not: {}
+            mechanic_tickets:
+              not: {}
+
+    Mechanic:
+      type: object
+      properties:
+        name:
+          type: string
+
+    Service:
+      allOf:
+        - $ref: "services.yaml#/components/schemas/Service"
+        - type: object
+          properties:
+            id:
+              not: {}
+            mechanic_tickets:
+              not: {}
+
+    ServiceItem:
+      allOf:
+        - $ref: "serviceItems.yaml#/components/schemas/ServiceItem"
+        - type: object
+          properties:
+            mechanic_tickets:
+              not: {}

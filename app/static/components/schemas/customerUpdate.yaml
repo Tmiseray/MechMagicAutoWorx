@@ -1,0 +1,60 @@
+components:
+  schemas:
+    CustomerUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        vehicles:
+          type: array
+          items:
+            $ref: "#/components/schemas/Vehicle"
+        account:
+          $ref: "#/components/schemas/CustomerAccount"
+        service_tickets:
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceTicket"
+
+    Vehicle:
+      allOf:
+        - $ref: "vehicles.yaml#/components/schemas/Vehicle"
+        - type: object
+          properties:
+            customer_id:
+              not: {}
+            customer:
+              not: {}
+            service_tickets:
+              not: {}
+
+    CustomerAccount:
+      allOf:
+        - $ref: "customerAccounts.yaml#/components/schemas/CustomerAccount"
+        - type: object
+          properties:
+            customer_id:
+              not: {}
+            customer:
+              not: {}
+
+    ServiceTicket:
+      allOf:
+        - $ref: "serviceTickets.yaml#/components/schemas/ServiceTicket"
+        - type: object
+          properties:
+            customer_id:
+              not: {}
+            customer:
+              not: {}

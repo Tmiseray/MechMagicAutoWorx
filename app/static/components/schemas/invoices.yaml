@@ -1,0 +1,32 @@
+components:
+  schemas:
+    Invoice:
+      type: object
+      required:
+        - paid
+        - service_ticket_id
+      properties:
+        id:
+          type: integer
+        invoice_date:
+          type: string
+          format: date
+        total:
+          type: number
+          format: float
+        paid:
+          type: boolean
+        service_ticket_id:
+          type: integer
+        service_ticket:
+          $ref: "#/components/schemas/ServiceTicket"
+
+    ServiceTicket:
+      allOf:
+        - $ref: 'serviceTickets.yaml#/components/schemas/ServiceTicket'
+        - type: object
+          properties:
+            invoice:
+              not: {}
+            id:
+              not: {}

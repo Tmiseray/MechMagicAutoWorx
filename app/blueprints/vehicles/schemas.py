@@ -20,7 +20,7 @@ class VehicleSchema(SQLAlchemyAutoSchema):
     customer_id = fields.Int(required=False)
     
     customer = fields.Nested('CustomerSchema', exclude=('vehicles', 'id', 'account', 'service_tickets',))
-    service_tickets = fields.List(fields.Nested('ServiceTicketSchema', exclude=('vehicle', 'customer', 'customer_id',)))
+    service_tickets = fields.List(fields.Nested('ServiceTicketSchema', exclude=('VIN', 'vehicle', 'customer', 'customer_id',)))
 
     @validates('VIN')
     def validate_vin(self, value):
