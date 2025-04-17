@@ -1,30 +1,30 @@
 components:
   examples:
     LoginSuccess:
-      $ref: 'login.yaml#/components/examples/LoginSuccess'
+      $ref: 'login.yaml#/LoginSuccess'
 
     # Customer Examples
     Customer1:
-      $ref: 'customers.yaml#/components/examples/Customer1'
+      $ref: 'customers.yaml#/Customer1'
     Customer2:
-      $ref: 'customers.yaml#/components/examples/Customer2'
+      $ref: 'customers.yaml#/Customer2'
     Customer3:
-      $ref: 'customers.yaml#/components/examples/Customer3'
+      $ref: 'customers.yaml#/Customer3'
     Customer4:
-      $ref: 'customers.yaml#/components/examples/Customer4'
+      $ref: 'customers.yaml#/Customer4'
     Customer5:
-      $ref: 'customers.yaml#/components/examples/Customer5'
+      $ref: 'customers.yaml#/Customer5'
     Customer6:
-      $ref: 'customers.yaml#/components/examples/Customer6'
+      $ref: 'customers.yaml#/Customer6'
     AllCustomers:
-      $ref: 'customers.yaml#/components/examples/AllCustomers'
+      $ref: 'customers.yaml#/AllCustomers'
 
     # Mechanic Examples
     Mechanic1:
-      $ref: 'mechanics.yaml#/components/examples/Mechanic1'
+      $ref: 'mechanics.yaml#/Mechanic1'
     Mechanic2:
-      $ref: 'mechanics.yaml#/components/examples/Mechanic2'
+      $ref: 'mechanics.yaml#/Mechanic2'
     Mechanic3:
-      $ref: 'mechanics.yaml#/components/examples/Mechanic3'
+      $ref: 'mechanics.yaml#/Mechanic3'
     AllMechanics:
-      $ref: 'mechanics.yaml#/components/examples/AllMechanics'
+      $ref: 'mechanics.yaml#/AllMechanics'

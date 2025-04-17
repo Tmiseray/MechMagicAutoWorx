@@ -1,7 +1,5 @@
-components:
-  examples:
-    CustomerAccount:
-      value:
-        id: 1
-        customer_id: 1
-        email:
+CustomerAccount:
+  value:
+    id: 1
+    customer_id: 1
+    email:

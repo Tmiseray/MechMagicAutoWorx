@@ -1,17 +1,15 @@
-components:
-  requestBodies:
-    ServiceItemCreate:
-      description: Service Item Creation Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/serviceItems.yaml#/components/schemas/ServiceItem'
+ServiceItemCreate:
+  description: Service Item Creation Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/ServiceItem'
 
-    ServiceItemUpdate:
-      description: Service Item Update Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/serviceItemUpdate.yaml#/components/schemas/ServiceItemUpdate'
+ServiceItemUpdate:
+  description: Service Item Update Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/ServiceItemUpdate'

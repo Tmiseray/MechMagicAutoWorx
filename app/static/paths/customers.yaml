@@ -9,7 +9,7 @@
       content:
         application/json:
           schema:
-            $ref: "#/definitions/Customer"
+            $ref: "#/components/schemas/Customer"
     responses:
       201:
         description: Customer created
@@ -31,7 +31,7 @@
       content:
         application/json:
           schema:
-            $ref: '#/definitions/CustomerUpdate'
+            $ref: '#/components/schemas/CustomerUpdate'
     responses:
       200:
         description: Customer updated

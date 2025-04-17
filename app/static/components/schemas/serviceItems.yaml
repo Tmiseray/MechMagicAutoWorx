@@ -1,58 +1,56 @@
-components:
-  schemas:
-    ServiceItem:
+ServiceItem:
+  type: object
+  required:
+    - item_id
+    - quantity
+  properties:
+    - id:
+      type: integer
+    - item_id:
+      type: integer
+    - quantity:
+      type: integer
+      minimum: 1
+    - service_id:
+      type: integer
+    - inventory:
       type: object
-      required:
-        - item_id
-        - quantity
       properties:
         - id:
           type: integer
-        - item_id:
+        - name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        - stock:
           type: integer
-        - quantity:
-          type: integer
-          minimum: 1
-        - service_id:
-          type: integer
-        - inventory:
-          type: object
-          properties:
-            - id:
-              type: integer
-            - name:
-              type: string
-              minLength: 1
-              maxLength: 100
-            - stock:
-              type: integer
-              minimum: 0
-            - price:
-              type: number
-              format: float
-              minimum: 0.0
-        - service:
-          type: object
-          properties:
-            - name:
-              type: string
-              minLength: 1
-              maxLength: 100
-            - price:
-              type: number
-              format: float
-        - mechanic_tickets:
-          type: array
-          items:
-            type: object
-            properties:
-              - id:
-                type: integer
-              - start_date:
-                type: string
-                format: date
-              - end_date:
-                type: string
-                format: date
-              - mechanic_id:
-                type: integer
+          minimum: 0
+        - price:
+          type: number
+          format: float
+          minimum: 0.0
+    - service:
+      type: object
+      properties:
+        - name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        - price:
+          type: number
+          format: float
+    - mechanic_tickets:
+      type: array
+      items:
+        type: object
+        properties:
+          - id:
+            type: integer
+          - start_date:
+            type: string
+            format: date
+          - end_date:
+            type: string
+            format: date
+          - mechanic_id:
+            type: integer

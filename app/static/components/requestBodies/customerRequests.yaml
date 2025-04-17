@@ -1,17 +1,15 @@
-components:
-  requestBodies:
-    CustomerCreate:
-      description: Customer Information Creation Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/customers.yaml#/components/schemas/Customer'
+CustomerCreate:
+  description: Customer Information Creation Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Customer'
 
-    CustomerUpdate:
-      description: Customer Information Update Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/customerUpdate.yaml#/components/schemas/CustomerUpdate'
+CustomerUpdate:
+  description: Customer Information Update Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/CustomerUpdate'

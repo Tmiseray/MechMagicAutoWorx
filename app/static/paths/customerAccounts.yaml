@@ -9,24 +9,14 @@
       content:
         application/json:
           schema:
-            type: object
-            required:
-              - email
-              - password
-            properties:
-              email:
-                type: string
-                format: email
-              password:
-                type: string
-                format: password
+            $ref: "#/components/requestBodies/CustomerLogin"
     responses:
-      200:
-        description: Login successful, returns JWT token
-      400:
-        description: Invalid request format
-      401:
-        description: Invalid credentials
+      200Login:
+        $ref: '#/components/responses/200Login'
+      400Login:
+        $ref: '#/components/responses/400Login'
+      401Login:
+        $ref: '#/components/responses/401Login'
 
 /customers/accounts:
   post:
@@ -38,7 +28,7 @@
       content:
         application/json:
           schema:
-          $ref: "#/definitions/CustomerAccount"
+            $ref: "#/components/requestBodies/CustomerAccount"
   responses:
     201:
       description: Account successfully created
@@ -58,8 +48,8 @@
     responses:
       200:
         description: Customer account retrieved
-      404:
-        description: Account not found or unauthorized
+      404CustomerAccount:
+        $ref: '#/components/responses/404CustomerAccount'
 
   put:
     tags:
@@ -80,8 +70,8 @@
     responses:
       200:
         description: Customer account updated
-      404:
-        description: Customer or account not found
+      404CustomerAccount:
+        $ref: '#/components/responses/404CustomerAccount'
 
   delete:
     tags:
@@ -94,8 +84,8 @@
         schema:
           type: integer
     responses:
-      200:
-        description: Account successfully deleted
+      200AccountDelete:
+        $ref: '#/components/responses/200AccountDelete'
       404:
         description: Account not found
 

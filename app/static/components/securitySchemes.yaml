@@ -1,28 +1,27 @@
-components:
-  securitySchemes:
-    CustomerToken:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: >
-        Use the customer Bearer token provided after login. Format: `Bearer {token}`.
-        Token is generated via:
-        - Algorithm: HS256
-        - Payload: 
-          - `sub`: User ID
-          - `exp`: 24 hours from issue
-          - `iat`: Issued at timestamp
+securitySchemes:
+  CustomerToken:
+    type: apiKey
+    in: header
+    name: Authorization
+    description: >
+      Use the customer Bearer token provided after login. Format: `Bearer {token}`.
+      Token is generated via:
+      - Algorithm: HS256
+      - Payload: 
+        - `sub`: User ID
+        - `exp`: 24 hours from issue
+        - `iat`: Issued at timestamp
 
-    MechanicToken:
-      type: apiKey
-      in: header
-      name: Authorization
-      description: >
-        Use the mechanic Bearer token provided after login. Format: `Bearer {token}`.
-        Token is generated via:
-        - Algorithm: HS256
-        - Payload: 
-          - `sub`: User ID
-          - `role`: Always "Mechanic"
-          - `exp`: 24 hours from issue
-          - `iat`: Issued at timestamp
+  MechanicToken:
+    type: apiKey
+    in: header
+    name: Authorization
+    description: >
+      Use the mechanic Bearer token provided after login. Format: `Bearer {token}`.
+      Token is generated via:
+      - Algorithm: HS256
+      - Payload: 
+        - `sub`: User ID
+        - `role`: Always "Mechanic"
+        - `exp`: 24 hours from issue
+        - `iat`: Issued at timestamp

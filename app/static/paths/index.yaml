@@ -1,0 +1,13 @@
+paths:
+  /customers/accounts/login:
+    $ref: "./customerAccounts.yaml#/paths/customers/accounts/login"
+  /customers/accounts:
+    $ref: "./customerAccounts.yaml#/paths/customers/accounts"
+  /customers/accounts/all:
+    $ref: "./customerAccounts.yaml#/paths/customers/accounts/all"
+  /mechanics/accounts/login:
+    $ref: "./mechanicAccounts.yaml#/paths/mechanics/accounts/login"
+  /mechanics/accounts:
+    $ref: "./mechanicAccounts.yaml#/paths/mechanics/accounts"
+  /mechanics/accounts/all:
+    $ref: "./mechanicAccounts.yaml#/paths/mechanics/accounts/all"

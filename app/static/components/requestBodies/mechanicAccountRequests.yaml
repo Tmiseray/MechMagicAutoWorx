@@ -1,25 +1,23 @@
-components:
-  requestBodies:
-    MechanicAccountCreate:
-      description: Mechanic Account Creation Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/mechanicAccounts.yaml#/components/schemas/MechanicAccount'
+MechanicAccountCreate:
+  description: Mechanic Account Creation Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/MechanicAccount'
 
-    MechanicAccountUpdate:
-      description: Mechanic Account Update Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/mechanicAccountUpdate.yaml#/components/schemas/MechanicAccountUpdate'
+MechanicAccountUpdate:
+  description: Mechanic Account Update Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/MechanicAccountUpdate'
 
-    MechanicLogin:
-      description: Mechanic Account Login Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/mechanicLogin.yaml#/components/schemas/MechanicLogin'
+MechanicLogin:
+  description: Mechanic Account Login Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/MechanicLogin'

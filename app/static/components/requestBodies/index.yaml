@@ -1,50 +1,50 @@
 components:
   requestBodies:
     CustomerCreate:
-      $ref: './customerRequests.yaml#/components/requestBodies/CustomerCreate'
+      $ref: './customerRequests.yaml#/CustomerCreate'
     CustomerUpdate:
-      $ref: './customerRequests.yaml#/components/requestBodies/CustomerUpdate'
+      $ref: './customerRequests.yaml#/CustomerUpdate'
     CustomerAccountCreate:
-      $ref: './customerAccountRequests.yaml#/components/requestBodies/CustomerAccountCreate'
+      $ref: './customerAccountRequests.yaml#/CustomerAccountCreate'
     CustomerAccountUpdate:
-      $ref: './customerAccountRequests.yaml#/components/requestBodies/CustomerAccountUpdate'
+      $ref: './customerAccountRequests.yaml#/CustomerAccountUpdate'
     CustomerLogin:
-      $ref: './customerAccountRequests.yaml#/components/requestBodies/CustomerLogin'
+      $ref: './customerAccountRequests.yaml#/CustomerLogin'
     InventoryCreate:
-      $ref: './inventoryRequests.yaml#/components/requestBodies/InventoryCreate'
+      $ref: './inventoryRequests.yaml#/InventoryCreate'
     InventoryUpdate:
-      $ref: './inventoryRequests.yaml#/components/requestBodies/InventoryUpdate'
+      $ref: './inventoryRequests.yaml#/InventoryUpdate'
     InvoiceCreate:
-      $ref: './invoiceRequests.yaml#/components/requestBodies/InvoiceCreate'
+      $ref: './invoiceRequests.yaml#/InvoiceCreate'
     InvoiceUpdate:
-      $ref: './invoiceRequests.yaml#/components/requestBodies/InvoiceUpdate'
+      $ref: './invoiceRequests.yaml#/InvoiceUpdate'
     MechanicAccountCreate:
-      $ref: './mechanicAccountRequests.yaml#/components/requestBodies/MechanicAccountCreate'
+      $ref: './mechanicAccountRequests.yaml#/MechanicAccountCreate'
     MechanicAccountUpdate:
-      $ref: './mechanicAccountRequests.yaml#/components/requestBodies/MechanicAccountUpdate'
+      $ref: './mechanicAccountRequests.yaml#/MechanicAccountUpdate'
     MechanicLogin:
-      $ref: './mechanicAccountRequests.yaml#/components/requestBodies/MechanicLogin'
+      $ref: './mechanicAccountRequests.yaml#/MechanicLogin'
     MechanicCreate:
-      $ref: './mechanicRequests.yaml#/components/requestBodies/MechanicCreate'
+      $ref: './mechanicRequests.yaml#/MechanicCreate'
     MechanicUpdate:
-      $ref: './mechanicRequests.yaml#/components/requestBodies/MechanicUpdate'
+      $ref: './mechanicRequests.yaml#/MechanicUpdate'
     MechanicTicketCreate:
-      $ref: './mechanicTicketRequests.yaml#/components/requestBodies/MechanicTicketCreate'
+      $ref: './mechanicTicketRequests.yaml#/MechanicTicketCreate'
     MechanicTicketUpdate:
-      $ref: './mechanicTicketRequests.yaml#/components/requestBodies/MechanicTicketUpdate'
+      $ref: './mechanicTicketRequests.yaml#/MechanicTicketUpdate'
     ServiceItemCreate:
-      $ref: './serviceItemRequests.yaml#/components/requestBodies/ServiceItemCreate'
+      $ref: './serviceItemRequests.yaml#/ServiceItemCreate'
     ServiceItemUpdate:
-      $ref: './serviceItemRequests.yaml#/components/requestBodies/ServiceItemUpdate'
+      $ref: './serviceItemRequests.yaml#/ServiceItemUpdate'
     ServiceCreate:
-      $ref: './serviceRequests.yaml#/components/requestBodies/ServiceCreate'
+      $ref: './serviceRequests.yaml#/ServiceCreate'
     ServiceUpdate:
-      $ref: './serviceRequests.yaml#/components/requestBodies/ServiceUpdate'
+      $ref: './serviceRequests.yaml#/ServiceUpdate'
     ServiceTicketCreate:
-      $ref: './serviceTicketRequests.yaml#/components/requestBodies/ServiceTicketCreate'
+      $ref: './serviceTicketRequests.yaml#/ServiceTicketCreate'
     ServiceTicketUpdate:
-      $ref: './serviceTicketRequests.yaml#/components/requestBodies/ServiceTicketUpdate'
+      $ref: './serviceTicketRequests.yaml#/ServiceTicketUpdate'
     VehicleCreate:
-      $ref: './vehicleRequests.yaml#/components/requestBodies/VehicleCreate'
+      $ref: './vehicleRequests.yaml#/VehicleCreate'
     VehicleUpdate:
-      $ref: './vehicleRequests.yaml#/components/requestBodies/VehicleUpdate'
+      $ref: './vehicleRequests.yaml#/VehicleUpdate'

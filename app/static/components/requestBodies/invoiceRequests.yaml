@@ -1,17 +1,15 @@
-components:
-  requestBodies:
-    InvoiceCreate:
-      description: Invoice Creation Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/invoices.yaml#/components/schemas/Invoice'
+InvoiceCreate:
+  description: Invoice Creation Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Invoice'
 
-    InvoiceUpdate:
-      description: Invoice Update Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/invoiceUpdate.yaml#/components/schemas/InvoiceUpdate'
+InvoiceUpdate:
+  description: Invoice Update Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/InvoiceUpdate'

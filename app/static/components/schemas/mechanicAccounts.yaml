@@ -1,38 +1,36 @@
-components:
-  schemas:
-    MechanicAccount:
+MechanicAccount:
+  type: object
+  required:
+    - mechanic_id
+    - email
+    - password
+  properties:
+    - id:
+      type: integer
+    - role:
+      type: string
+      default: Mechanic
+    - mechanic_id:
+      type: integer
+    - email:
+      type: string
+      format: email
+    - password:
+      type: string
+      minLength: 8
+      maxLength: 100
+    - mechanic:
       type: object
-      required:
-        - mechanic_id
-        - email
-        - password
       properties:
-        - id:
-          type: integer
-        - role:
+        - name:
           type: string
-          default: Mechanic
-        - mechanic_id:
-          type: integer
-        - email:
-          type: string
-          format: email
-        - password:
-          type: string
-          minLength: 8
+          minLength: 1
           maxLength: 100
-        - mechanic:
-          type: object
-          properties:
-            - name:
-              type: string
-              minLength: 1
-              maxLength: 100
-            - phone:
-              type: string
-              minLength: 10
-              maxLength: 100
-            - salary:
-              type: number
-              format: float
+        - phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        - salary:
+          type: number
+          format: float
 

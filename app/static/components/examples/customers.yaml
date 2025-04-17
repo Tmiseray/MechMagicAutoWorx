@@ -1,294 +1,292 @@
-components:
-  examples:
-    Customer1:
-      value:
-        id: 1
-        name: Selina Kyle
-        email: kittySoftPaws@example.com
-        phone: 777-777-1313
-        vehicles:
-          - VIN: 1FA6P8TH4L5500001
-            year: 2020
+Customer1:
+  value:
+    id: 1
+    name: Selina Kyle
+    email: kittySoftPaws@example.com
+    phone: 777-777-1313
+    vehicles:
+      - VIN: 1FA6P8TH4L5500001
+        year: 2020
+        make: Ford
+        model: Mustang
+        mileage: 15000
+    account:
+      - id: 1
+        password: $2a$12$VdjVpUg7VPVy8pYG3QzP0e9dUT9yFlUIAxViRD16uLCfMaInP9GP6
+    service_tickets:
+      - id: 1
+        service_date: 2023-10-01
+        service_desc: Oil change
+        VIN: 1FA6P8TH4L5500001
+        vehicle:
+          - year: 2020
             make: Ford
             model: Mustang
             mileage: 15000
-        account:
-          - id: 1
-            password: $2a$12$VdjVpUg7VPVy8pYG3QzP0e9dUT9yFlUIAxViRD16uLCfMaInP9GP6
-        service_tickets:
-          - id: 1
-            service_date: 2023-10-01
-            service_desc: Oil change
-            VIN: 1FA6P8TH4L5500001
-            vehicle:
-              - year: 2020
-                make: Ford
-                model: Mustang
-                mileage: 15000
-    Customer2:
-      value:
-        id: 2
-        name: Bruce Wayne
-        email: darkKnightRides@example.com
-        phone: 212-000-1940
-        vehicles:
-          - VIN: WAUZZZF49JA000002
-            year: 2022
+Customer2:
+  value:
+    id: 2
+    name: Bruce Wayne
+    email: darkKnightRides@example.com
+    phone: 212-000-1940
+    vehicles:
+      - VIN: WAUZZZF49JA000002
+        year: 2022
+        make: Lamborghini
+        model: Aventador
+        mileage: 3800
+    account:
+      - id: 2
+        password: $2a$12$z3uAKlX8HoTbJmlM3pD.pOxe.ub3NQTfGTb1Jb6fOo9/ld/uxkIgC
+    service_tickets:
+      - id: 2
+        service_date: 2024-01-15
+        service_desc: Armor plating upgrade
+        VIN: WAUZZZF49JA000002
+        vehicle:
+          - year: 2022
             make: Lamborghini
             model: Aventador
             mileage: 3800
-        account:
-          - id: 2
-            password: $2a$12$z3uAKlX8HoTbJmlM3pD.pOxe.ub3NQTfGTb1Jb6fOo9/ld/uxkIgC
-        service_tickets:
-          - id: 2
-            service_date: 2024-01-15
-            service_desc: Armor plating upgrade
-            VIN: WAUZZZF49JA000002
-            vehicle:
-              - year: 2022
-                make: Lamborghini
-                model: Aventador
-                mileage: 3800
-    Customer3:
-      value:
-        id: 3
-        name: Jack Napier
-        email: laughsRfree@example.com
-        phone: 666-123-0000
-        vehicles:
-          - VIN: JHMFA16586S000003
-            year: 2012
+Customer3:
+  value:
+    id: 3
+    name: Jack Napier
+    email: laughsRfree@example.com
+    phone: 666-123-0000
+    vehicles:
+      - VIN: JHMFA16586S000003
+        year: 2012
+        make: Dodge
+        model: Charger
+        mileage: 98765
+    account:
+      - id: 3
+        password: $2a$12$m.ES8I4rE6pBJ0h8od1c/.amgCyT31hF/NhSHgQCrIwovMcAIGOwa
+    service_tickets:
+      - id: 3
+        service_date: 2024-03-31
+        service_desc: Custom horn install (laugh track)
+        VIN: JHMFA16586S000003
+        vehicle:
+          - year: 2012
             make: Dodge
             model: Charger
             mileage: 98765
-        account:
-          - id: 3
-            password: $2a$12$m.ES8I4rE6pBJ0h8od1c/.amgCyT31hF/NhSHgQCrIwovMcAIGOwa
-        service_tickets:
-          - id: 3
-            service_date: 2024-03-31
-            service_desc: Custom horn install (laugh track)
-            VIN: JHMFA16586S000003
-            vehicle:
-              - year: 2012
-                make: Dodge
-                model: Charger
-                mileage: 98765
-    Customer4:
-      value:
-        id: 4
-        name: Harleen Quinzel
-        email: puddin4life@example.com
-        phone: 555-666-9901
-        vehicles:
-          - VIN: KM8JU3AG6BU000004
-            year: 2018
+Customer4:
+  value:
+    id: 4
+    name: Harleen Quinzel
+    email: puddin4life@example.com
+    phone: 555-666-9901
+    vehicles:
+      - VIN: KM8JU3AG6BU000004
+        year: 2018
+        make: Mini
+        model: Cooper
+        mileage: 22300
+    account:
+      - id: 4
+        password: $2a$12$01T6r3QDdNLqlkFp4F3EAe02hQmu9ciZWheutqlSLDUxUuQBj8HWK
+    service_tickets:
+      - id: 4
+        service_date: 2024-02-14
+        service_desc: Tire rotation and bubblegum scent refresh
+        VIN: KM8JU3AG6BU000004
+        vehicle:
+          - year: 2018
             make: Mini
             model: Cooper
             mileage: 22300
-        account:
-          - id: 4
-            password: $2a$12$01T6r3QDdNLqlkFp4F3EAe02hQmu9ciZWheutqlSLDUxUuQBj8HWK
-        service_tickets:
-          - id: 4
-            service_date: 2024-02-14
-            service_desc: Tire rotation and bubblegum scent refresh
-            VIN: KM8JU3AG6BU000004
-            vehicle:
-              - year: 2018
-                make: Mini
-                model: Cooper
-                mileage: 22300
-    Customer5:
-      value:
-        id: 5
-        name: Pamela Isley
-        email: rootedQueen@example.com
-        phone: 444-888-3737
-        vehicles:
-          - VIN: YV4952DL3F2000005
-            year: 2019
+Customer5:
+  value:
+    id: 5
+    name: Pamela Isley
+    email: rootedQueen@example.com
+    phone: 444-888-3737
+    vehicles:
+      - VIN: YV4952DL3F2000005
+        year: 2019
+        make: Tesla
+        model: Model S
+        mileage: 12345
+    account:
+      - id: 5
+        password: $2a$12$5v4cnQ7wWRbulkHnxZyghuMpPH5Zeka5YzxYQWGG9VcyqV7LGJWVK
+    service_tickets:
+      - id: 5
+        service_date: 2023-11-20
+        service_desc: Biofuel filter replacement
+        VIN: YV4952DL3F2000005
+        vehicle:
+          - year: 2019
             make: Tesla
             model: Model S
             mileage: 12345
-        account:
-          - id: 5
-            password: $2a$12$5v4cnQ7wWRbulkHnxZyghuMpPH5Zeka5YzxYQWGG9VcyqV7LGJWVK
-        service_tickets:
-          - id: 5
-            service_date: 2023-11-20
-            service_desc: Biofuel filter replacement
-            VIN: YV4952DL3F2000005
-            vehicle:
-              - year: 2019
-                make: Tesla
-                model: Model S
-                mileage: 12345
-    Customer6:
-      value:
-        id: 6
-        name: Edward Nigma
-        email: r1ddleM3Th1s@example.com
-        phone: 313-313-3133
-        vehicles:
-          - VIN: 1C4RJFBG0JC000006
-            year: 2021
+Customer6:
+  value:
+    id: 6
+    name: Edward Nigma
+    email: r1ddleM3Th1s@example.com
+    phone: 313-313-3133
+    vehicles:
+      - VIN: 1C4RJFBG0JC000006
+        year: 2021
+        make: Jaguar
+        model: XF
+        mileage: 28900
+    account:
+      - id: 6
+        password: $2a$12$czcd.25AqAJUNmhJ0EAc7u5UUjkkmAB5y09wWcSEK2YH7vAb/taYe
+    service_tickets:
+      - id: 6
+        service_date: 2024-04-01
+        service_desc: ECU reprogrammed for puzzle mode
+        VIN: 1C4RJFBG0JC000006
+        vehicle:
+          - year: 2021
             make: Jaguar
             model: XF
             mileage: 28900
-        account:
-          - id: 6
-            password: $2a$12$czcd.25AqAJUNmhJ0EAc7u5UUjkkmAB5y09wWcSEK2YH7vAb/taYe
-        service_tickets:
-          - id: 6
-            service_date: 2024-04-01
-            service_desc: ECU reprogrammed for puzzle mode
-            VIN: 1C4RJFBG0JC000006
-            vehicle:
-              - year: 2021
-                make: Jaguar
-                model: XF
-                mileage: 28900
 
-    AllCustomers:
-      summary: A list of All Customers
-      value:
+AllCustomers:
+  summary: A list of All Customers
+  value:
+    - id: 1
+      name: Selina Kyle
+      email: kittySoftPaws@example.com
+      phone: 777-777-1313
+      vehicles:
+        - VIN: 1FA6P8TH4L5500001
+          year: 2020
+          make: Ford
+          model: Mustang
+          mileage: 15000
+      account:
         - id: 1
-          name: Selina Kyle
-          email: kittySoftPaws@example.com
-          phone: 777-777-1313
-          vehicles:
-            - VIN: 1FA6P8TH4L5500001
-              year: 2020
+          password: $2a$12$VdjVpUg7VPVy8pYG3QzP0e9dUT9yFlUIAxViRD16uLCfMaInP9GP6
+      service_tickets:
+        - id: 1
+          service_date: 2023-10-01
+          service_desc: Oil change
+          VIN: 1FA6P8TH4L5500001
+          vehicle:
+            - year: 2020
               make: Ford
               model: Mustang
               mileage: 15000
-          account:
-            - id: 1
-              password: $2a$12$VdjVpUg7VPVy8pYG3QzP0e9dUT9yFlUIAxViRD16uLCfMaInP9GP6
-          service_tickets:
-            - id: 1
-              service_date: 2023-10-01
-              service_desc: Oil change
-              VIN: 1FA6P8TH4L5500001
-              vehicle:
-                - year: 2020
-                  make: Ford
-                  model: Mustang
-                  mileage: 15000
+    - id: 2
+      name: Bruce Wayne
+      email: darkKnightRides@example.com
+      phone: 212-000-1940
+      vehicles:
+        - VIN: WAUZZZF49JA000002
+          year: 2022
+          make: Lamborghini
+          model: Aventador
+          mileage: 3800
+      account:
         - id: 2
-          name: Bruce Wayne
-          email: darkKnightRides@example.com
-          phone: 212-000-1940
-          vehicles:
-            - VIN: WAUZZZF49JA000002
-              year: 2022
+          password: $2a$12$z3uAKlX8HoTbJmlM3pD.pOxe.ub3NQTfGTb1Jb6fOo9/ld/uxkIgC
+      service_tickets:
+        - id: 2
+          service_date: 2024-01-15
+          service_desc: Armor plating upgrade
+          VIN: WAUZZZF49JA000002
+          vehicle:
+            - year: 2022
               make: Lamborghini
               model: Aventador
               mileage: 3800
-          account:
-            - id: 2
-              password: $2a$12$z3uAKlX8HoTbJmlM3pD.pOxe.ub3NQTfGTb1Jb6fOo9/ld/uxkIgC
-          service_tickets:
-            - id: 2
-              service_date: 2024-01-15
-              service_desc: Armor plating upgrade
-              VIN: WAUZZZF49JA000002
-              vehicle:
-                - year: 2022
-                  make: Lamborghini
-                  model: Aventador
-                  mileage: 3800
+    - id: 3
+      name: Jack Napier
+      email: laughsRfree@example.com
+      phone: 666-123-0000
+      vehicles:
+        - VIN: JHMFA16586S000003
+          year: 2012
+          make: Dodge
+          model: Charger
+          mileage: 98765
+      account:
         - id: 3
-          name: Jack Napier
-          email: laughsRfree@example.com
-          phone: 666-123-0000
-          vehicles:
-            - VIN: JHMFA16586S000003
-              year: 2012
+          password: $2a$12$m.ES8I4rE6pBJ0h8od1c/.amgCyT31hF/NhSHgQCrIwovMcAIGOwa
+      service_tickets:
+        - id: 3
+          service_date: 2024-03-31
+          service_desc: Custom horn install (laugh track)
+          VIN: JHMFA16586S000003
+          vehicle:
+            - year: 2012
               make: Dodge
               model: Charger
               mileage: 98765
-          account:
-            - id: 3
-              password: $2a$12$m.ES8I4rE6pBJ0h8od1c/.amgCyT31hF/NhSHgQCrIwovMcAIGOwa
-          service_tickets:
-            - id: 3
-              service_date: 2024-03-31
-              service_desc: Custom horn install (laugh track)
-              VIN: JHMFA16586S000003
-              vehicle:
-                - year: 2012
-                  make: Dodge
-                  model: Charger
-                  mileage: 98765
+    - id: 4
+      name: Harleen Quinzel
+      email: puddin4life@example.com
+      phone: 555-666-9901
+      vehicles:
+        - VIN: KM8JU3AG6BU000004
+          year: 2018
+          make: Mini
+          model: Cooper
+          mileage: 22300
+      account:
         - id: 4
-          name: Harleen Quinzel
-          email: puddin4life@example.com
-          phone: 555-666-9901
-          vehicles:
-            - VIN: KM8JU3AG6BU000004
-              year: 2018
+          password: $2a$12$01T6r3QDdNLqlkFp4F3EAe02hQmu9ciZWheutqlSLDUxUuQBj8HWK
+      service_tickets:
+        - id: 4
+          service_date: 2024-02-14
+          service_desc: Tire rotation and bubblegum scent refresh
+          VIN: KM8JU3AG6BU000004
+          vehicle:
+            - year: 2018
               make: Mini
               model: Cooper
               mileage: 22300
-          account:
-            - id: 4
-              password: $2a$12$01T6r3QDdNLqlkFp4F3EAe02hQmu9ciZWheutqlSLDUxUuQBj8HWK
-          service_tickets:
-            - id: 4
-              service_date: 2024-02-14
-              service_desc: Tire rotation and bubblegum scent refresh
-              VIN: KM8JU3AG6BU000004
-              vehicle:
-                - year: 2018
-                  make: Mini
-                  model: Cooper
-                  mileage: 22300
+    - id: 5
+      name: Pamela Isley
+      email: rootedQueen@example.com
+      phone: 444-888-3737
+      vehicles:
+        - VIN: YV4952DL3F2000005
+          year: 2019
+          make: Tesla
+          model: Model S
+          mileage: 12345
+      account:
         - id: 5
-          name: Pamela Isley
-          email: rootedQueen@example.com
-          phone: 444-888-3737
-          vehicles:
-            - VIN: YV4952DL3F2000005
-              year: 2019
+          password: $2a$12$5v4cnQ7wWRbulkHnxZyghuMpPH5Zeka5YzxYQWGG9VcyqV7LGJWVK
+      service_tickets:
+        - id: 5
+          service_date: 2023-11-20
+          service_desc: Biofuel filter replacement
+          VIN: YV4952DL3F2000005
+          vehicle:
+            - year: 2019
               make: Tesla
               model: Model S
               mileage: 12345
-          account:
-            - id: 5
-              password: $2a$12$5v4cnQ7wWRbulkHnxZyghuMpPH5Zeka5YzxYQWGG9VcyqV7LGJWVK
-          service_tickets:
-            - id: 5
-              service_date: 2023-11-20
-              service_desc: Biofuel filter replacement
-              VIN: YV4952DL3F2000005
-              vehicle:
-                - year: 2019
-                  make: Tesla
-                  model: Model S
-                  mileage: 12345
+    - id: 6
+      name: Edward Nigma
+      email: r1ddleM3Th1s@example.com
+      phone: 313-313-3133
+      vehicles:
+        - VIN: 1C4RJFBG0JC000006
+          year: 2021
+          make: Jaguar
+          model: XF
+          mileage: 28900
+      account:
         - id: 6
-          name: Edward Nigma
-          email: r1ddleM3Th1s@example.com
-          phone: 313-313-3133
-          vehicles:
-            - VIN: 1C4RJFBG0JC000006
-              year: 2021
+          password: $2a$12$czcd.25AqAJUNmhJ0EAc7u5UUjkkmAB5y09wWcSEK2YH7vAb/taYe
+      service_tickets:
+        - id: 6
+          service_date: 2024-04-01
+          service_desc: ECU reprogrammed for puzzle mode
+          VIN: 1C4RJFBG0JC000006
+          vehicle:
+            - year: 2021
               make: Jaguar
               model: XF
               mileage: 28900
-          account:
-            - id: 6
-              password: $2a$12$czcd.25AqAJUNmhJ0EAc7u5UUjkkmAB5y09wWcSEK2YH7vAb/taYe
-          service_tickets:
-            - id: 6
-              service_date: 2024-04-01
-              service_desc: ECU reprogrammed for puzzle mode
-              VIN: 1C4RJFBG0JC000006
-              vehicle:
-                - year: 2021
-                  make: Jaguar
-                  model: XF
-                  mileage: 28900

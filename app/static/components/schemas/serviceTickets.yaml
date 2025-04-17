@@ -1,81 +1,79 @@
-components:
-  schemas:
-    ServiceTicket:
+ServiceTicket:
+  type: object
+  required:
+    - service_desc
+    - VIN
+  properties:
+    - id:
+      type: integer
+    - service_date:
+      type: string
+      format: date
+    - service_desc:
+      type: string
+    - VIN:
+      type: string
+      minLength: 17
+      maxLength: 255
+    - customer_id:
+      type: integer
+    - vehicle:
       type: object
-      required:
-        - service_desc
-        - VIN
+      properties:
+        - year:
+          type: integer
+        - make:
+          type: string
+          minLength: 1
+          maxLength: 100
+        - model:
+          type: string
+          minLength: 1
+          maxLength: 100
+        - mileage:
+          type: integer
+    - customer:
+      type: object
+      properties:
+        - name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        - email:
+          type: string
+          format: email
+        - phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+    - mechanic_tickets:
+      type: array
+      items:
+        type: object
+        properties:
+          - id:
+            type: integer
+          - start_date:
+            type: string
+            format: date
+          - end_date:
+            type: string
+            format: date
+          - hours_worked:
+            type: number
+            format: float
+          - mechanic_id:
+            type: integer
+    - invoice:
+      type: object
       properties:
         - id:
           type: integer
-        - service_date:
+        - invoice_date:
           type: string
           format: date
-        - service_desc:
-          type: string
-        - VIN:
-          type: string
-          minLength: 17
-          maxLength: 255
-        - customer_id:
-          type: integer
-        - vehicle:
-          type: object
-          properties:
-            - year:
-              type: integer
-            - make:
-              type: string
-              minLength: 1
-              maxLength: 100
-            - model:
-              type: string
-              minLength: 1
-              maxLength: 100
-            - mileage:
-              type: integer
-        - customer:
-          type: object
-          properties:
-            - name:
-              type: string
-              minLength: 1
-              maxLength: 100
-            - email:
-              type: string
-              format: email
-            - phone:
-              type: string
-              minLength: 10
-              maxLength: 100
-        - mechanic_tickets:
-          type: array
-          items:
-            type: object
-            properties:
-              - id:
-                type: integer
-              - start_date:
-                type: string
-                format: date
-              - end_date:
-                type: string
-                format: date
-              - hours_worked:
-                type: number
-                format: float
-              - mechanic_id:
-                type: integer
-        - invoice:
-          type: object
-          properties:
-            - id:
-              type: integer
-            - invoice_date:
-              type: string
-              format: date
-            - total:
-              type: number
-              format: float
-            - paid:
-              type: boolean
+        - total:
+          type: number
+          format: float
+        - paid:
+          type: boolean

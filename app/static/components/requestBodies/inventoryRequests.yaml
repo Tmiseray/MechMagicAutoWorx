@@ -1,17 +1,15 @@
-components:
-  requestBodies:
-    InventoryCreate:
-      description: Inventory Creation Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/inventory.yaml#/components/schemas/Inventory'
+InventoryCreate:
+  description: Inventory Creation Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Inventory'
 
-    InventoryUpdate:
-      description: Inventory Update Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/inventoryUpdate.yaml#/components/schemas/InventoryUpdate'
+InventoryUpdate:
+  description: Inventory Update Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/InventoryUpdate'

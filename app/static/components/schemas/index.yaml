@@ -1,48 +1,48 @@
 components:
   schemas:
     Customer:
-      $ref: 'customers.yaml#/components/schemas/Customer'
+      $ref: 'customers.yaml#/Customer'
     CustomerAccount:
-      $ref: 'customerAccounts.yaml#/components/schemas/CustomerAccount'
+      $ref: 'customerAccounts.yaml#/CustomerAccount'
     Inventory:
-      $ref: 'inventory.yaml#/components/schemas/Inventory'
+      $ref: 'inventory.yaml#/Inventory'
     Invoice:
-      $ref: 'invoices.yaml#/components/schemas/Invoice'
+      $ref: 'invoices.yaml#/Invoice'
     MechanicAccount:
-      $ref: 'mechanicAccounts.yaml#/components/schemas/MechanicAccount'
+      $ref: 'mechanicAccounts.yaml#/MechanicAccount'
     Mechanic:
-      $ref: 'mechanics.yaml#/components/schemas/Mechanic'
+      $ref: 'mechanics.yaml#/Mechanic'
     MechanicTicket:
-      $ref: 'mechanicTickets.yaml#/components/schemas/MechanicTicket'
+      $ref: 'mechanicTickets.yaml#/MechanicTicket'
     ServiceItem:
-      $ref: 'serviceItems.yaml#/components/schemas/ServiceItem'
+      $ref: 'serviceItems.yaml#/ServiceItem'
     Service:
-      $ref: 'services.yaml#/components/schemas/Service'
+      $ref: 'services.yaml#/Service'
     ServiceTicket:
-      $ref: 'serviceTickets.yaml#/components/schemas/ServiceTicket'
+      $ref: 'serviceTickets.yaml#/ServiceTicket'
     Vehicle:
-      $ref: 'vehicles.yaml#/components/schemas/Vehicle'
+      $ref: 'vehicles.yaml#/Vehicle'
     CustomerUpdate:
-      $ref: 'customerUpdate.yaml#/components/schemas/CustomerUpdate'
+      $ref: 'customerUpdate.yaml#/CustomerUpdate'
     CustomerAccountUpdate:
-      $ref: 'customerAccountUpdate.yaml#/components/schemas/CustomerAccountUpdate'
+      $ref: 'customerAccountUpdate.yaml#/CustomerAccountUpdate'
     InventoryUpdate:
-      $ref: 'inventoryUpdate.yaml#/components/schemas/InventoryUpdate'
+      $ref: 'inventoryUpdate.yaml#/InventoryUpdate'
     InvoiceUpdate:
-      $ref: 'invoiceUpdate.yaml#/components/schemas/InvoiceUpdate'
+      $ref: 'invoiceUpdate.yaml#/InvoiceUpdate'
     MechanicAccountUpdate:
-      $ref: 'mechanicAccountUpdate.yaml#/components/schemas/MechanicAccountUpdate'
+      $ref: 'mechanicAccountUpdate.yaml#/MechanicAccountUpdate'
     MechanicUpdate:
-      $ref: 'mechanicUpdate.yaml#/components/schemas/MechanicUpdate'
+      $ref: 'mechanicUpdate.yaml#/MechanicUpdate'
     MechanicTicketUpdate:
-      $ref: 'mechanicTicketUpdate.yaml#/components/schemas/MechanicTicketUpdate'
+      $ref: 'mechanicTicketUpdate.yaml#/MechanicTicketUpdate'
     ServiceItemUpdate:
-      $ref: 'serviceItemUpdate.yaml#/components/schemas/ServiceItemUpdate'
+      $ref: 'serviceItemUpdate.yaml#/ServiceItemUpdate'
     ServiceUpdate:
-      $ref: 'serviceUpdate.yaml#/components/schemas/ServiceUpdate'
+      $ref: 'serviceUpdate.yaml#/ServiceUpdate'
     ServiceTicketUpdate:
-      $ref: 'serviceTicketUpdate.yaml#/components/schemas/ServiceTicketUpdate'
+      $ref: 'serviceTicketUpdate.yaml#/ServiceTicketUpdate'
     VehicleUpdate:
-      $ref: 'vehicleUpdate.yaml#/components/schemas/VehicleUpdate'
+      $ref: 'vehicleUpdate.yaml#/VehicleUpdate'
     Login:
-      $ref: 'login.yaml#/components/schemas/Login'
+      $ref: 'login.yaml#/Login'

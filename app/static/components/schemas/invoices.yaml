@@ -1,94 +1,144 @@
-components:
-  schemas:
-    Invoice:
+Invoice:
+  type: object
+  required:
+    - paid
+    - service_ticket_id
+  properties:
+    - id:
+      type: integer
+    - invoice_date:
+      type: string
+      format: date
+    - total:
+      type: number
+      format: float
+    - paid:
+      type: boolean
+    - service_ticket_id:
+      type: integer
+    - service_ticket:
       type: object
-      required:
-        - paid
-        - service_ticket_id
       properties:
-        - id:
-          type: integer
-        - invoice_date:
+        - service_date:
           type: string
           format: date
-        - total:
-          type: number
-          format: float
-        - paid:
-          type: boolean
-        - service_ticket_id:
+        - service_desc:
+          type: string
+          minLength: 1
+          maxLength: 255
+        - VIN:
+          type: string
+          minLength: 17
+          maxLength: 255
+        - customer_id:
           type: integer
-        - service_ticket:
+        - vehicle:
           type: object
           properties:
-            - service_date:
-              type: string
-              format: date
-            - service_desc:
+            - year:
+              type: integer
+            - make:
               type: string
               minLength: 1
-              maxLength: 255
-            - VIN:
+              maxLength: 100
+            - model:
               type: string
-              minLength: 17
-              maxLength: 255
-            - customer_id:
-              type: integer
-            - vehicle:
-              type: object
-              properties:
-                - year:
-                  type: integer
-                - make:
-                  type: string
-                  minLength: 1
-                  maxLength: 100
-                - model:
-                  type: string
-                  minLength: 1
-                  maxLength: 100
-            - customer:
-              type: object
-              properties:
-                - name:
-                  type: string
-                  minLength: 1
-                  maxLength: 100
-                - email:
-                  type: string
-                  format: email
-                - phone:
-                  type: string
-                  minLength: 10
-                  maxLength: 100
-            - mechanic_tickets:
-              type: array
-              items:
+              minLength: 1
+              maxLength: 100
+        - customer:
+          type: object
+          properties:
+            - name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            - email:
+              type: string
+              format: email
+            - phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+        - mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              - id:
+                type: integer
+              - start_date:
+                type: string
+                format: date
+              - end_date:
+                type: string
+                format: date
+              - hours_worked:
+                type: number
+                format: float
+              - mechanic_id:
+                type: integer
+              - mechanic:
                 type: object
                 properties:
-                  - id:
-                    type: integer
-                  - start_date:
+                  - name:
                     type: string
-                    format: date
-                  - end_date:
-                    type: string
-                    format: date
-                  - hours_worked:
-                    type: number
-                    format: float
-                  - mechanic_id:
-                    type: integer
-                  - mechanic:
-                    type: object
-                    properties:
-                      - name:
-                        type: string
-                        minLength: 1
-                        maxLength: 100
-                  - services:
-                    type: array
-                    items:
+                    minLength: 1
+                    maxLength: 100
+              - services:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    - id:
+                      type: integer
+                    - name:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    - price:
+                      type: number
+                      format: float
+                    - service_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          - id:
+                            type: integer
+                          - item_id:
+                            type: integer
+                          - quantity:
+                            type: integer
+                            minimum: 1
+                          - inventory:
+                            type: object
+                            properties:
+                              - id:
+                                type: integer
+                              - name:
+                                type: string
+                                minLength: 1
+                                maxLength: 100
+                              - stock:
+                                type: integer
+                                minimum: 0
+                              - price:
+                                type: number
+                                format: float
+                                minimum: 0.0
+              - additional_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    - id:
+                      type: integer
+                    - item_id:
+                      type: integer
+                    - quantity:
+                      type: integer
+                      minimum: 1
+                    - inventory:
                       type: object
                       properties:
                         - id:
@@ -97,62 +147,10 @@ components:
                           type: string
                           minLength: 1
                           maxLength: 100
+                        - stock:
+                          type: integer
+                          minimum: 0
                         - price:
                           type: number
                           format: float
-                        - service_items:
-                          type: array
-                          items:
-                            type: object
-                            properties:
-                              - id:
-                                type: integer
-                              - item_id:
-                                type: integer
-                              - quantity:
-                                type: integer
-                                minimum: 1
-                              - inventory:
-                                type: object
-                                properties:
-                                  - id:
-                                    type: integer
-                                  - name:
-                                    type: string
-                                    minLength: 1
-                                    maxLength: 100
-                                  - stock:
-                                    type: integer
-                                    minimum: 0
-                                  - price:
-                                    type: number
-                                    format: float
-                                    minimum: 0.0
-                  - additional_items:
-                    type: array
-                    items:
-                      type: object
-                      properties:
-                        - id:
-                          type: integer
-                        - item_id:
-                          type: integer
-                        - quantity:
-                          type: integer
-                          minimum: 1
-                        - inventory:
-                          type: object
-                          properties:
-                            - id:
-                              type: integer
-                            - name:
-                              type: string
-                              minLength: 1
-                              maxLength: 100
-                            - stock:
-                              type: integer
-                              minimum: 0
-                            - price:
-                              type: number
-                              format: float
-                              minimum: 0.0
+                          minimum: 0.0

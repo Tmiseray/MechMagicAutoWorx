@@ -1,6 +1,7 @@
 
 from flask import Flask
-from flask_redoc import Redoc
+import shutil
+import subprocess
 
 from .models import db
 from .extensions import ma, limiter, cache
@@ -31,6 +32,22 @@ swaggerui_blueprint = get_swaggerui_blueprint(
     }
 )
 
+def bundle_openapi():
+    """Bundle modular OpenAPI docs using Redocly CLI, with graceful fallback."""
+    redocly_path = shutil.which("redocly")
+
+    if redocly_path:
+        try:
+            subprocess.run(
+                [redocly_path, "bundle", "app/static/openapi.yaml", "-o", "app/static/combined_docs.yaml"],
+                check=True
+            )
+            print("✅ OpenAPI docs bundled successfully.")
+        except subprocess.CalledProcessError as e:
+            print(f"❌ Redocly failed to bundle OpenAPI docs: {e}")
+    else:
+        print("⚠️ Redocly CLI not found — skipping OpenAPI bundling. "
+              "Install with: npm install -g @redocly/cli")
 
 
 def create_app(config_name):
@@ -38,16 +55,9 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(f'config.{config_name}')
 
-    # Redoc setup
-    # redoc = Redoc(app)
-    # redoc.spec_url = '/static/combined_docs.yaml'
-    # redoc.route_path = '/api/redoc'
-
-    # Load the combined Swagger documentation
-    # combine_swagger_docs()
-
-    # Load the combined OpenAPI documentation
-    # combine_openapi_docs()
+    # Bundle OpenAPI docs
+    if app.config.get("OPENAPI_AUTOBUNDLE"):
+        bundle_openapi()
 
     # Database initialization
     db.init_app(app)

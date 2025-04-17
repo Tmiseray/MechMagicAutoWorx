@@ -1,17 +1,15 @@
-components:
-  requestBodies:
-    MechanicTicketCreate:
-      description: Mechanic Ticket Creation Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/mechanicTickets.yaml#/components/schemas/MechanicTicket'
+MechanicTicketCreate:
+  description: Mechanic Ticket Creation Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/MechanicTicket'
 
-    MechanicTicketUpdate:
-      description: Mechanic Ticket Update Request Body
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: '../schemas/mechanicTicketUpdate.yaml#/components/schemas/MechanicTicketUpdate'
+MechanicTicketUpdate:
+  description: Mechanic Ticket Update Request Body
+  required: true
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/MechanicTicketUpdate'

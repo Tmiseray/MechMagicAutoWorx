@@ -1,49 +1,46 @@
-components:
-  responses:
-    200Login:
-      description: Successful login, returns auth token
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              status:
-                type: string
-              message:
-                type: string
-              auth_token:
-                type: string
-          examples:
-            LoginSuccess:
-              $ref: '../examples/login.yaml#/components/examples/LoginSuccess'
-    200AccountDelete:
-      description: Successful Account Deletion
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "Account Successfully Deleted"
-    200CustomerDelete:
-      description: Successful Customer Deletion
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "Customer Successfully Deleted"
-    200MechanicDelete:
-      description: Successful Mechanic Deletion
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              message:
-                type: string
-                example: "Mechanic Successfully Deleted"
+200Login:
+  description: Successful login, returns auth token
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          status:
+            type: string
+          message:
+            type: string
+          auth_token:
+            type: string
+      example:
+        $ref: '#/components/examples/LoginSuccess'
+200AccountDelete:
+  description: Successful Account Deletion
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            example: "Account Successfully Deleted"
+200CustomerDelete:
+  description: Successful Customer Deletion
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            example: "Customer Successfully Deleted"
+200MechanicDelete:
+  description: Successful Mechanic Deletion
+  content:
+    application/json:
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            example: "Mechanic Successfully Deleted"
 
