@@ -44,7 +44,5 @@ components:
       $ref: 'serviceTicketUpdate.yaml#/components/schemas/ServiceTicketUpdate'
     VehicleUpdate:
       $ref: 'vehicleUpdate.yaml#/components/schemas/VehicleUpdate'
-    CustomerLogin:
-      $ref: 'customerLogin.yaml#/components/schemas/CustomerLogin'
-    MechanicLogin:
-      $ref: 'mechanicLogin.yaml#/components/schemas/MechanicLogin'
+    Login:
+      $ref: 'login.yaml#/components/schemas/Login'

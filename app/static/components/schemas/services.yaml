@@ -6,51 +6,55 @@ components:
         - name
         - price
       properties:
-        id:
+        - id:
           type: integer
-        name:
+        - name:
           type: string
           minLength: 1
           maxLength: 100
-        price:
+        - price:
           type: number
           format: float
-          minimum: 0.0
-        service_items:
+        - service_items:
           type: array
           items:
-            $ref: "#/components/schemas/ServiceItem"
-        mechanic_tickets:
-          type: array
-          items:
-            $ref: "#/components/schemas/MechanicTicket"
-
-    ServiceItem:
-      allOf:
-        - $ref: "serviceItems.yaml#/components/schemas/ServiceItem"
-        - type: object
-          properties:
-            service_id:
-              not: {}
-            service:
-              not: {}
-            mechanic_tickets:
-              not: {}
-
-    MechanicTicket:
-        allOf:
-          - $ref: "mechanicTickets.yaml#/components/schemas/MechanicTicket"
-          - type: object
+            type: object
             properties:
-              hours_worked:
-                not: { }
-              service_ticket_id:
-                not: { }
-              service_ticket:
-                not: { }
-              mechanic:
-                not: { }
-              services:
-                not: { }
-              additional_items:
-                not: { }
+              - id:
+                type: integer
+              - item_id:
+                type: integer
+              - quantity:
+                type: integer
+                minimum: 1
+              - inventory:
+                type: object
+                properties:
+                  - id:
+                    type: integer
+                  - name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  - stock:
+                    type: integer
+                    minimum: 0
+                  - price:
+                    type: number
+                    format: float
+                    minimum: 0.0
+        - mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              - id:
+                type: integer
+              - start_date:
+                type: string
+                format: date
+              - end_date:
+                type: string
+                format: date
+              - mechanic_id:
+                type: integer

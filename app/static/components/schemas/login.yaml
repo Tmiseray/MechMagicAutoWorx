@@ -1,6 +1,6 @@
 components:
   schemas:
-    CustomerLogin:
+    Login:
       type: object
       required:
         - email

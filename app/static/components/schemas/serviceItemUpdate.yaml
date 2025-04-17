@@ -3,60 +3,53 @@ components:
     ServiceItemUpdate:
       type: object
       properties:
-        id:
+        - id:
           type: integer
-        item_id:
+        - item_id:
           type: integer
-        quantity:
+        - quantity:
           type: integer
           minimum: 1
-        service_id:
+        - service_id:
           type: integer
-        inventory:
-          $ref: "#/components/schemas/Inventory"
-        service:
-          $ref: "#/components/schemas/Service"
-        mechanic_tickets:
+        - inventory:
+          type: object
+          properties:
+            - id:
+              type: integer
+            - name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            - stock:
+              type: integer
+              minimum: 0
+            - price:
+              type: number
+              format: float
+              minimum: 0.0
+        - service:
+          type: object
+          properties:
+            - name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            - price:
+              type: number
+              format: float
+        - mechanic_tickets:
           type: array
           items:
-            $ref: "#/components/schemas/MechanicTicket"
-
-    Inventory:
-      allOf:
-        - $ref: "inventory.yaml#/components/schemas/Inventory"
-        - type: object
-          properties:
-            id:
-              not: {}
-            service_items:
-              not: {}
-
-    Service:
-      allOf:
-        - $ref: "services.yaml#/components/schemas/Service"
-        - type: object
-          properties:
-            id:
-              not: {}
-            service_items:
-              not: {}
-            mechanic_tickets:
-              not: {}
-
-    MechanicTicket:
-      allOf:
-        - $ref: "mechanicTickets.yaml#/components/schemas/MechanicTicket"
-        - type: object
-          properties:
-            hours_worked:
-              not: {}
-            service_ticket_id:
-              not: {}
-            service_ticket:
-              not: {}
-            mechanic:
-              not: {}
-            services:
-              not: {}
-            additional_items:
-              not: {}
+            type: object
+            properties:
+              - id:
+                type: integer
+              - start_date:
+                type: string
+                format: date
+              - end_date:
+                type: string
+                format: date
+              - mechanic_id:
+                type: integer

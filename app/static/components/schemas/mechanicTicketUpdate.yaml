@@ -3,64 +3,138 @@ components:
     MechanicTicketUpdate:
       type: object
       properties:
-        id:
+        - id:
           type: integer
-        start_date:
+        - start_date:
           type: string
           format: date
-        end_date:
+        - end_date:
           type: string
           format: date
-        hours_worked:
+        - hours_worked:
           type: number
           format: float
-        service_ticket_id:
+        - service_ticket_id:
           type: integer
-        mechanic_id:
+        - mechanic_id:
           type: integer
-        service_ticket:
-          $ref: "#/components/schemas/ServiceTicket"
-        mechanic:
-          $ref: "#/components/schemas/Mechanic"
-        services:
+        - service_ticket:
+          type: object
+          properties:
+            - service_date:
+              type: string
+              format: date
+            - service_desc:
+              type: string
+              minLength: 1
+              maxLength: 255
+            - VIN:
+              type: string
+              minLength: 17
+              maxLength: 255
+            - customer_id:
+              type: integer
+            - vehicle:
+              type: object
+              properties:
+                - year:
+                  type: integer
+                - make:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                - model:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+            - customer:
+              type: object
+              properties:
+                - name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                - email:
+                  type: string
+                  format: email
+                - phone:
+                  type: string
+                  minLength: 10
+                  maxLength: 100
+        - mechanic:
+          type: object
+          properties:
+            - name:
+              type: string
+              minLength: 1
+              maxLength: 100
+        - services:
           type: array
           items:
-            $ref: "#/components/schemas/Service"
-        additional_items:
+            type: object
+            properties:
+              - id:
+                type: integer
+              - name:
+                type: string
+                minLength: 1
+                maxLength: 100
+              - price:
+                type: number
+                format: float
+              - service_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    - id:
+                      type: integer
+                    - item_id:
+                      type: integer
+                    - quantity:
+                      type: integer
+                      minimum: 1
+                    - inventory:
+                      type: object
+                      properties:
+                        - id:
+                          type: integer
+                        - name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        - stock:
+                          type: integer
+                          minimum: 0
+                        - price:
+                          type: number
+                          format: float
+                          minimum: 0.0
+        - additional_items:
           type: array
           items:
-            $ref: "#/components/schemas/ServiceItem"
-
-    ServiceTicket:
-      allOf:
-        - $ref: "serviceTickets.yaml#/components/schemas/ServiceTicket"
-        - type: object
-          properties:
-            id:
-              not: {}
-            mechanic_tickets:
-              not: {}
-
-    Mechanic:
-      type: object
-      properties:
-        name:
-          type: string
-
-    Service:
-      allOf:
-        - $ref: "services.yaml#/components/schemas/Service"
-        - type: object
-          properties:
-            id:
-              not: {}
-            mechanic_tickets:
-              not: {}
-
-    ServiceItem:
-      allOf:
-        - $ref: "serviceItems.yaml#/components/schemas/ServiceItem"
-        - type: object
-          properties:
-            mechanic_tickets:
-              not: {}
+            type: object
+            properties:
+              - id:
+                type: integer
+              - item_id:
+                type: integer
+              - quantity:
+                type: integer
+                minimum: 1
+              - inventory:
+                type: object
+                properties:
+                  - id:
+                    type: integer
+                  - name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  - stock:
+                    type: integer
+                    minimum: 0
+                  - price:
+                    type: number
+                    format: float
+                    minimum: 0.0
