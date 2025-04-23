@@ -37,9 +37,9 @@ def create_customer():
 # @cache.cached(timeout=60)
 # # Cache the response for 60 seconds
 # # This will help reduce the load on the database
-# @mechanic_token_required
+@mechanic_token_required
 # Only mechanics can retrieve all customers
-def get_customers():
+def get_customers(user_id, role):
     try:
         page = int(request.args.get('page'))
         per_page = int(request.args.get('per_page'))
@@ -58,9 +58,9 @@ def get_customers():
 # @limiter.limit("10 per hour")
 # # Limit the number of retrievals to 10 per hour
 # # There shouldn't be a need to retrieve a single customer more than 10 per hour
-# @mechanic_token_required
+@mechanic_token_required
 # # Only mechanics can retrieve a single customer
-def get_customer(id):
+def get_customer(user_id, role, id):
     customer = db.session.get(Customer, id)
 
     if not customer:
@@ -70,11 +70,11 @@ def get_customer(id):
 
 
 # Update a customer
-@customers_bp.route('/<int:id>', methods=['PUT'])
-# @customers_bp.route('/', methods=['PUT'])
-# @token_required
-def update_customer(id):
-    customer = db.session.get(Customer, id)
+# @customers_bp.route('/<int:id>', methods=['PUT'])
+@customers_bp.route('/update', methods=['PUT'])
+@token_required
+def update_customer(user_id):
+    customer = db.session.get(Customer, int(user_id))
     if not customer:
         return jsonify({"message": "Invalid Customer ID or Customer Not in Database"}), 404
 
@@ -91,11 +91,11 @@ def update_customer(id):
 
 
 # Delete a customer
-@customers_bp.route('/<int:id>', methods=['DELETE'])
-# @customers_bp.route('/', methods=['DELETE'])
-# @token_required
-def delete_customer(id):
-    customer = db.session.get(Customer, id)
+# @customers_bp.route('/<int:id>', methods=['DELETE'])
+@customers_bp.route('/delete', methods=['DELETE'])
+@token_required
+def delete_customer(user_id):
+    customer = db.session.get(Customer, int(user_id))
 
     if not customer:
         return jsonify({"message": "Invalid Customer ID or Customer Not in Database"}), 404

@@ -22,10 +22,14 @@ def login():
     
     query = select(CustomerAccount).where(CustomerAccount.email==email)
     account = db.session.execute(query).scalar_one_or_none()
+    if not account:
+        return jsonify({"message": "Invalid Credentials"}), 401
+
     print("Password match:", check_password(password, account.password))
     print("DB password:", account.password)
     print("Customer password:", password)
     print("Type:", type(account.password))
+
 
     if account and check_password(password, account.password):
         auth_token = encode_token(account.customer_id)
@@ -66,9 +70,9 @@ def create_customer_account():
 # @cache.cached(timeout=60)
 # # Cache the response for 60 seconds
 # # This will help reduce the load on the database
-# @mechanic_token_required
+@mechanic_token_required
 # # Only mechanics can retrieve all Customers' Accounts
-def get_customer_accounts():
+def get_customer_accounts(user_id, role):
     try:
         page = int(request.args.get('page'))
         per_page = int(request.args.get('per_page'))
@@ -82,15 +86,15 @@ def get_customer_accounts():
         return jsonify(customer_accounts_schema.dump(result)), 200
 
 # Read/Get Specific CustomerAccount
-@customer_accounts_bp.route('/<int:id>', methods=['GET'])
-# @customer_accounts_bp.route('/', methods=['GET'])
+# @customer_accounts_bp.route('/<int:id>', methods=['GET'])
+@customer_accounts_bp.route('/details', methods=['GET'])
 # @limiter.limit("3 per hour")
 # # Limit the number of retrievals to 3 per hour
 # # There shouldn't be a need to retrieve a single customer account more than 3 per hour
-# @token_required
+@token_required
 # # Only that customer can retrieve their account details
-def get_customer_account(id):
-    customer = db.session.get(Customer, id)
+def get_customer_account(user_id):
+    customer = db.session.get(Customer, int(user_id))
 
     if not customer:
         return jsonify({"message": "Customer or Account not found"}), 404
@@ -100,15 +104,15 @@ def get_customer_account(id):
 
 
 # Update CustomerAccount
-@customer_accounts_bp.route('/<int:id>', methods=['PUT'])
-# @customer_accounts_bp.route('/', methods=['PUT'])
+# @customer_accounts_bp.route('/<int:id>', methods=['PUT'])
+@customer_accounts_bp.route('/update', methods=['PUT'])
 # @limiter.limit("2 per day")
 # # Limit the number of updates to 2 per day
 # # There shouldn't be a need to update the customer account more than 2 per day
-# @token_required
+@token_required
 # # Only that customer can update their account
-def update_customer_account(id):
-    customer = db.session.get(Customer, id)
+def update_customer_account(user_id):
+    customer = db.session.get(Customer, int(user_id))
     if not customer or not customer.account:
         return jsonify({"message": "Customer or Account not found"}), 404
 
@@ -132,11 +136,11 @@ def update_customer_account(id):
 
 
 # Delete CustomerAccount
-@customer_accounts_bp.route('/<int:id>', methods=['DELETE'])
-# @customer_accounts_bp.route('/', methods=['DELETE'])
-# @token_required
-def delete_customer_account(id):
-    customer = db.session.get(Customer, id)
+# @customer_accounts_bp.route('/<int:id>', methods=['DELETE'])
+@customer_accounts_bp.route('/delete', methods=['DELETE'])
+@token_required
+def delete_customer_account(user_id):
+    customer = db.session.get(Customer, int(user_id))
     account = db.session.get(CustomerAccount, customer.account.id)
     db.session.delete(account)
     db.session.commit()

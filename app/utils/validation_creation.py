@@ -1,6 +1,7 @@
 
 from flask import jsonify
 from sqlalchemy import func
+from marshmallow import ValidationError
 from app.models import db, Inventory
 
 
@@ -10,7 +11,7 @@ def is_duplicate(model, filters: dict, case_insensitive_fields: list = []):
     Universal reusable function
     Checks for duplicate data for other functionality
     '''
-    query = model.query
+    query = db.session.query(model)
     for key, value in filters.items():
         column = getattr(model, key)
         if key in case_insensitive_fields:
@@ -73,8 +74,16 @@ def validate_and_create(
             msg = {"message": f"{model.__name__} with similar data already exists."}
             return (jsonify(msg), 409) if return_json else msg
 
-    # 3. Create Instance & Continue Creation
-    instance = model(**payload)
+    # 3. Validate Payload with Schema (if provided) & Create Instance
+    if schema:
+        try:
+            instance = schema.load(payload)  # ✅ now instance, not dict
+        except ValidationError as err:
+            return jsonify({'errors': err.messages}), 400
+    else:
+        instance = model(**payload)
+
+    # 4. Continue Creation
     db.session.add(instance)
     if commit:
         db.session.commit()
