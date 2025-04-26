@@ -1,13 +1,12 @@
-paths:
-  /customers/accounts/login:
-    $ref: "./customerAccounts.yaml#/paths/customers/accounts/login"
-  /customers/accounts:
-    $ref: "./customerAccounts.yaml#/paths/customers/accounts"
-  /customers/accounts/all:
-    $ref: "./customerAccounts.yaml#/paths/customers/accounts/all"
-  /mechanics/accounts/login:
-    $ref: "./mechanicAccounts.yaml#/paths/mechanics/accounts/login"
-  /mechanics/accounts:
-    $ref: "./mechanicAccounts.yaml#/paths/mechanics/accounts"
-  /mechanics/accounts/all:
-    $ref: "./mechanicAccounts.yaml#/paths/mechanics/accounts/all"
+/customers/accounts/login:
+  $ref: "./customerAccounts.yaml#/customers/accounts/login"
+/customers/accounts:
+  $ref: "./customerAccounts.yaml#/customers/accounts"
+/customers/accounts/all:
+  $ref: "./customerAccounts.yaml#/customers/accounts/all"
+/mechanics/accounts/login:
+  $ref: "./mechanicAccounts.yaml#/mechanics/accounts/login"
+/mechanics/accounts:
+  $ref: "./mechanicAccounts.yaml#/mechanics/accounts"
+/mechanics/accounts/all:
+  $ref: "./mechanicAccounts.yaml#/mechanics/accounts/all"

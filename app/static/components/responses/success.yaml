@@ -12,7 +12,7 @@
           auth_token:
             type: string
       example:
-        $ref: '#/components/examples/LoginSuccess'
+        $ref: ./components/examples/login.yaml#/LoginSuccess
 200AccountDelete:
   description: Successful Account Deletion
   content:

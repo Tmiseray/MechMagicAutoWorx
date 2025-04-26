@@ -1,53 +1,53 @@
 ServiceItemUpdate:
   type: object
   properties:
-    - id:
+    id:
       type: integer
-    - item_id:
+    item_id:
       type: integer
-    - quantity:
+    quantity:
       type: integer
       minimum: 1
-    - service_id:
+    service_id:
       type: integer
-    - inventory:
+    inventory:
       type: object
       properties:
-        - id:
+        id:
           type: integer
-        - name:
+        name:
           type: string
           minLength: 1
           maxLength: 100
-        - stock:
+        stock:
           type: integer
           minimum: 0
-        - price:
+        price:
           type: number
           format: float
           minimum: 0.0
-    - service:
+    service:
       type: object
       properties:
-        - name:
+        name:
           type: string
           minLength: 1
           maxLength: 100
-        - price:
+        price:
           type: number
           format: float
-    - mechanic_tickets:
+    mechanic_tickets:
       type: array
       items:
         type: object
         properties:
-          - id:
+          id:
             type: integer
-          - start_date:
+          start_date:
             type: string
             format: date
-          - end_date:
+          end_date:
             type: string
             format: date
-          - mechanic_id:
+          mechanic_id:
             type: integer

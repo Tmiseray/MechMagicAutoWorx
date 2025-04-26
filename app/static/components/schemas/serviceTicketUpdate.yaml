@@ -1,76 +1,76 @@
 ServiceTicketUpdate:
   type: object
   properties:
-    - id:
+    id:
       type: integer
-    - service_date:
+    service_date:
       type: string
       format: date
-    - service_desc:
+    service_desc:
       type: string
-    - VIN:
+    VIN:
       type: string
       minLength: 17
       maxLength: 255
-    - customer_id:
+    customer_id:
       type: integer
-    - vehicle:
+    vehicle:
       type: object
       properties:
-        - year:
+        year:
           type: integer
-        - make:
+        make:
           type: string
           minLength: 1
           maxLength: 100
-        - model:
+        model:
           type: string
           minLength: 1
           maxLength: 100
-        - mileage:
+        mileage:
           type: integer
-    - customer:
+    customer:
       type: object
       properties:
-        - name:
+        name:
           type: string
           minLength: 1
           maxLength: 100
-        - email:
+        email:
           type: string
           format: email
-        - phone:
+        phone:
           type: string
           minLength: 10
           maxLength: 100
-    - mechanic_tickets:
+    mechanic_tickets:
       type: array
       items:
         type: object
         properties:
-          - id:
+          id:
             type: integer
-          - start_date:
+          start_date:
             type: string
             format: date
-          - end_date:
+          end_date:
             type: string
             format: date
-          - hours_worked:
+          hours_worked:
             type: number
             format: float
-          - mechanic_id:
+          mechanic_id:
             type: integer
-    - invoice:
+    invoice:
       type: object
       properties:
-        - id:
+        id:
           type: integer
-        - invoice_date:
+        invoice_date:
           type: string
           format: date
-        - total:
+        total:
           type: number
           format: float
-        - paid:
+        paid:
           type: boolean

@@ -1,48 +1,46 @@
-components:
-  schemas:
-    Customer:
-      $ref: 'customers.yaml#/Customer'
-    CustomerAccount:
-      $ref: 'customerAccounts.yaml#/CustomerAccount'
-    Inventory:
-      $ref: 'inventory.yaml#/Inventory'
-    Invoice:
-      $ref: 'invoices.yaml#/Invoice'
-    MechanicAccount:
-      $ref: 'mechanicAccounts.yaml#/MechanicAccount'
-    Mechanic:
-      $ref: 'mechanics.yaml#/Mechanic'
-    MechanicTicket:
-      $ref: 'mechanicTickets.yaml#/MechanicTicket'
-    ServiceItem:
-      $ref: 'serviceItems.yaml#/ServiceItem'
-    Service:
-      $ref: 'services.yaml#/Service'
-    ServiceTicket:
-      $ref: 'serviceTickets.yaml#/ServiceTicket'
-    Vehicle:
-      $ref: 'vehicles.yaml#/Vehicle'
-    CustomerUpdate:
-      $ref: 'customerUpdate.yaml#/CustomerUpdate'
-    CustomerAccountUpdate:
-      $ref: 'customerAccountUpdate.yaml#/CustomerAccountUpdate'
-    InventoryUpdate:
-      $ref: 'inventoryUpdate.yaml#/InventoryUpdate'
-    InvoiceUpdate:
-      $ref: 'invoiceUpdate.yaml#/InvoiceUpdate'
-    MechanicAccountUpdate:
-      $ref: 'mechanicAccountUpdate.yaml#/MechanicAccountUpdate'
-    MechanicUpdate:
-      $ref: 'mechanicUpdate.yaml#/MechanicUpdate'
-    MechanicTicketUpdate:
-      $ref: 'mechanicTicketUpdate.yaml#/MechanicTicketUpdate'
-    ServiceItemUpdate:
-      $ref: 'serviceItemUpdate.yaml#/ServiceItemUpdate'
-    ServiceUpdate:
-      $ref: 'serviceUpdate.yaml#/ServiceUpdate'
-    ServiceTicketUpdate:
-      $ref: 'serviceTicketUpdate.yaml#/ServiceTicketUpdate'
-    VehicleUpdate:
-      $ref: 'vehicleUpdate.yaml#/VehicleUpdate'
-    Login:
-      $ref: 'login.yaml#/Login'
+Customer:
+  $ref: './customers.yaml#/Customer'
+CustomerAccount:
+  $ref: './customerAccounts.yaml#/CustomerAccount'
+Inventory:
+  $ref: './inventory.yaml#/Inventory'
+Invoice:
+  $ref: './invoices.yaml#/Invoice'
+MechanicAccount:
+  $ref: './mechanicAccounts.yaml#/MechanicAccount'
+Mechanic:
+  $ref: './mechanics.yaml#/Mechanic'
+MechanicTicket:
+  $ref: './mechanicTickets.yaml#/MechanicTicket'
+ServiceItem:
+  $ref: './serviceItems.yaml#/ServiceItem'
+Service:
+  $ref: './services.yaml#/Service'
+ServiceTicket:
+  $ref: './serviceTickets.yaml#/ServiceTicket'
+Vehicle:
+  $ref: './vehicles.yaml#/Vehicle'
+CustomerUpdate:
+  $ref: './customerUpdate.yaml#/CustomerUpdate'
+CustomerAccountUpdate:
+  $ref: './customerAccountUpdate.yaml#/CustomerAccountUpdate'
+InventoryUpdate:
+  $ref: './inventoryUpdate.yaml#/InventoryUpdate'
+InvoiceUpdate:
+  $ref: './invoiceUpdate.yaml#/InvoiceUpdate'
+MechanicAccountUpdate:
+  $ref: './mechanicAccountUpdate.yaml#/MechanicAccountUpdate'
+MechanicUpdate:
+  $ref: './mechanicUpdate.yaml#/MechanicUpdate'
+MechanicTicketUpdate:
+  $ref: './mechanicTicketUpdate.yaml#/MechanicTicketUpdate'
+ServiceItemUpdate:
+  $ref: './serviceItemUpdate.yaml#/ServiceItemUpdate'
+ServiceUpdate:
+  $ref: './serviceUpdate.yaml#/ServiceUpdate'
+ServiceTicketUpdate:
+  $ref: './serviceTicketUpdate.yaml#/ServiceTicketUpdate'
+VehicleUpdate:
+  $ref: './vehicleUpdate.yaml#/VehicleUpdate'
+Login:
+  $ref: './login.yaml#/Login'

@@ -3,10 +3,11 @@ info:
   title: "MechMagic AutoWorx API"
   description: "This API provides endpoints for managing a mechanic shop, including services, inventory, service tickets, mechanic information, and customer information."
   version: "1.0.0"
-
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
 servers:
   - url: http://127.0.0.1:5000
-
 tags:
   - name: CustomerAccount
     description: Operations for Account Information associated with Customers
@@ -30,7 +31,7 @@ tags:
     description: Operations for Service Ticket Information associated with Customers, Vehicles, and Invoices
   - name: Vehicle
     description: Operations for Vehicle Information associated with Customers and ServiceTickets
-
+paths: {}
 components:
   schemas:
     $ref: "./components/schemas/index.yaml"
@@ -46,5 +47,4 @@ security:
   - CustomerToken: []
   - MechanicToken: []
 
-paths: {}
 

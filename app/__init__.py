@@ -23,7 +23,8 @@ from .utils.openapi_merge import combine_openapi_docs
 
 # Swagger UI setup
 SWAGGER_URL = '/api/docs'
-API_URL = '/static/combined_docs.yaml'
+# API_URL = '/static/combined_docs.yaml'
+API_URL = '/static/cleaned_openapi.yaml'
 swaggerui_blueprint = get_swaggerui_blueprint(
     SWAGGER_URL,
     API_URL,
@@ -56,8 +57,8 @@ def create_app(config_name):
     app.config.from_object(f'config.{config_name}')
 
     # Bundle OpenAPI docs
-    if app.config.get("OPENAPI_AUTOBUNDLE"):
-        bundle_openapi()
+    # if app.config.get("OPENAPI_AUTOBUNDLE"):
+    #     bundle_openapi()
 
     # Database initialization
     db.init_app(app)

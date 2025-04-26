@@ -1,108 +1,109 @@
-/customers/accounts/login:
-  post:
-    tags:
-      - CustomerAccount
-    summary: Customer Login
-    description: Authenticates a customer using email and password and returns a JWT token.
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/requestBodies/CustomerLogin"
-    responses:
-      200Login:
-        $ref: '#/components/responses/200Login'
-      400Login:
-        $ref: '#/components/responses/400Login'
-      401Login:
-        $ref: '#/components/responses/401Login'
-
-/customers/accounts:
-  post:
-    tags:
-      - CustomerAccount
-    summary: Create a new customer account
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/requestBodies/CustomerAccount"
-  responses:
-    201:
-      description: Account successfully created
-    400:
-      description: Invalid input or duplicate email
-
-  get:
-    tags:
-      - CustomerAccount
-    summary: Get a customer account by ID (token required)
-    parameters:
-      - in: query
-        name: id
+paths:
+  /customers/accounts/login:
+    post:
+      tags:
+        - CustomerAccount
+      summary: Customer Login
+      description: Authenticates a customer using email and password and returns a JWT token.
+      requestBody:
         required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Customer account retrieved
-      404CustomerAccount:
-        $ref: '#/components/responses/404CustomerAccount'
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/requestBodies/customerAccountRequests.yaml#/CustomerLogin
+      responses:
+        200Login:
+          $ref: ../../components/responses/success.yaml#/200Login
+        400Login:
+          $ref: ../../components/responses/errors.yaml#/400Login
+        401Login:
+          $ref: ../../components/responses/errors.yaml#/401Login
 
-  put:
-    tags:
-      - CustomerAccount
-    summary: Update a customer account (token required)
-    parameters:
-      - in: query
-        name: id
+  /customers/accounts:
+    post:
+      tags:
+        - CustomerAccount
+      summary: Create a new customer account
+      requestBody:
         required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/requestBodies/customerAccountRequests.yaml#/CustomerAccountCreate
+    responses:
+      201:
+        description: Account successfully created
+      400:
+        description: Invalid input or duplicate email
+
+    get:
+      tags:
+        - CustomerAccount
+      summary: Get a customer account by ID (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
           schema:
-            $ref: '#/definitions/CustomerAccountUpdate'
-    responses:
-      200:
-        description: Customer account updated
-      404CustomerAccount:
-        $ref: '#/components/responses/404CustomerAccount'
+            type: integer
+      responses:
+        200:
+          description: Customer account retrieved
+        404CustomerAccount:
+          $ref: ../../components/responses/errors.yaml#/404CustomerAccount
 
-  delete:
-    tags:
-      - CustomerAccount
-    summary: Delete a customer account (token required)
-    parameters:
-      - in: query
-        name: id
+    put:
+      tags:
+        - CustomerAccount
+      summary: Update a customer account (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
         required: true
-        schema:
-          type: integer
-    responses:
-      200AccountDelete:
-        $ref: '#/components/responses/200AccountDelete'
-      404:
-        description: Account not found
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/requestBodies/customerAccountRequests.yaml#/CustomerAccountUpdate
+      responses:
+        200:
+          description: Customer account updated
+        404CustomerAccount:
+          $ref: ../../components/responses/errors.yaml#/404CustomerAccount
 
-/customers/accounts/all:
-  get:
-    tags:
-      - CustomerAccount
-    summary: Get all customer accounts (mechanic token required)
-    parameters:
-      - in: query
-        name: page
-        schema:
-        type: integer
-      - in: query
-        name: per_page
-        schema:
-        type: integer
-    responses:
-      200:
-        description: Paginated list of all customer accounts
+    delete:
+      tags:
+        - CustomerAccount
+      summary: Delete a customer account (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200AccountDelete:
+          $ref: ../../components/responses/success.yaml#/200AccountDelete
+        404:
+          description: Account not found
+
+  /customers/accounts/all:
+    get:
+      tags:
+        - CustomerAccount
+      summary: Get all customer accounts (mechanic token required)
+      parameters:
+        - in: query
+          name: page
+          schema:
+          type: integer
+        - in: query
+          name: per_page
+          schema:
+          type: integer
+      responses:
+        200:
+          description: Paginated list of all customer accounts

@@ -1,31 +1,31 @@
 MechanicAccountUpdate:
   type: object
   properties:
-    - id:
+    id:
       type: integer
-    - role:
+    role:
       type: string
       default: Mechanic
-    - mechanic_id:
+    mechanic_id:
       type: integer
-    - email:
+    email:
       type: string
       format: email
-    - password:
+    password:
       type: string
       minLength: 8
       maxLength: 100
-    - mechanic:
+    mechanic:
       type: object
       properties:
-        - name:
+        name:
           type: string
           minLength: 1
           maxLength: 100
-        - phone:
+        phone:
           type: string
           minLength: 10
           maxLength: 100
-        - salary:
+        salary:
           type: number
           format: float

@@ -4,7 +4,7 @@ MechanicAccountCreate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/MechanicAccount'
+        $ref: ./components/schemas/mechanicAccounts.yaml#/MechanicAccount
 
 MechanicAccountUpdate:
   description: Mechanic Account Update Request Body
@@ -12,7 +12,7 @@ MechanicAccountUpdate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/MechanicAccountUpdate'
+        $ref: ./components/schemas/mechanicAccountUpdate.yaml#/MechanicAccountUpdate
 
 MechanicLogin:
   description: Mechanic Account Login Request Body
@@ -20,4 +20,4 @@ MechanicLogin:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/MechanicLogin'
+        $ref: ./components/schemas/login.yaml#/Login

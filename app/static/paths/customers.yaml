@@ -9,7 +9,7 @@
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Customer"
+            $ref: ../../components/requestBodies/customerRequests.yaml#/CustomerCreate
     responses:
       201:
         description: Customer created
@@ -31,12 +31,12 @@
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CustomerUpdate'
+            $ref: ../../components/requestBodies/customerRequests.yaml#/CustomerUpdate
     responses:
       200:
         description: Customer updated
-      404:
-        description: Customer not found
+      404Customer:
+        $ref: ../../components/responses/errors.yaml#/404Customer
 
   delete:
     tags:
@@ -49,10 +49,10 @@
         schema:
           type: integer
     responses:
-      200:
-        description: Customer successfully deleted
-      404:
-        description: Invalid customer ID
+      200CustomerDelete:
+        $ref: ../../components/responses/success.yaml#/200CustomerDelete
+      404Customer:
+        $ref: ../../components/responses/errors.yaml#/404Customer
 
 /customers/all:
   get:
@@ -87,5 +87,5 @@
   responses:
     200:
       description: Customer found
-    404:
-      description: Invalid customer ID
+    404Customer:
+      $ref: ../../components/responses/errors.yaml#/404Customer

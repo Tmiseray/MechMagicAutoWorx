@@ -5,76 +5,76 @@ CustomerAccount:
     - email
     - password
   properties:
-    - id:
+    id:
       type: integer
-    - customer_id:
+    customer_id:
       type: integer
-    - email:
+    email:
       type: string
       format: email
-    - password:
+    password:
       type: string
       minLength: 8
-    - customer:
+    customer:
       type: object
       properties:
-        - name:
+        name:
           type: string
           minLength: 1
           maxLength: 100
-        - phone:
+        phone:
           type: string
           minLength: 10
           maxLength: 100
-        - vehicles:
+        vehicles:
           type: array
           items:
             type: object
             properties:
-              - VIN:
+              VIN:
                 type: string
                 minLength: 17
                 maxLength: 100
-              - year:
+              year:
                 type: integer
-              - make:
+              make:
                 type: string
                 minLength: 1
                 maxLength: 100
-              - model:
+              model:
                 type: string
                 minLength: 1
                 maxLength: 100
-              - mileage:
+              mileage:
                 type: integer
-        - service_tickets:
+        service_tickets:
           type: array
           items:
             type: object
             properties:
-              - id:
+              id:
                 type: integer
-              - service_date:
+              service_date:
                 type: string
                 format: date
-              - service_desc:
+              service_desc:
                 type: string
-              - VIN:
+              VIN:
                 type: string
                 minLength: 17
                 maxLength: 255
-              - vehicle:
+              vehicle:
                 type: object
                 properties:
-                  - year:
+                  year:
                     type: integer
-                  - make:
+                  make:
                     type: string
                     minLength: 1
                     maxLength: 100
-                  - model:
+                  model:
                     type: string
                     minLength: 1
                     maxLength: 100
-                  - mileage:
+                  mileage:
                     type: integer

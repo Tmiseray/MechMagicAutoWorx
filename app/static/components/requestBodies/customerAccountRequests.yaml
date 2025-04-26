@@ -4,7 +4,7 @@ CustomerAccountCreate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/CustomerAccount'
+        $ref: ./components/schemas/customerAccounts.yaml#/CustomerAccount
 
 CustomerAccountUpdate:
   description: Customer Account Update Request Body
@@ -12,7 +12,7 @@ CustomerAccountUpdate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/CustomerAccountUpdate'
+        $ref: ./components/schemas/customerAccountUpdate.yaml#/CustomerAccountUpdate
 
 CustomerLogin:
   description: Customer Account Login Request Body
@@ -20,4 +20,4 @@ CustomerLogin:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/CustomerLogin'
+        $ref: ./components/schemas/login.yaml#/Login

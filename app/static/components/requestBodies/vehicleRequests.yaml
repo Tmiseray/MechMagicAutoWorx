@@ -4,7 +4,7 @@ VehicleCreate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/Vehicle'
+        $ref: ./components/schemas/vehicles.yaml#/Vehicle
 
 VehicleUpdate:
   description: Vehicle Update Request Body
@@ -12,4 +12,4 @@ VehicleUpdate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/VehicleUpdate'
+        $ref: ./components/schemas/vehicleUpdate.yaml#/VehicleUpdate

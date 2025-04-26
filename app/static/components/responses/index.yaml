@@ -1,41 +1,39 @@
-components:
-  responses:
-    # Success Responses
-    200Login:
-      $ref: 'success.yaml#/200Login'
-    200AccountDelete:
-      $ref: 'success.yaml#/200AccountDelete'
-    200CustomerDelete:
-      $ref: 'success.yaml#/200CustomerDelete'
-    200MechanicDelete:
-      $ref: 'success.yaml#/200MechanicDelete'
+# Success Responses
+200Login:
+  $ref: './success.yaml#/200Login'
+200AccountDelete:
+  $ref: './success.yaml#/200AccountDelete'
+200CustomerDelete:
+  $ref: './success.yaml#/200CustomerDelete'
+200MechanicDelete:
+  $ref: './success.yaml#/200MechanicDelete'
 
-    # Error Responses
-    400Login:
-      $ref: 'errors.yaml#/400Login'
-    401Login:
-      $ref: 'errors.yaml#/401Login'
-    404CustomerAccount:
-      $ref: 'errors.yaml#/404CustomerAccount'
-    404Customer:
-      $ref: 'errors.yaml#/404Customer'
-    404Inventory:
-      $ref: 'errors.yaml#/404Inventory'
-    404Invoice:
-      $ref: 'errors.yaml#/404Invoice'
-    404MechanicAccount:
-      $ref: 'errors.yaml#/404MechanicAccount'
-    404Mechanic:
-      $ref: 'errors.yaml#/404Mechanic'
-    404MechanicTicket:
-      $ref: 'errors.yaml#/404MechanicTicket'
-    404MechanicTicketServices:
-      $ref: 'errors.yaml#/404MechanicTicketServices'
-    400Items:
-      $ref: 'errors.yaml#/400Items'
-    404ServiceItem:
-      $ref: 'errors.yaml#/404ServiceItem'
-    404ServiceTicket:
-      $ref: 'errors.yaml#/404ServiceTicket'
-    404Vehicle:
-      $ref: 'errors.yaml#/404Vehicle'
+# Error Responses
+400Login:
+  $ref: './errors.yaml#/400Login'
+401Login:
+  $ref: './errors.yaml#/401Login'
+404CustomerAccount:
+  $ref: './errors.yaml#/404CustomerAccount'
+404Customer:
+  $ref: './errors.yaml#/404Customer'
+404Inventory:
+  $ref: './errors.yaml#/404Inventory'
+404Invoice:
+  $ref: './errors.yaml#/404Invoice'
+404MechanicAccount:
+  $ref: './errors.yaml#/404MechanicAccount'
+404Mechanic:
+  $ref: './errors.yaml#/404Mechanic'
+404MechanicTicket:
+  $ref: './errors.yaml#/404MechanicTicket'
+404MechanicTicketServices:
+  $ref: './errors.yaml#/404MechanicTicketServices'
+400Items:
+  $ref: './errors.yaml#/400Items'
+404ServiceItem:
+  $ref: './errors.yaml#/404ServiceItem'
+404ServiceTicket:
+  $ref: './errors.yaml#/404ServiceTicket'
+404Vehicle:
+  $ref: './errors.yaml#/404Vehicle'

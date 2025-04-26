@@ -1,108 +1,109 @@
-/mechanics/accounts:
-  post:
-    tags:
-      - MechanicAccount
-    summary: Create a new mechanic account
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/MechanicAccount"
-    responses:
-      201:
-        description: Mechanic account created
-      400:
-        description: Validation error or duplicate email
-
-  put:
-    tags:
-      - MechanicAccount
-    summary: Update mechanic account (token required)
-    parameters:
-      - in: query
-        name: id
+paths:
+  /mechanics/accounts:
+    post:
+      tags:
+        - MechanicAccount
+      summary: Create a new mechanic account
+      requestBody:
         required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/requestBodies/mechanicAccountRequests.yaml#/MechanicAccountCreate
+      responses:
+        201:
+          description: Mechanic account created
+        400:
+          description: Validation error or duplicate email
+
+    put:
+      tags:
+        - MechanicAccount
+      summary: Update mechanic account (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
           schema:
-            $ref: '#/components/schemas/MechanicAccountUpdate'
-    responses:
-      200:
-        description: Mechanic account updated
-      404MechanicAccount:
-        $ref: '#/components/responses/404MechanicAccount'
-
-  delete:
-    tags:
-      - MechanicAccount
-    summary: Delete mechanic account (token required)
-    parameters:
-      - in: query
-        name: id
+            type: integer
+      requestBody:
         required: true
-        schema:
-          type: integer
-    responses:
-      200AccountDelete:
-        $ref: '#/components/responses/200AccountDelete'
-      404MechanicAccount:
-        $ref: '#/components/responses/404MechanicAccount'
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/requestBodies/mechanicAccountRequests.yaml#/MechanicAccountUpdate
+      responses:
+        200:
+          description: Mechanic account updated
+        404MechanicAccount:
+          $ref: ../../components/responses/errors.yaml#/404MechanicAccount
 
-  get:
-    tags:
-      - MechanicAccount
-    summary: Get a specific mechanic account (token required)
-    parameters:
-      - in: query
-        name: id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Mechanic account found
-      404MechanicAccount:
-        $ref: '#/components/responses/404MechanicAccount'
-
-/mechanics/accounts/login:
-  post:
-    tags:
-      - MechanicAccount
-    summary: Mechanic Login
-    description: Authenticates a mechanic using email and password and returns a JWT token.
-    requestBody:
-      required: true
-      content:
-        application/json:
+    delete:
+      tags:
+        - MechanicAccount
+      summary: Delete mechanic account (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
           schema:
-            $ref: "#/components/RequestBodies/MechanicLogin"
-    responses:
-      200Login:
-        $ref: '#/components/responses/200Login'
-      400Login:
-        $ref: '#/components/responses/400Login'
-      401Login:
-        $ref: '#/components/responses/401Login'
+            type: integer
+      responses:
+        200AccountDelete:
+          $ref: ../../components/responses/success.yaml#/200AccountDelete
+        404MechanicAccount:
+          $ref: ../../components/responses/errors.yaml#/404MechanicAccount
 
-/mechanics/accounts/all:
-  get:
-    tags:
-      - MechanicAccount
-    summary: Get all mechanic accounts (mechanic token required)
-    parameters:
-      - in: query
-        name: page
-        schema:
-        type: integer
-      - in: query
-        name: per_page
-        schema:
-        type: integer
-    responses:
-      200:
-        description: List of mechanic accounts
+    get:
+      tags:
+        - MechanicAccount
+      summary: Get a specific mechanic account (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Mechanic account found
+        404MechanicAccount:
+          $ref: ../../components/responses/errors.yaml#/404MechanicAccount
+
+  /mechanics/accounts/login:
+    post:
+      tags:
+        - MechanicAccount
+      summary: Mechanic Login
+      description: Authenticates a mechanic using email and password and returns a JWT token.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../../components/requestBodies/mechanicAccountRequests.yaml#/MechanicLogin
+      responses:
+        200Login:
+          $ref: ../../components/responses/success.yaml#/200Login
+        400Login:
+          $ref: ../../components/responses/errors.yaml#/400Login
+        401Login:
+          $ref: ../../components/responses/errors.yaml#/401Login
+
+  /mechanics/accounts/all:
+    get:
+      tags:
+        - MechanicAccount
+      summary: Get all mechanic accounts (mechanic token required)
+      parameters:
+        - in: query
+          name: page
+          schema:
+          type: integer
+        - in: query
+          name: per_page
+          schema:
+          type: integer
+      responses:
+        200:
+          description: List of mechanic accounts

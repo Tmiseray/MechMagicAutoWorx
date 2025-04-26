@@ -3,6 +3,12 @@ info:
   title: MechMagic AutoWorx API
   description: This API provides endpoints for managing a mechanic shop, including services, inventory, service tickets, mechanic information, and customer information.
   version: 1.0.0
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
 servers:
   - url: http://127.0.0.1:5000
 security:
@@ -31,57 +37,2089 @@ tags:
     description: Operations for Service Ticket Information associated with Customers, Vehicles, and Invoices
   - name: Vehicle
     description: Operations for Vehicle Information associated with Customers and ServiceTickets
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
 paths: {}
 components:
   schemas:
-    components:
-      schemas:
-        Customer:
-          $ref: customers.yaml#/Customer
-        CustomerAccount:
-          $ref: customerAccounts.yaml#/CustomerAccount
-        Inventory:
-          $ref: inventory.yaml#/Inventory
-        Invoice:
-          $ref: invoices.yaml#/Invoice
-        MechanicAccount:
-          $ref: mechanicAccounts.yaml#/MechanicAccount
-        Mechanic:
-          $ref: mechanics.yaml#/Mechanic
-        MechanicTicket:
-          $ref: mechanicTickets.yaml#/MechanicTicket
-        ServiceItem:
-          $ref: serviceItems.yaml#/ServiceItem
-        Service:
-          $ref: services.yaml#/Service
-        ServiceTicket:
-          $ref: serviceTickets.yaml#/ServiceTicket
-        Vehicle:
-          $ref: vehicles.yaml#/Vehicle
-        CustomerUpdate:
-          $ref: customerUpdate.yaml#/CustomerUpdate
-        CustomerAccountUpdate:
-          $ref: customerAccountUpdate.yaml#/CustomerAccountUpdate
-        InventoryUpdate:
-          $ref: inventoryUpdate.yaml#/InventoryUpdate
-        InvoiceUpdate:
-          $ref: invoiceUpdate.yaml#/InvoiceUpdate
-        MechanicAccountUpdate:
-          $ref: mechanicAccountUpdate.yaml#/MechanicAccountUpdate
-        MechanicUpdate:
-          $ref: mechanicUpdate.yaml#/MechanicUpdate
-        MechanicTicketUpdate:
-          $ref: mechanicTicketUpdate.yaml#/MechanicTicketUpdate
-        ServiceItemUpdate:
-          $ref: serviceItemUpdate.yaml#/ServiceItemUpdate
-        ServiceUpdate:
-          $ref: serviceUpdate.yaml#/ServiceUpdate
-        ServiceTicketUpdate:
-          $ref: serviceTicketUpdate.yaml#/ServiceTicketUpdate
-        VehicleUpdate:
-          $ref: vehicleUpdate.yaml#/VehicleUpdate
-        Login:
-          $ref: login.yaml#/Login
+    Customer:
+      type: object
+      required:
+        - name
+        - email
+        - phone
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        vehicles:
+          type: array
+          items:
+            type: object
+            properties:
+              VIN:
+                type: string
+                minLength: 17
+                maxLength: 100
+              year:
+                type: integer
+              make:
+                type: string
+                minLength: 1
+                maxLength: 100
+              model:
+                type: string
+                minLength: 1
+                maxLength: 100
+              mileage:
+                type: integer
+        account:
+          type: object
+          properties:
+            id:
+              type: integer
+            password:
+              type: string
+              minLength: 8
+        service_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              service_date:
+                type: string
+                format: date
+              service_desc:
+                type: string
+              VIN:
+                type: string
+                minLength: 17
+                maxLength: 255
+              mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date
+                    end_date:
+                      type: string
+                      format: date
+                    hours_worked:
+                      type: number
+                      format: float
+                    mechanic_id:
+                      type: integer
+                    mechanic:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                    services:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                            minLength: 1
+                            maxLength: 100
+                          price:
+                            type: number
+                            format: float
+                            minimum: 0
+                          service_items:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                item_id:
+                                  type: integer
+                                quantity:
+                                  type: integer
+                                  minimum: 1
+                                inventory:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 100
+                                    stock:
+                                      type: integer
+                                      minimum: 0
+                                    price:
+                                      type: number
+                                      format: float
+                                      minimum: 0
+                    additional_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          item_id:
+                            type: integer
+                          quantity:
+                            type: integer
+                            minimum: 1
+                          inventory:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                minLength: 1
+                                maxLength: 100
+                              stock:
+                                type: integer
+                                minimum: 0
+                              price:
+                                type: number
+                                format: float
+                                minimum: 0
+    CustomerAccount:
+      type: object
+      required:
+        - customer_id
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+        customer_id:
+          type: integer
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+            vehicles:
+              type: array
+              items:
+                type: object
+                properties:
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 100
+                  year:
+                    type: integer
+                  make:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  model:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  mileage:
+                    type: integer
+            service_tickets:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  service_date:
+                    type: string
+                    format: date
+                  service_desc:
+                    type: string
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 255
+                  vehicle:
+                    type: object
+                    properties:
+                      year:
+                        type: integer
+                      make:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      model:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      mileage:
+                        type: integer
+    Inventory:
+      type: object
+      required:
+        - name
+        - stock
+        - price
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        stock:
+          type: integer
+          minimum: 0
+        price:
+          type: number
+          format: float
+          minimum: 0
+        service_items:
+          type: array
+          items:
+            type: object
+            properties:
+              service_id:
+                type: integer
+              service:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  price:
+                    type: number
+                    format: float
+              mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date
+                    end_date:
+                      type: string
+                      format: date
+                    mechanic_id:
+                      type: integer
+    Invoice:
+      type: object
+      required:
+        - paid
+        - service_ticket_id
+      properties:
+        id:
+          type: integer
+        invoice_date:
+          type: string
+          format: date
+        total:
+          type: number
+          format: float
+        paid:
+          type: boolean
+        service_ticket_id:
+          type: integer
+        service_ticket:
+          type: object
+          properties:
+            service_date:
+              type: string
+              format: date
+            service_desc:
+              type: string
+              minLength: 1
+              maxLength: 255
+            VIN:
+              type: string
+              minLength: 17
+              maxLength: 255
+            customer_id:
+              type: integer
+            vehicle:
+              type: object
+              properties:
+                year:
+                  type: integer
+                make:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                model:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+            customer:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  minLength: 10
+                  maxLength: 100
+            mechanic_tickets:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  start_date:
+                    type: string
+                    format: date
+                  end_date:
+                    type: string
+                    format: date
+                  hours_worked:
+                    type: number
+                    format: float
+                  mechanic_id:
+                    type: integer
+                  mechanic:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                  services:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        price:
+                          type: number
+                          format: float
+                        service_items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              item_id:
+                                type: integer
+                              quantity:
+                                type: integer
+                                minimum: 1
+                              inventory:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  name:
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 100
+                                  stock:
+                                    type: integer
+                                    minimum: 0
+                                  price:
+                                    type: number
+                                    format: float
+                                    minimum: 0
+                  additional_items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        item_id:
+                          type: integer
+                        quantity:
+                          type: integer
+                          minimum: 1
+                        inventory:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                              minLength: 1
+                              maxLength: 100
+                            stock:
+                              type: integer
+                              minimum: 0
+                            price:
+                              type: number
+                              format: float
+                              minimum: 0
+    MechanicAccount:
+      type: object
+      required:
+        - mechanic_id
+        - email
+        - password
+      properties:
+        id:
+          type: integer
+        role:
+          type: string
+          default: Mechanic
+        mechanic_id:
+          type: integer
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          maxLength: 100
+        mechanic:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+            salary:
+              type: number
+              format: float
+    Mechanic:
+      type: object
+      required:
+        - name
+        - email
+        - phone
+        - salary
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        salary:
+          type: number
+          format: float
+        account:
+          type: object
+          properties:
+            role:
+              type: string
+              default: Mechanic
+            password:
+              type: string
+              minLength: 8
+              maxLength: 100
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              hours_worked:
+                type: number
+                format: float
+              service_ticket_id:
+                type: integer
+              service_ticket:
+                type: object
+                properties:
+                  service_date:
+                    type: string
+                    format: date
+                  service_desc:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 255
+                  customer_id:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      email:
+                        type: string
+                        format: email
+                      phone:
+                        type: string
+                        minLength: 10
+                        maxLength: 100
+                  invoice:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      invoice_date:
+                        type: string
+                        format: date
+                      total:
+                        type: number
+                        format: float
+                      paid:
+                        type: boolean
+              services:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    price:
+                      type: number
+                      format: float
+                    service_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          item_id:
+                            type: integer
+                          quantity:
+                            type: integer
+                          inventory:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                                minLength: 1
+                                maxLength: 100
+                              stock:
+                                type: integer
+                                minimum: 0
+                              price:
+                                type: number
+                                format: float
+                                minimum: 0
+              additional_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    quantity:
+                      type: integer
+                      minimum: 1
+                    inventory:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        stock:
+                          type: integer
+                          minimum: 0
+                        price:
+                          type: number
+                          format: float
+                          minimum: 0
+    MechanicTicket:
+      type: object
+      required:
+        - service_ticket_id
+      properties:
+        id:
+          type: integer
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        hours_worked:
+          type: number
+          format: float
+        service_ticket_id:
+          type: integer
+        mechanic_id:
+          type: integer
+        service_ticket:
+          type: object
+          properties:
+            service_date:
+              type: string
+              format: date
+            service_desc:
+              type: string
+              minLength: 1
+              maxLength: 255
+            VIN:
+              type: string
+              minLength: 17
+              maxLength: 255
+            customer_id:
+              type: integer
+            customer:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  minLength: 10
+                  maxLength: 100
+        mechanic:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+                minLength: 1
+                maxLength: 100
+              price:
+                type: number
+                format: float
+              service_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    quantity:
+                      type: integer
+                      minimum: 1
+                    inventory:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        stock:
+                          type: integer
+                          minimum: 0
+                        price:
+                          type: number
+                          format: float
+                          minimum: 0
+        additional_items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              item_id:
+                type: integer
+              quantity:
+                type: integer
+                minimum: 1
+              inventory:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  stock:
+                    type: integer
+                    minimum: 0
+                  price:
+                    type: number
+                    format: float
+                    minimum: 0
+    ServiceItem:
+      type: object
+      required:
+        - item_id
+        - quantity
+      properties:
+        id:
+          type: integer
+        item_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+        service_id:
+          type: integer
+        inventory:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            stock:
+              type: integer
+              minimum: 0
+            price:
+              type: number
+              format: float
+              minimum: 0
+        service:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            price:
+              type: number
+              format: float
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              mechanic_id:
+                type: integer
+    Service:
+      type: object
+      required:
+        - name
+        - price
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        price:
+          type: number
+          format: float
+        service_items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              item_id:
+                type: integer
+              quantity:
+                type: integer
+                minimum: 1
+              inventory:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  stock:
+                    type: integer
+                    minimum: 0
+                  price:
+                    type: number
+                    format: float
+                    minimum: 0
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              mechanic_id:
+                type: integer
+    ServiceTicket:
+      type: object
+      required:
+        - service_desc
+        - VIN
+      properties:
+        id:
+          type: integer
+        service_date:
+          type: string
+          format: date
+        service_desc:
+          type: string
+        VIN:
+          type: string
+          minLength: 17
+          maxLength: 255
+        customer_id:
+          type: integer
+        vehicle:
+          type: object
+          properties:
+            year:
+              type: integer
+            make:
+              type: string
+              minLength: 1
+              maxLength: 100
+            model:
+              type: string
+              minLength: 1
+              maxLength: 100
+            mileage:
+              type: integer
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              hours_worked:
+                type: number
+                format: float
+              mechanic_id:
+                type: integer
+        invoice:
+          type: object
+          properties:
+            id:
+              type: integer
+            invoice_date:
+              type: string
+              format: date
+            total:
+              type: number
+              format: float
+            paid:
+              type: boolean
+    Vehicle:
+      type: object
+      required:
+        - VIN
+        - year
+        - make
+        - model
+        - mileage
+        - customer_id
+      properties:
+        VIN:
+          type: string
+          minLength: 17
+          maxLength: 100
+        year:
+          type: integer
+        make:
+          type: string
+          minLength: 1
+          maxLength: 100
+        model:
+          type: string
+          minLength: 1
+          maxLength: 100
+        mileage:
+          type: integer
+        customer_id:
+          type: integer
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+        service_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              service_date:
+                type: string
+                format: date
+              service_desc:
+                type: string
+              mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date
+                    end_date:
+                      type: string
+                      format: date
+                    hours_worked:
+                      type: number
+                      format: float
+                    mechanic_id:
+                      type: integer
+              invoice:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  invoice_date:
+                    type: string
+                    format: date
+                  total:
+                    type: number
+                    format: float
+                  paid:
+                    type: boolean
+    CustomerUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        vehicles:
+          type: array
+          items:
+            type: object
+            properties:
+              VIN:
+                type: string
+                minLength: 17
+                maxLength: 100
+              year:
+                type: integer
+              make:
+                type: string
+                minLength: 1
+                maxLength: 100
+              model:
+                type: string
+                minLength: 1
+                maxLength: 100
+              mileage:
+                type: integer
+        account:
+          type: object
+          properties:
+            id:
+              type: integer
+            password:
+              type: string
+              minLength: 8
+        service_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              service_date:
+                type: string
+                format: date
+              service_desc:
+                type: string
+              VIN:
+                type: string
+                minLength: 17
+                maxLength: 255
+              mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date
+                    end_date:
+                      type: string
+                      format: date
+                    hours_worked:
+                      type: number
+                      format: float
+                    mechanic_id:
+                      type: integer
+                    mechanic:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                    services:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          name:
+                            type: string
+                            minLength: 1
+                            maxLength: 100
+                          price:
+                            type: number
+                            format: float
+                            minimum: 0
+                          service_items:
+                            type: array
+                            items:
+                              type: object
+                              properties:
+                                item_id:
+                                  type: integer
+                                quantity:
+                                  type: integer
+                                  minimum: 1
+                                inventory:
+                                  type: object
+                                  properties:
+                                    name:
+                                      type: string
+                                      minLength: 1
+                                      maxLength: 100
+                                    stock:
+                                      type: integer
+                                      minimum: 0
+                                    price:
+                                      type: number
+                                      format: float
+                                      minimum: 0
+                    additional_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          item_id:
+                            type: integer
+                          quantity:
+                            type: integer
+                            minimum: 1
+                          inventory:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                                minLength: 1
+                                maxLength: 100
+                              stock:
+                                type: integer
+                                minimum: 0
+                              price:
+                                type: number
+                                format: float
+                                minimum: 0
+    CustomerAccountUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer_id:
+          type: integer
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+            vehicles:
+              type: array
+              items:
+                type: object
+                properties:
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 100
+                  year:
+                    type: integer
+                  make:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  model:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  mileage:
+                    type: integer
+            service_tickets:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  service_date:
+                    type: string
+                    format: date
+                  service_desc:
+                    type: string
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 255
+                  vehicle:
+                    type: object
+                    properties:
+                      year:
+                        type: integer
+                      make:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      model:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      mileage:
+                        type: integer
+    InventoryUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        stock:
+          type: integer
+          minimum: 0
+        price:
+          type: number
+          format: float
+          minimum: 0
+        service_items:
+          type: array
+          items:
+            type: object
+            properties:
+              service_id:
+                type: integer
+              service:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  price:
+                    type: number
+                    format: float
+              mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date
+                    end_date:
+                      type: string
+                      format: date
+                    mechanic_id:
+                      type: integer
+    InvoiceUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        invoice_date:
+          type: string
+          format: date
+        total:
+          type: number
+          format: float
+        paid:
+          type: boolean
+        service_ticket_id:
+          type: integer
+        service_ticket:
+          type: object
+          properties:
+            service_date:
+              type: string
+              format: date
+            service_desc:
+              type: string
+              minLength: 1
+              maxLength: 255
+            VIN:
+              type: string
+              minLength: 17
+              maxLength: 255
+            customer_id:
+              type: integer
+            vehicle:
+              type: object
+              properties:
+                year:
+                  type: integer
+                make:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                model:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+            customer:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  minLength: 10
+                  maxLength: 100
+            mechanic_tickets:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  start_date:
+                    type: string
+                    format: date
+                  end_date:
+                    type: string
+                    format: date
+                  hours_worked:
+                    type: number
+                    format: float
+                  mechanic_id:
+                    type: integer
+                  mechanic:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                  services:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        price:
+                          type: number
+                          format: float
+                        service_items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              item_id:
+                                type: integer
+                              quantity:
+                                type: integer
+                                minimum: 1
+                              inventory:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  name:
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 100
+                                  stock:
+                                    type: integer
+                                    minimum: 0
+                                  price:
+                                    type: number
+                                    format: float
+                                    minimum: 0
+                        additional_items:
+                          type: array
+                          items:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              item_id:
+                                type: integer
+                              quantity:
+                                type: integer
+                                minimum: 1
+                              inventory:
+                                type: object
+                                properties:
+                                  id:
+                                    type: integer
+                                  name:
+                                    type: string
+                                    minLength: 1
+                                    maxLength: 100
+                                  stock:
+                                    type: integer
+                                    minimum: 0
+                                  price:
+                                    type: number
+                                    format: float
+                                    minimum: 0
+    MechanicAccountUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        role:
+          type: string
+          default: Mechanic
+        mechanic_id:
+          type: integer
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+          maxLength: 100
+        mechanic:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+            salary:
+              type: number
+              format: float
+    MechanicUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          minLength: 10
+          maxLength: 100
+        salary:
+          type: number
+          format: float
+        account:
+          type: object
+          properties:
+            role:
+              type: string
+              default: Mechanic
+            password:
+              type: string
+              minLength: 8
+              maxLength: 100
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              hours_worked:
+                type: number
+                format: float
+              service_ticket_id:
+                type: integer
+              service_ticket:
+                type: object
+                properties:
+                  service_date:
+                    type: string
+                    format: date
+                  service_desc:
+                    type: string
+                    minLength: 1
+                    maxLength: 255
+                  VIN:
+                    type: string
+                    minLength: 17
+                    maxLength: 255
+                  customer_id:
+                    type: integer
+                  customer:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        minLength: 1
+                        maxLength: 100
+                      email:
+                        type: string
+                        format: email
+                      phone:
+                        type: string
+                        minLength: 10
+                        maxLength: 100
+                  invoice:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      invoice_date:
+                        type: string
+                        format: date
+                      total:
+                        type: number
+                        format: float
+                      paid:
+                        type: boolean
+              services:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                      minLength: 1
+                      maxLength: 100
+                    price:
+                      type: number
+                      format: float
+                    service_items:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                          item_id:
+                            type: integer
+                          quantity:
+                            type: integer
+                          inventory:
+                            type: object
+                            properties:
+                              id:
+                                type: integer
+                              name:
+                                type: string
+                                minLength: 1
+                                maxLength: 100
+                              stock:
+                                type: integer
+                                minimum: 0
+                              price:
+                                type: number
+                                format: float
+                                minimum: 0
+              additional_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    quantity:
+                      type: integer
+                      minimum: 1
+                    inventory:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        stock:
+                          type: integer
+                          minimum: 0
+                        price:
+                          type: number
+                          format: float
+                          minimum: 0
+    MechanicTicketUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        start_date:
+          type: string
+          format: date
+        end_date:
+          type: string
+          format: date
+        hours_worked:
+          type: number
+          format: float
+        service_ticket_id:
+          type: integer
+        mechanic_id:
+          type: integer
+        service_ticket:
+          type: object
+          properties:
+            service_date:
+              type: string
+              format: date
+            service_desc:
+              type: string
+              minLength: 1
+              maxLength: 255
+            VIN:
+              type: string
+              minLength: 17
+              maxLength: 255
+            customer_id:
+              type: integer
+            vehicle:
+              type: object
+              properties:
+                year:
+                  type: integer
+                make:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                model:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+            customer:
+              type: object
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 100
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                  minLength: 10
+                  maxLength: 100
+        mechanic:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+        services:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+                minLength: 1
+                maxLength: 100
+              price:
+                type: number
+                format: float
+              service_items:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    item_id:
+                      type: integer
+                    quantity:
+                      type: integer
+                      minimum: 1
+                    inventory:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                          minLength: 1
+                          maxLength: 100
+                        stock:
+                          type: integer
+                          minimum: 0
+                        price:
+                          type: number
+                          format: float
+                          minimum: 0
+        additional_items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              item_id:
+                type: integer
+              quantity:
+                type: integer
+                minimum: 1
+              inventory:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  stock:
+                    type: integer
+                    minimum: 0
+                  price:
+                    type: number
+                    format: float
+                    minimum: 0
+    ServiceItemUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        item_id:
+          type: integer
+        quantity:
+          type: integer
+          minimum: 1
+        service_id:
+          type: integer
+        inventory:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            stock:
+              type: integer
+              minimum: 0
+            price:
+              type: number
+              format: float
+              minimum: 0
+        service:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            price:
+              type: number
+              format: float
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              mechanic_id:
+                type: integer
+    ServiceUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+          minLength: 1
+          maxLength: 100
+        price:
+          type: number
+          format: float
+        service_items:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              item_id:
+                type: integer
+              quantity:
+                type: integer
+                minimum: 1
+              inventory:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                    minLength: 1
+                    maxLength: 100
+                  stock:
+                    type: integer
+                    minimum: 0
+                  price:
+                    type: number
+                    format: float
+                    minimum: 0
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              mechanic_id:
+                type: integer
+    ServiceTicketUpdate:
+      type: object
+      properties:
+        id:
+          type: integer
+        service_date:
+          type: string
+          format: date
+        service_desc:
+          type: string
+        VIN:
+          type: string
+          minLength: 17
+          maxLength: 255
+        customer_id:
+          type: integer
+        vehicle:
+          type: object
+          properties:
+            year:
+              type: integer
+            make:
+              type: string
+              minLength: 1
+              maxLength: 100
+            model:
+              type: string
+              minLength: 1
+              maxLength: 100
+            mileage:
+              type: integer
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+        mechanic_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              start_date:
+                type: string
+                format: date
+              end_date:
+                type: string
+                format: date
+              hours_worked:
+                type: number
+                format: float
+              mechanic_id:
+                type: integer
+        invoice:
+          type: object
+          properties:
+            id:
+              type: integer
+            invoice_date:
+              type: string
+              format: date
+            total:
+              type: number
+              format: float
+            paid:
+              type: boolean
+    VehicleUpdate:
+      type: object
+      properties:
+        VIN:
+          type: string
+          minLength: 17
+          maxLength: 100
+        year:
+          type: integer
+        make:
+          type: string
+          minLength: 1
+          maxLength: 100
+        model:
+          type: string
+          minLength: 1
+          maxLength: 100
+        mileage:
+          type: integer
+        customer_id:
+          type: integer
+        customer:
+          type: object
+          properties:
+            name:
+              type: string
+              minLength: 1
+              maxLength: 100
+            email:
+              type: string
+              format: email
+            phone:
+              type: string
+              minLength: 10
+              maxLength: 100
+        service_tickets:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              service_date:
+                type: string
+                format: date
+              service_desc:
+                type: string
+              mechanic_tickets:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    start_date:
+                      type: string
+                      format: date
+                    end_date:
+                      type: string
+                      format: date
+                    hours_worked:
+                      type: number
+                      format: float
+                    mechanic_id:
+                      type: integer
+              invoice:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  invoice_date:
+                    type: string
+                    format: date
+                  total:
+                    type: number
+                    format: float
+                  paid:
+                    type: boolean
+    Login:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
   securitySchemes:
     securitySchemes:
       CustomerToken:

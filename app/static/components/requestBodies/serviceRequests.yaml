@@ -4,7 +4,7 @@ ServiceCreate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/Service'
+        $ref: ./components/schemas/services.yaml#/Service
 
 ServiceUpdate:
   description: Service Update Request Body
@@ -12,4 +12,4 @@ ServiceUpdate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/ServiceUpdate'
+        $ref: ./components/schemas/serviceUpdate.yaml#/ServiceUpdate

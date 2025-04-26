@@ -4,11 +4,11 @@ ServiceTicketCreate:
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/ServiceTicket'
+        $ref: ./components/schemas/serviceTickets.yaml#/ServiceTicket
 ServiceTicketUpdate:
   description: Service Ticket Update Request Body
   required: true
   content:
     application/json:
       schema:
-        $ref: '#/components/schemas/ServiceTicketUpdate'
+        $ref: ./components/schemas/serviceTicketUpdate.yaml#/ServiceTicketUpdate
