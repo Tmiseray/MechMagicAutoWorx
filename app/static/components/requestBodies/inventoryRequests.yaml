@@ -4,7 +4,7 @@ InventoryCreate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/inventory.yaml#/Inventory
+        $ref: ../schemas/inventory.yaml#/Inventory
 
 InventoryUpdate:
   description: Inventory Update Request Body
@@ -12,4 +12,4 @@ InventoryUpdate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/inventoryUpdate.yaml#/InventoryUpdate
+        $ref: ../schemas/inventoryUpdate.yaml#/InventoryUpdate

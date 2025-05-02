@@ -4,7 +4,7 @@ MechanicTicketCreate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/mechanicTickets.yaml#/MechanicTicket
+        $ref: ../schemas/mechanicTickets.yaml#/MechanicTicket
 
 MechanicTicketUpdate:
   description: Mechanic Ticket Update Request Body
@@ -12,4 +12,4 @@ MechanicTicketUpdate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/mechanicTicketUpdate.yaml#/MechanicTicketUpdate
+        $ref: ../schemas/mechanicTicketUpdate.yaml#/MechanicTicketUpdate

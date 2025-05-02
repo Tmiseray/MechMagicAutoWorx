@@ -1,90 +1,91 @@
-/mechanics/tickets:
-  post:
-    tags:
-      - MechanicTicket
-    summary: Create a new mechanic ticket (mechanic token required)
-    requestBody:
-      required: true
-      content:
-        application/json:
+paths:
+  /mechanics/tickets:
+    post:
+      tags:
+        - MechanicTicket
+      summary: Create a new mechanic ticket (mechanic token required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/MechanicTicket"
+      responses:
+        201:
+          description: Mechanic ticket created
+        400:
+          description: Validation error or bad inventory reference
+        404:
+          description: Invalid service or item ID
+
+    put:
+      tags:
+        - MechanicTicket
+      summary: Update mechanic ticket by ID (mechanic token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
           schema:
-            $ref: "#/definitions/MechanicTicket"
-    responses:
-      201:
-        description: Mechanic ticket created
-      400:
-        description: Validation error or bad inventory reference
-      404:
-        description: Invalid service or item ID
-
-  put:
-    tags:
-      - MechanicTicket
-    summary: Update mechanic ticket by ID (mechanic token required)
-    parameters:
-      - in: query
-        name: id
+            type: integer
+      requestBody:
         required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicTicketUpdate'
+      responses:
+        200:
+          description: Mechanic ticket updated
+        404:
+          description: Mechanic ticket not found
+
+  /mechanics/tickets/all:
+    get:
+      tags:
+        - MechanicTicket
+      summary: Get all mechanic tickets (mechanic token required)
+      parameters:
+        - in: query
+          name: page
           schema:
-            $ref: '#/definitions/MechanicTicketUpdate'
-    responses:
-      200:
-        description: Mechanic ticket updated
-      404:
-        description: Mechanic ticket not found
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of mechanic tickets
 
-/mechanics/tickets/all:
-  get:
-    tags:
-      - MechanicTicket
-    summary: Get all mechanic tickets (mechanic token required)
-    parameters:
-      - in: query
-        name: page
-        schema:
-          type: integer
-      - in: query
-        name: per_page
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of mechanic tickets
+  /mechanics/tickets/{id}:
+    get:
+      tags:
+        - MechanicTicket
+      summary: Get a specific mechanic ticket by ID (mechanic token required)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Mechanic ticket found
+        404:
+          description: Invalid mechanic ticket ID
 
-/mechanics/tickets/{id}:
-  get:
-    tags:
-      - MechanicTicket
-    summary: Get a specific mechanic ticket by ID (mechanic token required)
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Mechanic ticket found
-      404:
-        description: Invalid mechanic ticket ID
-
-/mechanics/tickets/my-tickets:
-  get:
-    tags:
-      - MechanicTicket
-    summary: Get tickets for a specific mechanic (mechanic token required)
-    parameters:
-      - in: query
-        name: id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of mechanic's tickets
+  /mechanics/tickets/my-tickets:
+    get:
+      tags:
+        - MechanicTicket
+      summary: Get tickets for a specific mechanic (mechanic token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of mechanic's tickets

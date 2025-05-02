@@ -1,73 +1,74 @@
-/inventory/items:
-  post:
-    tags:
-      - ServiceItem
-    summary: Create a new service item (mechanic token required)
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/definitions/ServiceItem"
-    responses:
-      201:
-        description: Service item created
-      400:
-        description: Validation error
-
-/inventory/items/all:
-  get:
-    tags:
-      - ServiceItem
-    summary: Get all service items (mechanic token required)
-    parameters:
-      - in: query
-        name: page
-        schema:
-          type: integer
-      - in: query
-        name: per_page
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of service items
-
-/inventory/items/{id}:
-  get:
-    tags:
-      - ServiceItem
-    summary: Get a specific service item by ID (mechanic token required)
-    parameters:
-      - name: id
-        in: path
+paths:
+  /inventory/items:
+    post:
+      tags:
+        - ServiceItem
+      summary: Create a new service item (mechanic token required)
+      requestBody:
         required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Service item found
-      404:
-        description: Invalid service item ID
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/ServiceItem"
+      responses:
+        201:
+          description: Service item created
+        400:
+          description: Validation error
 
-  put:
-    tags:
-      - ServiceItem
-    summary: Update a service item by ID (mechanic token required)
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+  /inventory/items/all:
+    get:
+      tags:
+        - ServiceItem
+      summary: Get all service items (mechanic token required)
+      parameters:
+        - in: query
+          name: page
           schema:
-            $ref: "#/definitions/ServiceItemUpdate"
-    responses:
-      200:
-        description: Service item updated
-      404:
-        description: Service item not found
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of service items
+
+  /inventory/items/{id}:
+    get:
+      tags:
+        - ServiceItem
+      summary: Get a specific service item by ID (mechanic token required)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Service item found
+        404:
+          description: Invalid service item ID
+
+    put:
+      tags:
+        - ServiceItem
+      summary: Update a service item by ID (mechanic token required)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/ServiceItemUpdate"
+      responses:
+        200:
+          description: Service item updated
+        404:
+          description: Service item not found

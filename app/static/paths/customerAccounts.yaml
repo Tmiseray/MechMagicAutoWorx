@@ -7,17 +7,14 @@ paths:
       description: Authenticates a customer using email and password and returns a JWT token.
       requestBody:
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../../components/requestBodies/customerAccountRequests.yaml#/CustomerLogin
+        $ref: ../components/requestBodies/customerAccountRequests.yaml#/CustomerLogin
       responses:
         200Login:
-          $ref: ../../components/responses/success.yaml#/200Login
+          $ref: ../components/responses/success.yaml#/200Login
         400Login:
-          $ref: ../../components/responses/errors.yaml#/400Login
+          $ref: ../components/responses/errors.yaml#/400Login
         401Login:
-          $ref: ../../components/responses/errors.yaml#/401Login
+          $ref: ../components/responses/errors.yaml#/401Login
 
   /customers/accounts:
     post:
@@ -26,10 +23,7 @@ paths:
       summary: Create a new customer account
       requestBody:
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../../components/requestBodies/customerAccountRequests.yaml#/CustomerAccountCreate
+        $ref: ../components/requestBodies/customerAccountRequests.yaml#/CustomerAccountCreate
     responses:
       201:
         description: Account successfully created
@@ -50,7 +44,7 @@ paths:
         200:
           description: Customer account retrieved
         404CustomerAccount:
-          $ref: ../../components/responses/errors.yaml#/404CustomerAccount
+          $ref: ../components/responses/errors.yaml#/404CustomerAccount
 
     put:
       tags:
@@ -64,15 +58,12 @@ paths:
             type: integer
       requestBody:
         required: true
-        content:
-          application/json:
-            schema:
-              $ref: ../../components/requestBodies/customerAccountRequests.yaml#/CustomerAccountUpdate
+        $ref: ../components/requestBodies/customerAccountRequests.yaml#/CustomerAccountUpdate
       responses:
         200:
           description: Customer account updated
         404CustomerAccount:
-          $ref: ../../components/responses/errors.yaml#/404CustomerAccount
+          $ref: ../components/responses/errors.yaml#/404CustomerAccount
 
     delete:
       tags:
@@ -86,7 +77,7 @@ paths:
             type: integer
       responses:
         200AccountDelete:
-          $ref: ../../components/responses/success.yaml#/200AccountDelete
+          $ref: ../components/responses/success.yaml#/200AccountDelete
         404:
           description: Account not found
 

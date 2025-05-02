@@ -9,7 +9,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../../components/requestBodies/mechanicAccountRequests.yaml#/MechanicAccountCreate
+              $ref: ../components/requestBodies/mechanicAccountRequests.yaml#/MechanicAccountCreate
       responses:
         201:
           description: Mechanic account created
@@ -31,12 +31,12 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../../components/requestBodies/mechanicAccountRequests.yaml#/MechanicAccountUpdate
+              $ref: ../components/requestBodies/mechanicAccountRequests.yaml#/MechanicAccountUpdate
       responses:
         200:
           description: Mechanic account updated
         404MechanicAccount:
-          $ref: ../../components/responses/errors.yaml#/404MechanicAccount
+          $ref: ../components/responses/errors.yaml#/404MechanicAccount
 
     delete:
       tags:
@@ -50,9 +50,9 @@ paths:
             type: integer
       responses:
         200AccountDelete:
-          $ref: ../../components/responses/success.yaml#/200AccountDelete
+          $ref: ../components/responses/success.yaml#/200AccountDelete
         404MechanicAccount:
-          $ref: ../../components/responses/errors.yaml#/404MechanicAccount
+          $ref: ../components/responses/errors.yaml#/404MechanicAccount
 
     get:
       tags:
@@ -68,7 +68,7 @@ paths:
         200:
           description: Mechanic account found
         404MechanicAccount:
-          $ref: ../../components/responses/errors.yaml#/404MechanicAccount
+          $ref: ../components/responses/errors.yaml#/404MechanicAccount
 
   /mechanics/accounts/login:
     post:
@@ -81,14 +81,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: ../../components/requestBodies/mechanicAccountRequests.yaml#/MechanicLogin
+              $ref: ../components/requestBodies/mechanicAccountRequests.yaml#/MechanicLogin
       responses:
         200Login:
-          $ref: ../../components/responses/success.yaml#/200Login
+          $ref: ../components/responses/success.yaml#/200Login
         400Login:
-          $ref: ../../components/responses/errors.yaml#/400Login
+          $ref: ../components/responses/errors.yaml#/400Login
         401Login:
-          $ref: ../../components/responses/errors.yaml#/401Login
+          $ref: ../components/responses/errors.yaml#/401Login
 
   /mechanics/accounts/all:
     get:

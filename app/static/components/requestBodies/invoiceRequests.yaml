@@ -4,7 +4,7 @@ InvoiceCreate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/invoices.yaml#/Invoice
+        $ref: ../schemas/invoices.yaml#/Invoice
 
 InvoiceUpdate:
   description: Invoice Update Request Body
@@ -12,4 +12,4 @@ InvoiceUpdate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/invoiceUpdate.yaml#/InvoiceUpdate
+        $ref: ../schemas/invoiceUpdate.yaml#/InvoiceUpdate

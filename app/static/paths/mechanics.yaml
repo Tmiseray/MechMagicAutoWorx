@@ -1,97 +1,98 @@
-/mechanics:
-  post:
-    tags:
-      - Mechanic
-    summary: Create a new mechanic
-    requestBody:
-      required: true
-      content:
-        application/json:
+paths:
+  /mechanics:
+    post:
+      tags:
+        - Mechanic
+      summary: Create a new mechanic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/Mechanic"
+      responses:
+        201:
+          description: Mechanic created
+        400:
+          description: Validation error or duplicate email
+
+    put:
+      tags:
+        - Mechanic
+      summary: Update mechanic data (token required)
+      parameters:
+        - in: query
+          name: mechanic_id
+          required: true
           schema:
-            $ref: "#/definitions/Mechanic"
-    responses:
-      201:
-        description: Mechanic created
-      400:
-        description: Validation error or duplicate email
-
-  put:
-    tags:
-      - Mechanic
-    summary: Update mechanic data (token required)
-    parameters:
-      - in: query
-        name: mechanic_id
+            type: integer
+      requestBody:
         required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/MechanicUpdate'
+      responses:
+        200:
+          description: Mechanic updated
+        404:
+          description: Mechanic not found
+
+    delete:
+      tags:
+        - Mechanic
+      summary: Delete a mechanic (token required)
+      parameters:
+        - in: query
+          name: mechanic_id
+          required: true
           schema:
-            $ref: '#/definitions/MechanicUpdate'
-    responses:
-      200:
-        description: Mechanic updated
-      404:
-        description: Mechanic not found
+            type: integer
+      responses:
+        200:
+          description: Mechanic successfully deleted
+        404:
+          description: Invalid mechanic ID
 
-  delete:
-    tags:
-      - Mechanic
-    summary: Delete a mechanic (token required)
-    parameters:
-      - in: query
-        name: mechanic_id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Mechanic successfully deleted
-      404:
-        description: Invalid mechanic ID
+    get:
+      tags:
+        - Mechanic
+      summary: Get a specific mechanic by ID (token required)
+      parameters:
+        - in: query
+          name: mechanic_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Mechanic found
+        404:
+          description: Invalid mechanic ID
 
-  get:
-    tags:
-      - Mechanic
-    summary: Get a specific mechanic by ID (token required)
-    parameters:
-      - in: query
-        name: mechanic_id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Mechanic found
-      404:
-        description: Invalid mechanic ID
+  /mechanics/all:
+    get:
+      tags:
+        - Mechanic
+      summary: Get all mechanics
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of mechanics
 
-/mechanics/all:
-  get:
-    tags:
-      - Mechanic
-    summary: Get all mechanics
-    parameters:
-      - in: query
-        name: page
-        schema:
-          type: integer
-      - in: query
-        name: per_page
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of mechanics
-
-/mechanics/top-mechanics:
-  get:
-    tags:
-      - Mechanic
-    summary: Get top mechanics based on ticket count
-    responses:
-      200:
-        description: List of top mechanics
+  /mechanics/top-mechanics:
+    get:
+      tags:
+        - Mechanic
+      summary: Get top mechanics based on ticket count
+      responses:
+        200:
+          description: List of top mechanics

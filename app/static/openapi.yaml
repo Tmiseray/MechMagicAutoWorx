@@ -31,18 +31,19 @@ tags:
     description: Operations for Service Ticket Information associated with Customers, Vehicles, and Invoices
   - name: Vehicle
     description: Operations for Vehicle Information associated with Customers and ServiceTickets
-paths: {}
+paths:
+  $ref: ./paths/index.yaml
 components:
   schemas:
-    $ref: "./components/schemas/index.yaml"
+    $ref: ./components/schemas/index.yaml
   securitySchemes:
-    $ref: "./components/securitySchemes.yaml"
+    $ref: ./components/securitySchemes.yaml
   examples:
-    $ref: "./components/examples/index.yaml"
+    $ref: ./components/examples/index.yaml
   requestBodies:
-    $ref: "./components/requestBodies/index.yaml"
+    $ref: ./components/requestBodies/index.yaml
   responses:
-    $ref: "./components/responses/index.yaml"
+    $ref: ./components/responses/index.yaml
 security:
   - CustomerToken: []
   - MechanicToken: []

@@ -4,7 +4,7 @@ MechanicCreate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/mechanics.yaml#/Mechanic
+        $ref: ../schemas/mechanics.yaml#/Mechanic
 
 MechanicUpdate:
   description: Mechanic Information Update Request Body
@@ -12,4 +12,4 @@ MechanicUpdate:
   content:
     application/json:
       schema:
-        $ref: ./components/schemas/mechanicUpdate.yaml#/MechanicUpdate
+        $ref: ../schemas/mechanicUpdate.yaml#/MechanicUpdate

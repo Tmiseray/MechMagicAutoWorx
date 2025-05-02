@@ -1,73 +1,74 @@
-/services:
-  post:
-    tags:
-      - Service
-    summary: Create a new service (mechanic token required)
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: "#/definitions/Service"
-    responses:
-      201:
-        description: Service created
-      400:
-        description: Validation error or bad service item reference
-
-/services/all:
-  get:
-    tags:
-      - Service
-    summary: Get all services
-    parameters:
-      - in: query
-        name: page
-        schema:
-          type: integer
-      - in: query
-        name: per_page
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of services
-
-/services/{id}:
-  get:
-    tags:
-      - Service
-    summary: Get a specific service by ID
-    parameters:
-      - name: id
-        in: path
+paths:
+  /services:
+    post:
+      tags:
+        - Service
+      summary: Create a new service (mechanic token required)
+      requestBody:
         required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Service found
-      404:
-        description: Invalid service ID
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/Service"
+      responses:
+        201:
+          description: Service created
+        400:
+          description: Validation error or bad service item reference
 
-  put:
-    tags:
-      - Service
-    summary: Update a service by ID (mechanic token required)
-    parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+  /services/all:
+    get:
+      tags:
+        - Service
+      summary: Get all services
+      parameters:
+        - in: query
+          name: page
           schema:
-            $ref: "#/definitions/ServiceUpdate"
-    responses:
-      200:
-        description: Service updated
-      404:
-        description: Service not found
+            type: integer
+        - in: query
+          name: per_page
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of services
+
+  /services/{id}:
+    get:
+      tags:
+        - Service
+      summary: Get a specific service by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Service found
+        404:
+          description: Invalid service ID
+
+    put:
+      tags:
+        - Service
+      summary: Update a service by ID (mechanic token required)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/definitions/ServiceUpdate"
+      responses:
+        200:
+          description: Service updated
+        404:
+          description: Service not found

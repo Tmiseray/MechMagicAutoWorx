@@ -1,91 +1,92 @@
-/customers:
-  post:
-    tags:
-      - Customer
-    summary: Create a new customer
-    description: Limited to 3 per hour
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: ../../components/requestBodies/customerRequests.yaml#/CustomerCreate
-    responses:
-      201:
-        description: Customer created
-      400:
-        description: Validation error or duplicate email
+paths:
+  /customers:
+    post:
+      tags:
+        - Customer
+      summary: Create a new customer
+      description: Limited to 3 per hour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/requestBodies/customerRequests.yaml#/CustomerCreate
+      responses:
+        201:
+          description: Customer created
+        400:
+          description: Validation error or duplicate email
 
-  put:
-    tags:
-      - Customer
-    summary: Update customer data (token required)
-    parameters:
-      - in: query
+    put:
+      tags:
+        - Customer
+      summary: Update customer data (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../components/requestBodies/customerRequests.yaml#/CustomerUpdate
+      responses:
+        200:
+          description: Customer updated
+        404Customer:
+          $ref: ../components/responses/errors.yaml#/404Customer
+
+    delete:
+      tags:
+        - Customer
+      summary: Delete a customer (token required)
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200CustomerDelete:
+          $ref: ../components/responses/success.yaml#/200CustomerDelete
+        404Customer:
+          $ref: ../components/responses/errors.yaml#/404Customer
+
+  /customers/all:
+    get:
+      tags:
+        - Customer
+      summary: Get all customers (mechanic token required)
+      description: Returns all customers, supports optional pagination
+      parameters:
+        - in: query
+          name: page
+          schema:
+          type: integer
+        - in: query
+          name: per_page
+          schema:
+          type: integer
+      responses:
+        200:
+          description: List of customers
+
+  /customers/{id}:
+    get:
+      tags:
+        - Customer
+      summary: Get a specific customer by ID (mechanic token required)
+      parameters:
+      - in: path
         name: id
         required: true
         schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
-          schema:
-            $ref: ../../components/requestBodies/customerRequests.yaml#/CustomerUpdate
-    responses:
-      200:
-        description: Customer updated
-      404Customer:
-        $ref: ../../components/responses/errors.yaml#/404Customer
-
-  delete:
-    tags:
-      - Customer
-    summary: Delete a customer (token required)
-    parameters:
-      - in: query
-        name: id
-        required: true
-        schema:
-          type: integer
-    responses:
-      200CustomerDelete:
-        $ref: ../../components/responses/success.yaml#/200CustomerDelete
-      404Customer:
-        $ref: ../../components/responses/errors.yaml#/404Customer
-
-/customers/all:
-  get:
-    tags:
-      - Customer
-    summary: Get all customers (mechanic token required)
-    description: Returns all customers, supports optional pagination
-    parameters:
-      - in: query
-        name: page
-        schema:
-        type: integer
-      - in: query
-        name: per_page
-        schema:
         type: integer
     responses:
       200:
-        description: List of customers
-
-/customers/{id}:
-  get:
-    tags:
-      - Customer
-    summary: Get a specific customer by ID (mechanic token required)
-    parameters:
-    - in: path
-      name: id
-      required: true
-      schema:
-      type: integer
-  responses:
-    200:
-      description: Customer found
-    404Customer:
-      $ref: ../../components/responses/errors.yaml#/404Customer
+        description: Customer found
+      404Customer:
+        $ref: ../components/responses/errors.yaml#/404Customer

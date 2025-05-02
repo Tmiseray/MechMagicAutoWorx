@@ -1,91 +1,92 @@
-/customers/tickets:
-  post:
-    tags:
-      - ServiceTicket
-    summary: Create a new service ticket
-    description: Limited to 20 per hour
-    requestBody:
-      required: true
-      content:
-        application/json:
+paths:
+  /customers/tickets:
+    post:
+      tags:
+        - ServiceTicket
+      summary: Create a new service ticket
+      description: Limited to 20 per hour
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceTicket'
+      responses:
+        201:
+          description: Service ticket created
+        400:
+          description: Validation error
+
+  /customers/tickets/all:
+    get:
+      tags:
+        - ServiceTicket
+      summary: Get all service tickets (mechanic token required)
+      parameters:
+        - name: page
+          in: query
           schema:
-            $ref: '#/definitions/ServiceTicket'
-    responses:
-      201:
-        description: Service ticket created
-      400:
-        description: Validation error
-
-/customers/tickets/all:
-  get:
-    tags:
-      - ServiceTicket
-    summary: Get all service tickets (mechanic token required)
-    parameters:
-      - name: page
-        in: query
-        schema:
-          type: integer
-      - name: per_page
-        in: query
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of service tickets
-
-/customers/tickets/{service_ticket_id}:
-  get:
-    tags:
-      - ServiceTicket
-    summary: Get a specific service ticket by ID (mechanic token required)
-    parameters:
-      - name: service_ticket_id
-        in: path
-        required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: Service ticket found
-      404:
-        description: Invalid Service Ticket ID or not found
-
-  put:
-    tags:
-      - ServiceTicket
-    summary: Update a service ticket (mechanic token required)
-    parameters:
-      - name: service_ticket_id
-        in: path
-        required: true
-        schema:
-          type: integer
-    requestBody:
-      required: true
-      content:
-        application/json:
+            type: integer
+        - name: per_page
+          in: query
           schema:
-            $ref: '#/definitions/ServiceTicketUpdate'
-    responses:
-      200:
-        description: Service ticket updated
-      404:
-        description: Invalid Service Ticket ID
+            type: integer
+      responses:
+        200:
+          description: List of service tickets
 
-/customers/tickets/my-tickets:
-  get:
-    tags:
-      - ServiceTicket
-    summary: Get all service tickets for a customer (token required)
-    parameters:
-      - name: customer_id
-        in: query
+  /customers/tickets/{service_ticket_id}:
+    get:
+      tags:
+        - ServiceTicket
+      summary: Get a specific service ticket by ID (mechanic token required)
+      parameters:
+        - name: service_ticket_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Service ticket found
+        404:
+          description: Invalid Service Ticket ID or not found
+
+    put:
+      tags:
+        - ServiceTicket
+      summary: Update a service ticket (mechanic token required)
+      parameters:
+        - name: service_ticket_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
         required: true
-        schema:
-          type: integer
-    responses:
-      200:
-        description: List of customer's service tickets
-      404:
-        description: Customer not found
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/ServiceTicketUpdate'
+      responses:
+        200:
+          description: Service ticket updated
+        404:
+          description: Invalid Service Ticket ID
+
+  /customers/tickets/my-tickets:
+    get:
+      tags:
+        - ServiceTicket
+      summary: Get all service tickets for a customer (token required)
+      parameters:
+        - name: customer_id
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: List of customer's service tickets
+        404:
+          description: Customer not found

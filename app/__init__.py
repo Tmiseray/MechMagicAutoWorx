@@ -40,7 +40,7 @@ def bundle_openapi():
     if redocly_path:
         try:
             subprocess.run(
-                [redocly_path, "bundle", "app/static/openapi.yaml", "-o", "app/static/combined_docs.yaml"],
+                [redocly_path, "bundle", "app/static/openapi.yaml", "-o", "app/static/cleaned_openapi.yaml"],
                 check=True
             )
             print("✅ OpenAPI docs bundled successfully.")
@@ -57,8 +57,8 @@ def create_app(config_name):
     app.config.from_object(f'config.{config_name}')
 
     # Bundle OpenAPI docs
-    # if app.config.get("OPENAPI_AUTOBUNDLE"):
-    #     bundle_openapi()
+    if app.config.get("OPENAPI_AUTOBUNDLE"):
+        bundle_openapi()
 
     # Database initialization
     db.init_app(app)
